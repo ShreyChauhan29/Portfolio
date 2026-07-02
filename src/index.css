@@ -35,6 +35,60 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Cursor-following glow (position driven from JS via transform) */
+.cursor-glow {
+  position: fixed;
+  top: -320px;
+  left: -320px;
+  width: 640px;
+  height: 640px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.16) 0%,
+    rgba(192, 132, 252, 0.07) 35%,
+    rgba(45, 212, 191, 0.04) 55%,
+    transparent 70%
+  );
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* Drifting hero orbs */
+@keyframes orb-drift-a {
+  0%,
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    transform: translate(-58%, 50px) scale(1.15);
+  }
+}
+@keyframes orb-drift-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(70px, -50px) scale(1.2);
+  }
+}
+@keyframes orb-drift-c {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-60px, 45px) scale(0.85);
+  }
+}
+
 /* Glass card base */
 .glass {
   background: rgba(255, 255, 255, 0.03);

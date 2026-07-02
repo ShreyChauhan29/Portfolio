@@ -232,6 +232,171 @@ function useReveal() {
 }
 
 // ---------------------------------------------------------------------------
+// Dynamic background
+// ---------------------------------------------------------------------------
+
+// Constellation of particles that drift, link up when close, and connect to
+// the cursor as it moves across the page.
+function ParticleField() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    let raf
+    let w = 0
+    let h = 0
+    let particles = []
+    const mouse = { x: -1e4, y: -1e4 }
+
+    const init = () => {
+      w = window.innerWidth
+      h = window.innerHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = `${w}px`
+      canvas.style.height = `${h}px`
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      const count = Math.min(90, Math.floor((w * h) / 22000))
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.5 + 0.7,
+      }))
+    }
+
+    const onMove = (e) => {
+      mouse.x = e.clientX
+      mouse.y = e.clientY
+    }
+    const onLeave = () => {
+      mouse.x = -1e4
+      mouse.y = -1e4
+    }
+
+    const LINK_DIST = 110
+    const MOUSE_DIST = 200
+
+    const tick = () => {
+      if (w !== window.innerWidth || h !== window.innerHeight) init()
+      ctx.clearRect(0, 0, w, h)
+
+      for (const p of particles) {
+        // gentle pull toward the cursor when it is nearby
+        const dx = mouse.x - p.x
+        const dy = mouse.y - p.y
+        const dist = Math.hypot(dx, dy)
+        if (dist < MOUSE_DIST && dist > 1) {
+          p.vx += (dx / dist) * 0.012
+          p.vy += (dy / dist) * 0.012
+        }
+        // speed cap keeps the pull from snowballing
+        const speed = Math.hypot(p.vx, p.vy)
+        if (speed > 0.7) {
+          p.vx = (p.vx / speed) * 0.7
+          p.vy = (p.vy / speed) * 0.7
+        }
+        p.x += p.vx
+        p.y += p.vy
+        if (p.x < -20) p.x = w + 20
+        if (p.x > w + 20) p.x = -20
+        if (p.y < -20) p.y = h + 20
+        if (p.y > h + 20) p.y = -20
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(148, 163, 184, 0.45)'
+        ctx.fill()
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i]
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j]
+          const d = Math.hypot(a.x - b.x, a.y - b.y)
+          if (d < LINK_DIST) {
+            ctx.beginPath()
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(b.x, b.y)
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.22 * (1 - d / LINK_DIST)})`
+            ctx.lineWidth = 1
+            ctx.stroke()
+          }
+        }
+        const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y)
+        if (dm < MOUSE_DIST) {
+          ctx.beginPath()
+          ctx.moveTo(a.x, a.y)
+          ctx.lineTo(mouse.x, mouse.y)
+          ctx.strokeStyle = `rgba(45, 212, 191, ${0.35 * (1 - dm / MOUSE_DIST)})`
+          ctx.lineWidth = 1
+          ctx.stroke()
+        }
+      }
+
+      raf = requestAnimationFrame(tick)
+    }
+
+    init()
+    window.addEventListener('resize', init)
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerleave', onLeave)
+    raf = requestAnimationFrame(tick)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', init)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerleave', onLeave)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0" aria-hidden="true" />
+}
+
+// Soft gradient glow that trails the cursor with a smoothed follow.
+function CursorGlow() {
+  const glowRef = useRef(null)
+
+  useEffect(() => {
+    if (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(pointer: coarse)').matches
+    )
+      return
+    const el = glowRef.current
+    let targetX = window.innerWidth / 2
+    let targetY = window.innerHeight / 3
+    let x = targetX
+    let y = targetY
+    let raf
+
+    const onMove = (e) => {
+      targetX = e.clientX
+      targetY = e.clientY
+    }
+    const tick = () => {
+      x += (targetX - x) * 0.09
+      y += (targetY - y) * 0.09
+      el.style.transform = `translate(${x}px, ${y}px)`
+      raf = requestAnimationFrame(tick)
+    }
+
+    window.addEventListener('pointermove', onMove)
+    raf = requestAnimationFrame(tick)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  return <div ref={glowRef} className="cursor-glow" aria-hidden="true" />
+}
+
+// ---------------------------------------------------------------------------
 // Building blocks
 // ---------------------------------------------------------------------------
 
@@ -353,11 +518,20 @@ function Navbar() {
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-36 pb-24 sm:pt-44 sm:pb-32">
-      {/* Ambient gradient orbs */}
+      {/* Ambient gradient orbs, slowly drifting */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute -top-40 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[140px]" />
-        <div className="absolute top-40 -left-40 h-80 w-80 rounded-full bg-teal-500/10 blur-[120px]" />
-        <div className="absolute top-64 -right-32 h-72 w-72 rounded-full bg-violet-600/15 blur-[120px]" />
+        <div
+          className="absolute -top-40 left-1/2 h-[480px] w-[720px] rounded-full bg-indigo-600/20 blur-[140px]"
+          style={{ animation: 'orb-drift-a 16s ease-in-out infinite' }}
+        />
+        <div
+          className="absolute top-40 -left-40 h-80 w-80 rounded-full bg-teal-500/10 blur-[120px]"
+          style={{ animation: 'orb-drift-b 20s ease-in-out infinite' }}
+        />
+        <div
+          className="absolute top-64 -right-32 h-72 w-72 rounded-full bg-violet-600/15 blur-[120px]"
+          style={{ animation: 'orb-drift-c 24s ease-in-out infinite' }}
+        />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
@@ -372,12 +546,10 @@ function Hero() {
         </div>
 
         <h1
-          className="animate-fade-up mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-6xl"
+          className="animate-fade-up mt-6 text-5xl font-extrabold tracking-tight text-white sm:text-7xl"
           style={{ animationDelay: '120ms' }}
         >
-          Chauhan Shreykumar
-          <br />
-          <span className="gradient-text">Harshadbhai</span>
+          Shrey <span className="gradient-text">Chauhan</span>
         </h1>
 
         <p
@@ -709,7 +881,7 @@ function Contact() {
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-8 text-xs text-slate-500 sm:flex-row">
-          <p>© {new Date().getFullYear()} Chauhan Shreykumar Harshadbhai. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Shrey Chauhan. All rights reserved.</p>
           <p className="flex items-center gap-1.5 font-mono">
             <Braces size={12} />
             Built with React, Tailwind CSS &amp; Lucide
@@ -739,6 +911,8 @@ export default function App() {
           backgroundSize: '56px 56px',
         }}
       />
+      <ParticleField />
+      <CursorGlow />
       <Navbar />
       <main>
         <Hero />
