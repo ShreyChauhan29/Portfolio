@@ -28,7 +28,7 @@ The `dist/` folder is a fully static site — deploy it to GitHub Pages, Netlify
 
 ## Deployment
 
-Pushing to `main` triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages at https://shreychauhan29.github.io/portfolio/
+Pushing to `main` triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages at https://shreychauhan29.github.io/Portfolio/
 
 ## Things to customize
 
