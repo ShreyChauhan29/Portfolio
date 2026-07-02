@@ -93,13 +93,13 @@ const PROJECTS = [
       'Multi-dimensional financial and operational reporting in Business Central — including automatic dimension updation on Transfer Orders at shipment and receipt for both in-transit and direct transfers.',
     tags: ['AL', 'RDLC Reports', 'Dimensions', 'Business Central'],
   },
-  {
-    icon: Receipt,
-    title: 'GST / TDS / TCS Automation',
-    description:
-      'Automated Indian statutory tax workflows — GST computation, TDS/TCS deduction and posting — reducing manual tax entries and compliance errors across purchase and sales cycles.',
-    tags: ['AL', 'Indian Tax Localization', 'Business Central'],
-  },
+  // {
+  //   icon: Receipt,
+  //   title: 'GST / TDS / TCS Automation',
+  //   description:
+  //     'Automated Indian statutory tax workflows — GST computation, TDS/TCS deduction and posting — reducing manual tax entries and compliance errors across purchase and sales cycles.',
+  //   tags: ['AL', 'Indian Tax Localization', 'Business Central'],
+  // },
   {
     icon: Plug,
     title: 'E-Way Bill & E-Invoicing Integration',
@@ -243,8 +243,8 @@ function ParticleField() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    const ctx = canvas.getContext('3d')
+    const dpr = Math.min(window.devicePixelRatio || 1, 2,3)
     let raf
     let w = 0
     let h = 0
@@ -549,7 +549,7 @@ function Hero() {
           className="animate-fade-up mt-6 text-5xl font-extrabold tracking-tight text-white sm:text-7xl"
           style={{ animationDelay: '120ms' }}
         >
-          Shrey <span className="gradient-text">Chauhan</span>
+           <span className="gradient-text">Shrey Chauhan</span>
         </h1>
 
         <p
@@ -597,7 +597,7 @@ function Hero() {
           style={{ animationDelay: '480ms' }}
         >
           <MapPin size={14} />
-          Gujarat, India · Technical Consultant @ Leaping Frog Solutions
+          Mumbai, India · Technical Consultant @ Leaping Frog Solutions
         </div>
       </div>
     </section>
