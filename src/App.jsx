@@ -243,8 +243,8 @@ function ParticleField() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('3d')
-    const dpr = Math.min(window.devicePixelRatio || 1, 2,3)
+    const ctx = canvas.getContext('2d')
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
     let raf
     let w = 0
     let h = 0
