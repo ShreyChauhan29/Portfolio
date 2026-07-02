@@ -26,8 +26,11 @@ npm run preview  # serve the production build
 
 The `dist/` folder is a fully static site — deploy it to GitHub Pages, Netlify, Vercel, or any static host.
 
+## Deployment
+
+Pushing to `main` triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages at https://shreychauhan29.github.io/portfolio/
+
 ## Things to customize
 
-- **GitHub URL** — the resume only contained a dashboard link, so `LINKS.github` in `src/App.jsx` is a placeholder. Replace it with your public profile URL.
 - **Resume file** — `public/Shrey-Chauhan-Resume.docx` is served by the "Download Resume" button. Replace it when your resume updates.
 - All content (experience bullets, projects, skills) lives in the constant arrays at the top of `src/App.jsx`.

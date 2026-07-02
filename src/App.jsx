@@ -32,8 +32,7 @@ import {
 // ---------------------------------------------------------------------------
 
 const LINKS = {
-  // TODO: replace with your public GitHub profile URL
-  github: 'https://github.com/',
+  github: 'https://github.com/ShreyChauhan29',
   linkedin: 'https://www.linkedin.com/in/shrey-chauhan-67a628227/',
   email: 'shreychauhan15312902@gmail.com',
   phone: '+91 84609 95300',
