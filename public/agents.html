@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Agent Portfolio | Shrey Chauhan</title>
+<meta name="description" content="Five intelligent Copilot Studio agents for Microsoft Dynamics 365 Business Central — production, finance, sales, inventory, and manufacturing operations. Built by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #060810; color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.7;
+  }
+  .backdrop { position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px; }
+  .glowbar { position: fixed; top: -260px; left: 50%; transform: translateX(-50%);
+    width: 760px; height: 440px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 960px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: #94a3b8;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s; }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .hero { text-align: center; margin: 44px 0 18px; }
+  .eyebrow { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #a5b4fc;
+    border: 1px solid rgba(129,140,248,0.25); background: rgba(129,140,248,0.06);
+    padding: 6px 16px; border-radius: 9999px; margin-bottom: 16px; }
+  h1.title { margin: 0 0 12px; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+  .grad { background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { max-width: 640px; margin: 0 auto; color: #94a3b8; font-size: 17px; }
+  .jump { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 30px 0 10px; }
+  .jump a { color: #cbd5e1; text-decoration: none; font-size: 13px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 9999px; transition: all .2s; }
+  .jump a:hover { border-color: rgba(129,140,248,0.5); color: #fff; background: rgba(129,140,248,0.1); }
+  .agent { margin-top: 64px; border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.025); border-radius: 22px; padding: 34px;
+    backdrop-filter: blur(12px); scroll-margin-top: 24px; }
+  .agent-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .monogram { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center;
+    justify-content: center; font-weight: 800; font-size: 18px; color: #fff; flex-shrink: 0; }
+  .m-1 { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+  .m-2 { background: linear-gradient(135deg, #8b5cf6, #d946ef); }
+  .m-3 { background: linear-gradient(135deg, #2dd4bf, #0ea5e9); }
+  .m-4 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+  .m-5 { background: linear-gradient(135deg, #0ea5e9, #6366f1); }
+  .agent h2 { margin: 0; color: #fff; font-size: 1.6rem; letter-spacing: -0.01em; }
+  .domain { margin: 2px 0 0; color: #818cf8; font-size: 14px; font-weight: 600; }
+  .num { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #475569; }
+  h3.block { color: #a5b4fc; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    letter-spacing: 0.14em; text-transform: uppercase; margin: 30px 0 10px; }
+  .agent p { margin: 0.6em 0; color: #b6c2d4; font-size: 15px; }
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 10px 0 0;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  ol.steps li { counter-increment: s; display: flex; gap: 12px; align-items: flex-start;
+    border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02);
+    border-radius: 12px; padding: 12px 14px; font-size: 14px; color: #b6c2d4; }
+  ol.steps li::before { content: counter(s); flex-shrink: 0; width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center; border-radius: 8px;
+    background: rgba(99,102,241,0.18); color: #a5b4fc; font-weight: 700; font-size: 12px;
+    font-family: 'JetBrains Mono', monospace; }
+  .demo { border: 1px solid rgba(45,212,191,0.15); background: rgba(45,212,191,0.04);
+    border-radius: 14px; padding: 18px 20px; margin-top: 10px; }
+  .demo .user { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #2dd4bf;
+    margin-bottom: 10px; }
+  .demo ul { margin: 0; padding-left: 1.2em; font-size: 14px; color: #b6c2d4; }
+  .demo li { margin: 4px 0; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 10px; }
+  .shot { border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;
+    background: #0b0e1a; }
+  .shot img { width: 100%; height: auto; display: block; cursor: zoom-in; transition: transform .25s; }
+  .shot img:hover { transform: scale(1.02); }
+  .shot figcaption { padding: 10px 12px; font-size: 12.5px; color: #7c8aa0; }
+  .disclaimer { margin-top: 16px; font-size: 12.5px; color: #64748b; font-family: 'JetBrains Mono', monospace; }
+  .principles { margin-top: 72px; }
+  .principles h2 { text-align: center; color: #fff; font-size: 1.7rem; margin-bottom: 6px; }
+  .principles .lead { text-align: center; color: #94a3b8; margin: 0 0 26px; }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+  .pcard { border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.025);
+    border-radius: 16px; padding: 20px; }
+  .pcard .ico { font-size: 20px; }
+  .pcard h4 { margin: 8px 0 6px; color: #fff; font-size: 15px; }
+  .pcard p { margin: 0; font-size: 13.5px; color: #94a3b8; }
+  .foot { margin-top: 64px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  /* lightbox */
+  .lightbox { position: fixed; inset: 0; background: rgba(3,4,10,0.92); display: none;
+    align-items: center; justify-content: center; z-index: 100; cursor: zoom-out; padding: 24px; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 92vh; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15); }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="./">&#8592; Back to portfolio</a>
+
+  <div class="hero">
+    <span class="eyebrow">Microsoft Copilot Studio</span>
+    <h1 class="title">AI Agent <span class="grad">Portfolio</span></h1>
+    <p class="sub">Five intelligent agents for Microsoft Dynamics 365 Business Central — production, finance, sales, inventory, and manufacturing operations. Every agent reads from Business Central, recommends and drafts, and acts only on explicit human confirmation.</p>
+  </div>
+
+  <nav class="jump">
+    <a href="#prodorder">ProdOrder Architect AI</a>
+    <a href="#finsight">FinSight</a>
+    <a href="#salesiq">SalesIQ</a>
+    <a href="#stockpulse">StockPulse AI</a>
+    <a href="#shopfloor">ShopFloor IQ</a>
+    <a href="#principles">Design Principles</a>
+  </nav>
+
+  <!-- ProdOrder Architect AI -->
+  <article class="agent" id="prodorder">
+    <div class="agent-head">
+      <span class="monogram m-1">PA</span>
+      <div>
+        <h2>ProdOrder Architect AI</h2>
+        <p class="domain">Production planning &amp; execution</p>
+      </div>
+      <span class="num">1 / 5</span>
+    </div>
+
+    <h3 class="block">What it is</h3>
+    <p>A production planning and execution agent for Business Central. It analyzes sales demand against available inventory for manufactured items, validates master data, and then creates, refreshes, modifies, changes the status of, and posts output and consumption against Firm Planned and Released production orders — including item tracking for lot- and serial-controlled items.</p>
+
+    <h3 class="block">Business use case</h3>
+    <p>Planners spend disproportionate time manually calculating shortages from sales orders, validating that an item is actually producible (missing BOMs, uncertified routings, blocked items), and clicking through Business Central to refresh, release, and post production journals. ProdOrder Architect AI compresses a multi-screen, multi-validation workflow into a conversation, eliminates the most common cause of orphan production orders (failed master-data checks), and keeps a human in the loop at every state transition.</p>
+
+    <h3 class="block">How it works</h3>
+    <ol class="steps">
+      <li>Identify item and variant; capture location</li>
+      <li>Run master-data validation (BOM, Routing, Type, Blocked, Certified status)</li>
+      <li>Calculate demand vs. available inventory; derive shortage</li>
+      <li>Apply order modifiers (Min/Max Qty, Order Multiple)</li>
+      <li>Draft order; confirm Firm Planned or Released</li>
+      <li>Create, refresh, transition status, and post output/consumption with tracking</li>
+    </ol>
+
+    <h3 class="block">Live demo flow</h3>
+    <div class="demo">
+      <p class="user">USER &rsaquo; Item 1027 has 150 sales and 50 stock. Create a production order.</p>
+      <ul>
+        <li>Validates item card, BOM, and Routing — all certified ✓</li>
+        <li>Calculates shortage of 100; rounds to order multiple</li>
+        <li>Drafts Firm Planned order; asks: Firm Planned or Released?</li>
+        <li>Creates order, refreshes to explode BOM</li>
+        <li>On confirmation, transitions to Released and posts 100-unit output</li>
+        <li>Returns Order No., ledger entries, and remaining qty</li>
+      </ul>
+    </div>
+
+    <h3 class="block">In action — live Business Central data</h3>
+    <div class="shots">
+      <figure class="shot"><img src="agents-img/prodorder-1.png" alt="ProdOrder agent intro" loading="lazy" /><figcaption>Agent introduces capabilities and asks for the minimum 4 inputs</figcaption></figure>
+      <figure class="shot"><img src="agents-img/prodorder-2.png" alt="Item validation and draft order" loading="lazy" /><figcaption>Item validation + draft of the Firm Planned production order</figcaption></figure>
+      <figure class="shot"><img src="agents-img/prodorder-3.png" alt="Refresh completed" loading="lazy" /><figcaption>Refresh completed — BOM exploded, routing and component lines generated</figcaption></figure>
+    </div>
+    <p class="disclaimer">Live BC data · Drafts, recommendations, and source-cited findings — no auto-posting</p>
+  </article>
+
+  <!-- FinSight -->
+  <article class="agent" id="finsight">
+    <div class="agent-head">
+      <span class="monogram m-2">FS</span>
+      <div>
+        <h2>FinSight</h2>
+        <p class="domain">Compliance &amp; finance operations</p>
+      </div>
+      <span class="num">2 / 5</span>
+    </div>
+
+    <h3 class="block">What it is</h3>
+    <p>A unified finance, compliance, and banking operations agent for Business Central and the connected finance stack. It brings together seven capabilities: regulatory research with audit-prep simulation, guidance-document evaluation against new regulations, spend anomaly and duplicate-invoice detection, real-time finance Q&amp;A, balance-sheet and period-close reconciliation, business performance and cash-flow variance analysis with forecasting, and intelligent collections prioritization with outreach drafting.</p>
+
+    <h3 class="block">Business use case</h3>
+    <p>Finance teams spend disproportionate time on three things: researching new regulations and prepping for audits, hunting for duplicate invoices and unusual spend patterns, and reconciling sub-ledgers during month-end close — all high-stakes, repetitive, detail-heavy work where humans tire and miss things. FinSight accelerates research with cited summaries, surfaces spend anomalies that would otherwise hide in transaction volume, and pre-builds reconciliation drafts so controllers can review rather than calculate. Never auto-posts, never auto-pays, never auto-sends.</p>
+
+    <h3 class="block">How it works</h3>
+    <ol class="steps">
+      <li>Capability router maps request to one of 7 modules</li>
+      <li>Module-specific rules apply (research, reconcile, detect, forecast)</li>
+      <li>Pulls from BC ledgers, Copilot for Finance, and authorized regulators</li>
+      <li>Cites source entity inline on every finding and figure</li>
+      <li>Drafts entries, outreach, and audit reports — never posts</li>
+      <li>Stages everything for explicit human approval in BC</li>
+    </ol>
+
+    <h3 class="block">Live demo flow</h3>
+    <div class="demo">
+      <p class="user">USER &rsaquo; Run a spend anomaly scan for this quarter and rank findings by risk.</p>
+      <ul>
+        <li>Scans 81 posted purchase invoices across 17 vendors</li>
+        <li>Raises 16 anomaly flags ranked by severity</li>
+        <li>2 Critical findings (master integrity, duplicate invoice)</li>
+        <li>Flags suspicious vendor codes and round-sum clusters</li>
+        <li>₹2.93M estimated exposure surfaced for review</li>
+        <li>Top 3 actions drafted — pending AP Controller approval</li>
+      </ul>
+    </div>
+
+    <h3 class="block">In action — live Business Central data</h3>
+    <div class="shots">
+      <figure class="shot"><img src="agents-img/finsight-1.png" alt="Critical findings ranked" loading="lazy" /><figcaption>Critical &amp; High-risk findings ranked, each with triggering signal</figcaption></figure>
+      <figure class="shot"><img src="agents-img/finsight-2.png" alt="Medium risk findings" loading="lazy" /><figcaption>Medium-risk findings + data-quality observations</figcaption></figure>
+      <figure class="shot"><img src="agents-img/finsight-3.png" alt="Period summary" loading="lazy" /><figcaption>Period summary + Top 3 recommended actions, pending approval</figcaption></figure>
+    </div>
+    <p class="disclaimer">Live BC data · Drafts, recommendations, and source-cited findings — no auto-posting</p>
+  </article>
+
+  <!-- SalesIQ -->
+  <article class="agent" id="salesiq">
+    <div class="agent-head">
+      <span class="monogram m-3">SQ</span>
+      <div>
+        <h2>SalesIQ</h2>
+        <p class="domain">Customer intelligence</p>
+      </div>
+      <span class="num">3 / 5</span>
+    </div>
+
+    <h3 class="block">What it is</h3>
+    <p>A sales performance and customer analytics agent for Business Central. It analyzes sales history, tracks revenue trends, scores every customer with a transparent A–D rating based on revenue contribution, payment behavior, order frequency, credit health, and returns/disputes, and generates customer-level reports that flag accounts needing follow-up, credit review, win-back, or upsell.</p>
+
+    <h3 class="block">Business use case</h3>
+    <p>Sales managers, credit controllers, and account executives operate without a unified view of customer health. Revenue contribution, payment history, credit usage, and order patterns sit in separate reports, and the synthesis happens in someone's head — usually inconsistently. SalesIQ produces a defensible rating with the underlying numbers visible at every step, prioritizes collections by who actually needs intervention this week, and drafts outreach so the team executes rather than composes. The transparency is the differentiator: every grade is reproducible from the data.</p>
+
+    <h3 class="block">How it works</h3>
+    <ol class="steps">
+      <li>Sales performance: by customer, salesperson, region, item</li>
+      <li>Customer 360: lifetime sales, overdue, credit usage, days to pay</li>
+      <li>Rating engine: Revenue 30%, Payment 30%, Frequency 20%, Credit 10%, Disputes 10%</li>
+      <li>Always shows the component breakdown — no opaque scores</li>
+      <li>Tied actions: A→upsell, B→nurture, C→check-in, D→credit review</li>
+      <li>Drafts outreach (reminders, win-back, check-in) — never auto-sends</li>
+    </ol>
+
+    <h3 class="block">Live demo flow</h3>
+    <div class="demo">
+      <p class="user">USER &rsaquo; Rate customer 10000 and explain why.</p>
+      <ul>
+        <li>Pulls Customer + Cust. Ledger Entry data</li>
+        <li>Computes 5-component weighted score: 38/100 → D (At Risk)</li>
+        <li>Strong: ₹12.54M revenue contribution (highest in portfolio)</li>
+        <li>Weak: invoices fully open from Jul 2024 (16–23 months overdue)</li>
+        <li>Weak: credit limit set at ₹0 — exposure uncontrolled</li>
+        <li>Drafts most urgent action: open formal credit review</li>
+      </ul>
+    </div>
+
+    <h3 class="block">In action — live Business Central data</h3>
+    <div class="shots">
+      <figure class="shot"><img src="agents-img/salesiq-1.png" alt="SalesIQ intro" loading="lazy" /><figcaption>Agent introduces capabilities — payment follow-up, ratings, exports</figcaption></figure>
+      <figure class="shot"><img src="agents-img/salesiq-2.png" alt="D rating breakdown" loading="lazy" /><figcaption>D-rating breakdown — every component scored with source citations</figcaption></figure>
+      <figure class="shot"><img src="agents-img/salesiq-3.png" alt="Urgent action recommendation" loading="lazy" /><figcaption>Most urgent action recommendation, with the supporting weakness data</figcaption></figure>
+    </div>
+    <p class="disclaimer">Live BC data · Drafts, recommendations, and source-cited findings — no auto-posting</p>
+  </article>
+
+  <!-- StockPulse AI -->
+  <article class="agent" id="stockpulse">
+    <div class="agent-head">
+      <span class="monogram m-4">SP</span>
+      <div>
+        <h2>StockPulse AI</h2>
+        <p class="domain">Inventory &amp; stock health</p>
+      </div>
+      <span class="num">4 / 5</span>
+    </div>
+
+    <h3 class="block">What it is</h3>
+    <p>An inventory and stock health analyst agent for Business Central. It monitors real-time inventory across locations, flags low-stock and stockout risks, surfaces slow-moving and dead inventory with carrying-cost exposure, drafts purchase order recommendations consolidated by vendor, and creates Firm Planned or Released production orders for manufactured items that need replenishment.</p>
+
+    <h3 class="block">Business use case</h3>
+    <p>Warehouse managers and purchasing teams operate against a backlog of stock reports, manual spreadsheets, and reactive replenishment. Most stockouts are predictable from data already in Business Central — what's missing is the synthesis: combining outstanding sales, current inventory, open POs, vendor lead times, and supplier performance into one decision. StockPulse compresses that synthesis into a conversation, drafts POs by vendor for batch creation, identifies slow movers with carrying-cost exposure, and creates production orders for manufactured replenishment — without auto-posting anything.</p>
+
+    <h3 class="block">How it works</h3>
+    <ol class="steps">
+      <li>Availability monitoring: On Hand, Available, Reserved by location/bin</li>
+      <li>Low-stock detection: criticality ranked vs. Reorder Point and Safety Stock</li>
+      <li>Slow-mover analysis: 30/60/90/180-day movement + turnover ratio</li>
+      <li>PO drafting: Qty respects Order Multiple, Min/Max, vendor lead times</li>
+      <li>Consolidates POs by vendor; warns if open PO already covers shortage</li>
+      <li>For manufactured items: creates Firm Planned or Released prod orders</li>
+    </ol>
+
+    <h3 class="block">Live demo flow</h3>
+    <div class="demo">
+      <p class="user">USER &rsaquo; Run a stock health check for all locations.</p>
+      <ul>
+        <li>Pulls 145 SKUs across 30+ locations from Stockkeeping Unit data</li>
+        <li>Surfaces 2 Critical shortages at MUMBAI (~₹10.06 Cr at risk)</li>
+        <li>Detects ~110 zero-stock 'shell' SKUs (data hygiene flag)</li>
+        <li>Flags 144 of 145 SKUs missing Reorder Point</li>
+        <li>Shows healthy stock breakdown — only 6 SKUs with active inventory</li>
+        <li>Recommends data quality fixes ranked by severity</li>
+      </ul>
+    </div>
+
+    <h3 class="block">In action — live Business Central data</h3>
+    <div class="shots">
+      <figure class="shot"><img src="agents-img/stockpulse-1.png" alt="StockPulse proactive opening" loading="lazy" /><figcaption>Agent opens with the most impactful pending action from prior context</figcaption></figure>
+      <figure class="shot"><img src="agents-img/stockpulse-2.png" alt="Stock health check" loading="lazy" /><figcaption>Stock Health Check across all locations — Critical shortages surfaced</figcaption></figure>
+      <figure class="shot"><img src="agents-img/stockpulse-3.png" alt="Data quality flags" loading="lazy" /><figcaption>Company-wide data-quality red flags ranked by severity</figcaption></figure>
+    </div>
+    <p class="disclaimer">Live BC data · Drafts, recommendations, and source-cited findings — no auto-posting</p>
+  </article>
+
+  <!-- ShopFloor IQ -->
+  <article class="agent" id="shopfloor">
+    <div class="agent-head">
+      <span class="monogram m-5">SF</span>
+      <div>
+        <h2>ShopFloor IQ</h2>
+        <p class="domain">Manufacturing operations</p>
+      </div>
+      <span class="num">5 / 5</span>
+    </div>
+
+    <h3 class="block">What it is</h3>
+    <p>A unified manufacturing operations agent consolidating five capabilities into one: dynamic production schedule optimization, visual SOP generation from expert walkthroughs, predictive maintenance from sensor and machine-log data, digital manufacturing inspection for compliance and traceability, and asset management optimization across equipment and maintenance schedules.</p>
+
+    <h3 class="block">Business use case</h3>
+    <p>Plant managers, planners, maintenance engineers, and quality leads typically use four or five separate tools, with integration happening in meetings and spreadsheets. ShopFloor IQ provides one conversational interface that connects demand-driven scheduling to predicted equipment failures (so a critical asset on the schedule's critical path is flagged automatically), connects compliance findings to traceability gaps (so audit prep stops being a fire drill), and turns expert walkthroughs into draft SOPs (so process knowledge gets captured). The cross-module proactive behavior is the value.</p>
+
+    <h3 class="block">How it works</h3>
+    <ol class="steps">
+      <li>Capability router across 5 modules: schedule, SOP, predict, inspect, asset</li>
+      <li>Schedule: factors capacity, materials, routing, committed orders</li>
+      <li>Predict: vibration, temperature, fault codes vs. baseline with confidence</li>
+      <li>Inspect: ranks deviations; forward/backward lot traceability</li>
+      <li>SOP: structured steps from walkthroughs with labeled visual references</li>
+      <li>Asset: surfaces high-downtime equipment; proposes maintenance windows</li>
+    </ol>
+
+    <h3 class="block">Live demo flow</h3>
+    <div class="demo">
+      <p class="user">USER &rsaquo; Optimize tomorrow's schedule for Line 2 and flag any risks.</p>
+      <ul>
+        <li>Reads capacity, routing, and committed production orders</li>
+        <li>Identifies 1 overdue Firm Planned order requiring release</li>
+        <li>Flags 6 Released orders past due (60–75 days)</li>
+        <li>Cross-module: flags 18 orders dated 2031 (data integrity issue)</li>
+        <li>Drafts 4-priority capacity plan for tomorrow</li>
+        <li>Closes with Top 3 actions — proposed schedule requires planner sign-off</li>
+      </ul>
+    </div>
+
+    <h3 class="block">In action — live Business Central data</h3>
+    <div class="shots">
+      <figure class="shot"><img src="agents-img/shopfloor-1.png" alt="Proposed schedule and risks" loading="lazy" /><figcaption>Proposed Production Schedule &amp; Risks — 6 overdue orders surfaced</figcaption></figure>
+      <figure class="shot"><img src="agents-img/shopfloor-2.png" alt="Open capacity recommendations" loading="lazy" /><figcaption>Recommended Use of Open Capacity — 4 priorities ranked</figcaption></figure>
+      <figure class="shot"><img src="agents-img/shopfloor-3.png" alt="Cross-module flags" loading="lazy" /><figcaption>Cross-Module Flags + Top 3 Actions — pending planner approval</figcaption></figure>
+    </div>
+    <p class="disclaimer">Live BC data · Drafts, recommendations, and source-cited findings — no auto-posting</p>
+  </article>
+
+  <!-- Design principles -->
+  <section class="principles" id="principles">
+    <h2>Common Design Principles</h2>
+    <p class="lead">What every agent in the portfolio shares</p>
+    <div class="pgrid">
+      <div class="pcard"><span class="ico">🛡️</span><h4>Human in the loop</h4><p>No agent posts, releases, sends, pays, or finalizes without explicit user confirmation in the current turn.</p></div>
+      <div class="pcard"><span class="ico">✅</span><h4>Validation-first</h4><p>Master-data checks run before any action. Failed validation halts the workflow with the exact field to fix.</p></div>
+      <div class="pcard"><span class="ico">🔍</span><h4>Cited transparency</h4><p>Every figure carries a source citation. Every rating shows its component breakdown. Nothing is opaque.</p></div>
+      <div class="pcard"><span class="ico">⚠️</span><h4>Conservative on uncertainty</h4><p>Predictions state confidence. Anomalies are flags, not accusations. Forecasts disclose assumptions.</p></div>
+      <div class="pcard"><span class="ico">🏢</span><h4>Business Central native</h4><p>Built on Copilot Studio with custom AL API pages exposing bound actions for safe, transactional operations.</p></div>
+      <div class="pcard"><span class="ico">⚡</span><h4>Proactive but bounded</h4><p>Agents surface adjacent risks without being asked, but never expand beyond their declared scope.</p></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>&copy; <span id="y"></span> Shrey Chauhan — From insight to action, safely.</span>
+    <a href="./">shrey.dev &#8599;</a>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox"><img id="lightbox-img" src="" alt="Screenshot enlarged" /></div>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear()
+  const lb = document.getElementById('lightbox')
+  const lbImg = document.getElementById('lightbox-img')
+  document.querySelectorAll('.shot img').forEach((img) => {
+    img.addEventListener('click', () => { lbImg.src = img.src; lb.classList.add('open') })
+  })
+  lb.addEventListener('click', () => lb.classList.remove('open'))
+</script>
+</body>
+</html>

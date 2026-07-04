@@ -3,11 +3,15 @@ import {
   ArrowUpRight,
   BarChart3,
   BookOpen,
+  Bot,
+  Boxes,
   Braces,
   Briefcase,
   Building2,
   Code2,
+  Cog,
   Container,
+  Cpu,
   Database,
   Download,
   Factory,
@@ -21,8 +25,10 @@ import {
   Phone,
   Plug,
   Receipt,
+  ShieldCheck,
   Ship,
   Sparkles,
+  TrendingUp,
   Webhook,
   Wrench,
   X,
@@ -46,6 +52,7 @@ const NAV_ITEMS = [
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
   { label: 'Blog', href: '#blog' },
+  { label: 'Agents', href: 'agents.html' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -241,6 +248,64 @@ const BLOGS = [
       'Customizing outgoing document emails in Business Central — dynamic subjects, bodies, and attachment file names via codeunit extensions.',
     url: 'blog/customize-email-subject-body-attachment.html',
     tags: ['AL', 'Email'],
+  },
+]
+
+const AGENTS = [
+  {
+    icon: Cog,
+    name: 'ProdOrder Architect AI',
+    domain: 'Production Planning & Execution',
+    gradient: 'from-indigo-500 to-violet-500',
+    blurb:
+      'Turns sales demand into validated production orders — creates, refreshes, releases, and posts output with full lot and serial tracking, all in a conversation.',
+    chips: ['Production Orders', 'Master-Data Validation', 'Item Tracking'],
+    demo: 'Item 1027 has 150 sales and 50 stock. Create a production order.',
+    anchor: 'prodorder',
+  },
+  {
+    icon: ShieldCheck,
+    name: 'FinSight',
+    domain: 'Compliance & Finance Operations',
+    gradient: 'from-violet-500 to-fuchsia-500',
+    blurb:
+      'Seven finance capabilities in one agent — regulatory research, spend anomaly and duplicate-invoice detection, reconciliation drafts, forecasting, and collections prioritization.',
+    chips: ['Anomaly Detection', 'Reconciliation', 'Forecasting'],
+    demo: 'Run a spend anomaly scan for this quarter and rank findings by risk.',
+    anchor: 'finsight',
+  },
+  {
+    icon: TrendingUp,
+    name: 'SalesIQ',
+    domain: 'Customer Intelligence',
+    gradient: 'from-teal-400 to-sky-500',
+    blurb:
+      'Scores every customer with a transparent A–D rating from revenue, payment behavior, order frequency, credit health, and disputes — every grade reproducible from the data.',
+    chips: ['Customer 360', 'A–D Rating Engine', 'Outreach Drafts'],
+    demo: 'Rate customer 10000 and explain why.',
+    anchor: 'salesiq',
+  },
+  {
+    icon: Boxes,
+    name: 'StockPulse AI',
+    domain: 'Inventory & Stock Health',
+    gradient: 'from-amber-500 to-rose-500',
+    blurb:
+      'Monitors stock across locations, flags stockout risk and dead inventory with carrying-cost exposure, and drafts vendor-consolidated purchase orders and replenishment production orders.',
+    chips: ['Stock Health', 'PO Drafting', 'Slow-Mover Analysis'],
+    demo: 'Run a stock health check for all locations.',
+    anchor: 'stockpulse',
+  },
+  {
+    icon: Cpu,
+    name: 'ShopFloor IQ',
+    domain: 'Manufacturing Operations',
+    gradient: 'from-sky-500 to-indigo-500',
+    blurb:
+      'Five manufacturing capabilities unified — schedule optimization, predictive maintenance, digital inspection with lot traceability, SOP generation, and asset management with cross-module flags.',
+    chips: ['Scheduling', 'Predictive Maintenance', 'Traceability'],
+    demo: "Optimize tomorrow's schedule for Line 2 and flag any risks.",
+    anchor: 'shopfloor',
   },
 ]
 
@@ -968,6 +1033,125 @@ function Blog() {
   )
 }
 
+function AgentsShowcase() {
+  const [active, setActive] = useState(0)
+  const [locked, setLocked] = useState(false)
+
+  // Auto-rotate through agents until the visitor picks one themselves.
+  useEffect(() => {
+    if (locked || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setActive((a) => (a + 1) % AGENTS.length), 4500)
+    return () => clearInterval(id)
+  }, [locked])
+
+  const agent = AGENTS[active]
+  const Icon = agent.icon
+
+  return (
+    <section id="agents" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
+      <SectionHeading
+        eyebrow="Copilot Studio"
+        title="AI Agents for Business Central"
+        subtitle="Five intelligent agents — one platform, human-in-the-loop by design. Built on Microsoft Copilot Studio with custom AL API pages."
+      />
+
+      <div className="glass reveal overflow-hidden rounded-3xl">
+        <div className="grid lg:grid-cols-5">
+          {/* Agent selector */}
+          <div className="flex flex-row gap-1 overflow-x-auto border-b border-white/5 p-3 lg:col-span-2 lg:flex-col lg:border-r lg:border-b-0 lg:p-4">
+            {AGENTS.map((a, i) => {
+              const AIcon = a.icon
+              const isActive = i === active
+              return (
+                <button
+                  key={a.name}
+                  onClick={() => {
+                    setActive(i)
+                    setLocked(true)
+                  }}
+                  className={`flex shrink-0 items-center gap-3 rounded-xl px-4 py-3 text-left transition-all duration-300 ${
+                    isActive ? 'bg-white/6 shadow-inner' : 'opacity-60 hover:bg-white/4 hover:opacity-100'
+                  }`}
+                >
+                  <span
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br text-white ${a.gradient} ${
+                      isActive ? '' : 'grayscale'
+                    }`}
+                  >
+                    <AIcon size={17} />
+                  </span>
+                  <span className="hidden sm:block">
+                    <span className={`block text-sm font-bold ${isActive ? 'text-white' : 'text-slate-300'}`}>
+                      {a.name}
+                    </span>
+                    <span className="block text-xs text-slate-500">{a.domain}</span>
+                  </span>
+                  {isActive && (
+                    <span className="ml-auto hidden h-1.5 w-1.5 rounded-full bg-teal-400 shadow-[0_0_8px_rgba(45,212,191,0.9)] lg:block" />
+                  )}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Detail panel — keyed so each switch re-triggers the entrance animation */}
+          <div key={agent.name} className="relative p-7 sm:p-9 lg:col-span-3">
+            <div
+              className={`pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full bg-gradient-to-br opacity-20 blur-[80px] ${agent.gradient}`}
+            />
+            <div className="animate-fade-up relative">
+              <div className="flex items-center gap-4">
+                <span
+                  className={`flex h-13 w-13 items-center justify-center rounded-2xl bg-gradient-to-br p-3.5 text-white shadow-lg ${agent.gradient}`}
+                >
+                  <Icon size={24} />
+                </span>
+                <div>
+                  <h3 className="text-xl font-bold text-white">{agent.name}</h3>
+                  <p className="text-sm text-indigo-300">{agent.domain}</p>
+                </div>
+              </div>
+
+              <p className="mt-5 leading-relaxed text-slate-300">{agent.blurb}</p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                {agent.chips.map((chip) => (
+                  <Badge key={chip}>{chip}</Badge>
+                ))}
+              </div>
+
+              <div className="mt-6 rounded-xl border border-teal-400/15 bg-teal-400/5 px-4 py-3 font-mono text-xs text-teal-300">
+                <span className="text-slate-500">USER ›</span> {agent.demo}
+              </div>
+
+              <a
+                href={`agents.html#${agent.anchor}`}
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-300 transition-colors hover:text-white"
+              >
+                Full details, demo flow &amp; screenshots
+                <ArrowUpRight size={15} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="reveal mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <a
+          href="agents.html"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-indigo-500/30 transition-all hover:scale-[1.04] hover:shadow-indigo-500/50"
+        >
+          <Bot size={17} />
+          Explore the full Agent Portfolio
+        </a>
+        <p className="text-xs text-slate-500">
+          Every agent reads from BC, drafts and recommends — acts only on explicit human confirmation.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 function Contact() {
   return (
     <footer id="contact" className="relative mt-12 scroll-mt-24 overflow-hidden border-t border-white/5">
@@ -1063,6 +1247,7 @@ export default function App() {
         <Projects />
         <Skills />
         <Blog />
+        <AgentsShowcase />
       </main>
       <Contact />
     </div>
