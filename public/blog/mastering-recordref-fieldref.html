@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mastering RecordRef & FieldRef in Business Central | Shrey Chauhan</title>
+<meta name="description" content="Mastering RecordRef & FieldRef in Business Central — a Business Central development blog by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060810;
+    color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glowbar { position: fixed; top: -240px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 780px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s;
+  }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  h1.post-title {
+    margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    color: #64748b; font-size: 14px; margin-bottom: 36px;
+    padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .meta .author {
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+  }
+  article h1, article h2 { color: #fff; font-size: 1.35rem; margin: 2.2em 0 0.6em; letter-spacing: -0.01em; }
+  article h3, article h4 { color: #e2e8f0; font-size: 1.1rem; margin: 1.8em 0 0.5em; }
+  article p { margin: 0.9em 0; }
+  article a { color: #2dd4bf; text-decoration: none; }
+  article a:hover { text-decoration: underline; }
+  article img {
+    max-width: 100%; height: auto; border-radius: 12px; margin: 18px 0;
+    border: 1px solid rgba(255,255,255,0.1); display: block;
+  }
+  article ul, article ol { padding-left: 1.4em; margin: 0.9em 0; }
+  article li { margin: 0.35em 0; }
+  article strong { color: #e2e8f0; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid rgba(255,255,255,0.12); padding: 8px 12px; text-align: left; }
+  article th { background: rgba(99,102,241,0.12); color: #e2e8f0; }
+  article pre, article code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
+    background: #0b0e1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  }
+  article code { padding: 2px 6px; }
+  article pre { padding: 16px; overflow-x: auto; }
+  article pre code { border: 0; padding: 0; }
+  .foot { margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  .foot a:hover { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <h1 class="post-title">Mastering RecordRef & FieldRef in Business Central</h1>
+  <p class="meta"><span class="author">Shrey Chauhan</span> &middot; January 2026 &middot; Business Central / AL</p>
+  <article>
+<p><strong>🚀 Mastering RecordRef &amp; FieldRef in Business Central: Dynamic Data Extraction and Updates</strong></p><p>In Business Central, most developers work directly with typed records like Customer or Vendor. But when you need <strong>dynamic, generic operations</strong>—copying data, mapping fields, applying transformations, or skipping primary keys—you need <strong>Record References (RecordRef) and Field References (FieldRef)</strong>.</p><p>This blog walks through a <strong>dynamic mapping and validation framework</strong> that leverages RecordRef and FieldRef to:</p><ul><li>Extract field values dynamically</li><li>Skip primary keys while updating records</li><li>Apply transformations and rule-based validations</li><li>Compare old vs new records</li></ul><p><strong>⭐ 1. What Are RecordRef and FieldRef?</strong></p><ul><li><strong>RecordRef</strong>: A generic pointer to any table at runtime.<br />It allows you to write code that works with <strong>any table</strong> instead of hardcoding types.</li><li><strong>FieldRef</strong>: A pointer to a specific field inside a RecordRef.<br />You can read, write, or evaluate field values <strong>without knowing the field name or number at compile time</strong>.</li></ul><p>These two objects make your AL code <strong>dynamic, reusable, and extensible</strong>.</p><p><strong>⭐ 2. Dynamic Mapping Rules</strong></p><p>All mapping rules are stored in a table (Dynamic Mapping Rule) instead of hardcoding:</p><table><tr><td><p><strong>Field</strong></p></td><td><p><strong>Purpose</strong></p></td></tr><tr><td><p>Source Table</p></td><td><p>Record to copy data from</p></td></tr><tr><td><p>Target Table</p></td><td><p>Record to copy data to</p></td></tr><tr><td><p>Field No.</p></td><td><p>Field number for mapping</p></td></tr><tr><td><p>Map Type</p></td><td><p>Copy directly or apply transformation</p></td></tr></table><p><br /><br /><br /><br /><br />field(1; "Source Table ID"; Integer) { }</p><p>field(2; "Target Table ID"; Integer) { }</p><p>field(3; "Field No."; Integer) { }</p><p>field(4; "Map Type"; Option "Copy", "Transform") { }</p><p>field(5; "Transform Codeunit ID"; Integer) { }<br /><br />The framework dynamically reads these rules and performs field-by-field mapping using <strong>RecordRef &amp; FieldRef</strong>.</p><h2>⭐ 3. Updating Records While Skipping Primary Keys</h2><p>One common requirement: <strong>update fields of a record without touching its primary key</strong>.</p><p>With RecordRef and FieldRef:</p><p>procedure UpdateRecordExceptPrimaryKey(var SourceRec: Record Customer; var TargetRec: Record Customer)</p><p>var</p><p>    RecRef: RecordRef;</p><p>    SourceRef: RecordRef;</p><p>    KeyRef: KeyRef;</p><p>    F: FieldRef;</p><p>    SourceF: FieldRef;</p><p>    i, j: Integer;</p><p>    IsPK: Boolean;</p><p>begin</p><p>    RecRef.GetTable(TargetRec);</p><p>    SourceRef.GetTable(SourceRec);</p><p>    KeyRef := RecRef.KeyIndex(1); // Primary Key</p><p>    for i := 1 to RecRef.FieldCount do begin</p><p>        F := RecRef.FieldIndex(i);</p><p>        IsPK := false;</p><p>        // Check if field is part of PK</p><p>        for j := 1 to KeyRef.FieldCount do</p><p>            if KeyRef.FieldIndex(j).Number = F.Number then</p><p>                IsPK := true;</p><p>        if IsPK then</p><p>            continue; // Skip PK</p><p>        SourceF := SourceRef.Field(F.Number);</p><p>        F.Value := SourceF.Value; // Copy value dynamically</p><p>    end;</p><p>    RecRef.SetTable(TargetRec);</p><p>    RecRef.Modify(true);</p><p>end;</p><p><strong>Why this works:</strong></p><ol><li><strong>Field iteration</strong>: No need to know field names at compile time.</li><li><strong>PK skipping</strong>: Ensures identity fields remain intact.</li><li><strong>Dynamic update</strong>: Works for any table or field type.</li></ol><h2>⭐ 4. Rule Validation Using FieldRef</h2><p>We also validate data dynamically without hardcoding:</p><p>procedure ValidateRecord(var SourceRec: Record Customer; var TargetRec: Record Customer; RuleCode: Code[20]; RuleCond: Record "Dynamic Rule Condition")</p><p>var</p><p>    Ref: RecordRef;</p><p>    F: FieldRef;</p><p>begin</p><p>    Ref := TargetRec;</p><p>    RuleCond.SetRange("Rule Code", RuleCode);</p><p>    if RuleCond.FindFirst() then</p><p>        repeat</p><p>            F := undefined;</p><p>            for i := 1 to Ref.FieldCount do</p><p>                if Ref.Field(i).Name = RuleCond."Field Name" then</p><p>                    F := Ref.Field(i);</p><p>            if F = undefined then</p><p>                Error('Field %1 not found in table', RuleCond."Field Name");</p><p>            if not EvaluateCondition(F.Value, RuleCond."Operator", RuleCond.Value) then</p><p>                Error('Rule %1 failed on field %2', RuleCode, RuleCond."Field Name");</p><p>        until RuleCond.Next() = 0;</p><p>    UpdateRecordExceptPrimaryKey(SourceRec, TargetRec);</p><p>end;</p><p>  <strong>Dynamic field lookup</strong>: Works even if fields are renamed or tables change.</p><p>  <strong>Safe updates</strong>: Only editable fields are updated, PKs remain intact.</p><h2>⭐ 5. Comparing Records Dynamically</h2><p>Using RecordRef and FieldRef, we can compare any two records field by field:</p><p>procedure CompareRecords(OldRec: Record Customer; NewRec: Record Customer; var Differences: Dictionary of [Text, Text])</p><p>var</p><p>    OldRef, NewRef: RecordRef;</p><p>    FOld, FNew: FieldRef;</p><p>begin</p><p>    OldRef := OldRec;</p><p>    NewRef := NewRec;</p><p>    for i := 1 to OldRef.FieldCount do begin</p><p>        FOld := OldRef.FieldIndex(i);</p><p>        FNew := NewRef.FieldIndex(i);</p><p>        if Format(FOld.Value) &lt;&gt; Format(FNew.Value) then</p><p>            Differences.Add(FOld.Name, StrSubstNo('%1 → %2', FOld.Value, FNew.Value));</p><p>    end;</p><p>end;</p><p>This is extremely useful for auditing or tracking dynamic changes.</p><p><strong>⭐ 6. Key Benefits of This Approach</strong></p><table><tr><td><p><strong>Benefit</strong></p></td><td><p><strong>Description</strong></p></td></tr><tr><td><p><strong>Dynamic</strong></p></td><td><p>Works for any table and fields without hardcoding</p></td></tr><tr><td><p><strong>PK-safe updates</strong></p></td><td><p>Avoids accidental primary key changes</p></td></tr><tr><td><p><strong>Extensible</strong></p></td><td><p>Add transform codeunits like Uppercase, Trim, or Custom Logic</p></td></tr><tr><td><p><strong>Rule-driven</strong></p></td><td><p>Apply business rules without touching AL code</p></td></tr><tr><td><p><strong>Audit-ready</strong></p></td><td><p>Compare old and new values dynamically</p></td></tr></table><h2>⭐ 7. Real-Life Scenarios</h2><ul><li>Copy Customer → Vendor dynamically</li><li>Sync Sales Line → Purchase Line while skipping identity fields</li><li>Apply conditional transformations on master data imports</li><li>Build automated data governance frameworks</li></ul><h1>🎯 Conclusion</h1><p><strong>RecordRef and FieldRef</strong> are the backbone of any <strong>dynamic, reusable AL code</strong>.<br />By using them, we can:</p><ol><li>Extract field values dynamically</li><li>Skip primary keys during updates</li><li>Validate rules on the fly</li><li>Apply transformations and filters</li><li>Compare records for auditing</li></ol><p>This framework is now <strong>ready for production</strong> and demonstrates the <strong>power of RecordRef &amp; FieldRef</strong> in solving real-world BC challenges.<br /><br /><img src="img/mastering-recordref-fieldref/1.png" alt="Screenshot 1" /><br /><img src="img/mastering-recordref-fieldref/2.png" alt="Screenshot 2" /></p><h3><strong>1️⃣ Dynamic Mapping Rule List</strong></h3><ul><li><strong>Screenshot 1:</strong> Shows the Dynamic Mapping Rule List.</li><li><strong>Purpose:</strong> Defines the rules for mapping data between tables.</li><li><strong>Key fields:</strong><ul><li><strong>Code:</strong> Unique identifier for the rule.</li><li><strong>Source Table ID / Target Table ID:</strong> Tables involved in mapping.</li><li><strong>Field No.:</strong> Specific field number to map or transform.</li><li><strong>Map Type:</strong> Defines if it’s a direct copy or a transformation.</li></ul></li></ul><h3><strong>Step:</strong> Create a mapping rule for the Customer table (Code: TEST) to apply transformations on field Name.<br /><br /><img src="img/mastering-recordref-fieldref/3.png" alt="Screenshot 3" /><br /><strong>2️⃣ Dynamic Rule Condition</strong></h3><ul><li><strong>Screenshot 2:</strong> Shows the Dynamic Rule Condition List.</li><li><strong>Purpose:</strong> Defines conditions that must be validated during mapping.</li><li><strong>Example:</strong><ul><li>Rule Code: TEST</li><li>Field Name: Name</li><li>Operator: &lt;&gt; (not equal)</li><li>Value: Shrey</li></ul></li></ul><p><strong>Step:</strong> This rule ensures that the Name field should not have the value "Shrey" when updating the record.<br /><br /><img src="img/mastering-recordref-fieldref/4.png" alt="Screenshot 4" /><br /><strong>3️⃣ Source Record Example</strong></p><ul><li><strong>Screenshot 3:</strong> Customer 10000 – Adatum Corporation</li><li><strong>Fields highlighted:</strong><ul><li><strong>Name:</strong> Adatum Corporation</li><li><strong>Address:</strong> 192 Market Square</li></ul></li></ul><h3><strong>Step:</strong> This is the <strong>source record</strong> whose data will be mapped to another record.<br /><br /><img src="img/mastering-recordref-fieldref/5.png" alt="Screenshot 5" /><br /><strong>4️⃣ Target Record Example (Before Mapping)</strong></h3><ul><li><strong>Screenshot 4:</strong> Customer 20000 – Tery Research</li><li><strong>Fields highlighted:</strong><ul><li><strong>Name:</strong> Tery Research</li><li><strong>Address:</strong> 153, Washington DC</li></ul></li></ul><p><strong>Step:</strong> This is the <strong>target record</strong>. The mapping and transformation rules will apply here.</p><h3><br /><br /><img src="img/mastering-recordref-fieldref/6.png" alt="Screenshot 6" /><br /><strong>5️⃣ Target Record Example (After Mapping &amp; Transformation)</strong></h3><ul><li><strong>Screenshot 5:</strong> Customer 20000 – Adatum Corporation</li><li><strong>Result:</strong><ul><li><strong>Name</strong> updated from "Tery Research" → "Adatum Corporation"</li><li><strong>Address</strong> updated from "153, Washington DC" → "192 Market Square"</li></ul></li><li><strong>Note:</strong> Primary key (Customer No.) remains unchanged.</li></ul><p><strong>Step:</strong> The UpdateRecordExceptPrimaryKey method ensures that only the data fields are updated while primary keys remain untouched. Validation rules (like Dynamic Rule Condition) are checked before updating.</p>
+  </article>
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="../">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>

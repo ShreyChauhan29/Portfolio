@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Migrating from C-AL to AL Using Txt2AL | Shrey Chauhan</title>
+<meta name="description" content="Migrating from C-AL to AL Using Txt2AL — a Business Central development blog by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060810;
+    color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glowbar { position: fixed; top: -240px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 780px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s;
+  }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  h1.post-title {
+    margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    color: #64748b; font-size: 14px; margin-bottom: 36px;
+    padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .meta .author {
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+  }
+  article h1, article h2 { color: #fff; font-size: 1.35rem; margin: 2.2em 0 0.6em; letter-spacing: -0.01em; }
+  article h3, article h4 { color: #e2e8f0; font-size: 1.1rem; margin: 1.8em 0 0.5em; }
+  article p { margin: 0.9em 0; }
+  article a { color: #2dd4bf; text-decoration: none; }
+  article a:hover { text-decoration: underline; }
+  article img {
+    max-width: 100%; height: auto; border-radius: 12px; margin: 18px 0;
+    border: 1px solid rgba(255,255,255,0.1); display: block;
+  }
+  article ul, article ol { padding-left: 1.4em; margin: 0.9em 0; }
+  article li { margin: 0.35em 0; }
+  article strong { color: #e2e8f0; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid rgba(255,255,255,0.12); padding: 8px 12px; text-align: left; }
+  article th { background: rgba(99,102,241,0.12); color: #e2e8f0; }
+  article pre, article code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
+    background: #0b0e1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  }
+  article code { padding: 2px 6px; }
+  article pre { padding: 16px; overflow-x: auto; }
+  article pre code { border: 0; padding: 0; }
+  .foot { margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  .foot a:hover { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <h1 class="post-title">Migrating from C-AL to AL Using Txt2AL</h1>
+  <p class="meta"><span class="author">Shrey Chauhan</span> &middot; October 2025 &middot; Business Central / AL</p>
+  <article>
+<p><strong>Migrating from C/AL to AL Using Txt2AL — Complete Guide for Dynamics NAV &amp; Business Central Developers</strong></p><p>As Microsoft Dynamics 365 Business Central moved from the old C/SIDE development environment to the AL language and Visual Studio Code, developers needed a bridge to bring forward their existing C/AL customizations.<br />That’s where <strong>Txt2AL</strong> comes in.</p><h2>🚀 What Is Txt2AL?</h2><p><strong>Txt2AL</strong> is Microsoft’s official conversion tool that transforms classic Dynamics NAV <strong>C/AL objects (in .txt format)</strong> into modern <strong>AL files</strong> used by Business Central extensions.</p><p>It’s a <strong>command-line utility</strong> (txt2al.exe) included in the <strong>RoleTailored Client (RTC)</strong> for <strong>Business Central 2019 Spring Release / Version 14</strong> — the last release that still supported both C/AL and AL development.</p><p>Essentially, it allows developers to take their exported .txt objects and generate .al files that can be compiled, customized, and published as modern extensions inside Business Central.</p><h2>💡 Why You Need Txt2AL</h2><p>When you’re upgrading or refactoring an existing NAV solution for Business Central, you’ll likely have hundreds of customized C/AL objects. Rewriting all of them manually into AL would be a nightmare.</p><p><strong>Txt2AL</strong> automates most of this process by:</p><ul><li>Converting <strong>tables, pages, reports, and codeunits</strong> from .txt (C/AL) to .al (AL)</li><li>Generating <strong>extension-ready objects</strong> with updated syntax</li><li>Providing <strong>starting points for manual refactoring</strong></li></ul><p>However, it’s not a magic wand — the conversion is about <strong>80–90% automated</strong>. You’ll still need to review and refactor certain constructs (like RDLC reports, menus, and event patterns).</p><h2>⚙️ Before You Begin: Prerequisites</h2><ol><li><strong>Export C/AL Objects</strong><br />Open the NAV/BC Development Environment and export the objects you want to convert as .txt files.<br />(File → Export → Save as Text Format)</li></ol><p><img src="img/migrating-cal-to-al-txt2al/1.png" alt="Screenshot 1" /></p><ol><li><strong>Locate Txt2AL.exe</strong><br />The tool is included with the <strong>RoleTailored Client</strong>. A typical path looks like this: C:\Program Files (x86)\Microsoft Dynamics NAV\140\RoleTailored Client\Txt2Al.exe</li></ol><p>In your case, it may be part of the BC14 installation DVD:</p><p>C:\Users\Admin\Downloads\CU 52 Spring 19 Update IN\Dynamics.365.BC.50097.IN.DVD\RoleTailoredClient\program files\Microsoft Dynamics NAV\140\RoleTailored Client</p><p><img src="img/migrating-cal-to-al-txt2al/2.png" alt="Screenshot 2" /></p><ol><li><strong>Prepare Folders</strong><ul><li>Source → contains exported .txt files</li><li>Destination → empty folder where .al files will be generated</li></ul></li></ol><p><img src="img/migrating-cal-to-al-txt2al/3.png" alt="Screenshot 3" /></p><ol><li><strong>Run CMD as Administrator</strong><br />Txt2AL must be executed with admin rights for full access.</li></ol><p><img src="img/migrating-cal-to-al-txt2al/4.png" alt="Screenshot 4" /></p><h2>🧭 Step-by-Step: How to Use Txt2AL</h2><h3><strong>Step 1: Open Command Prompt</strong></h3><p>Run <strong>Command Prompt as Administrator</strong> and navigate to the folder where Txt2AL.exe is located:</p><p>cd "C:\Users\Admin\Downloads\CU 52 Spring 19 Update IN\Dynamics.365.BC.50097.IN.DVD\RoleTailoredClient\program files\Microsoft Dynamics NAV\140\RoleTailored Client"</p><p><img src="img/migrating-cal-to-al-txt2al/5.png" alt="Screenshot 5" /></p><p><img src="img/migrating-cal-to-al-txt2al/6.png" alt="Screenshot 6" /></p><h3><strong>Step 2: Execute the Txt2AL Command</strong></h3><p>Txt2Al.exe --source "C:\Users\Admin\OneDrive\Documents\AL Converter CAL to AL\Source" ^</p><p>           --target "C:\Users\Admin\OneDrive\Documents\AL Converter CAL to AL\Destination" ^</p><p>           --extensionStartId 50000 –rename</p><p><img src="img/migrating-cal-to-al-txt2al/7.png" alt="Screenshot 7" /></p><p><strong>Explanation of parameters:</strong></p><ul><li>--source → Folder containing your exported .txt C/AL objects</li><li>--target → Folder where the converted .al files will be created</li><li>--extensionStartId → Starting object ID for the converted AL objects (use your custom range, e.g. 50000)</li><li>--rename → Optional flag that renames objects to AL-friendly names automatically</li></ul><p>Tip: Always quote your folder paths if they include spaces.</p><h3><strong>Step 3: Review and Fix the Output</strong></h3><p>Once the process completes, open your <strong>Destination</strong> folder. You’ll see .al files created for each object.<br />Now, open these files in <strong>Visual Studio Code</strong> (with the AL Language extension) and:</p><ul><li>Fix any <strong>compile-time errors</strong></li><li>Replace obsolete syntax or references</li><li>Refactor business logic into <strong>event subscribers</strong></li><li>Validate <strong>reports</strong> and <strong>page extensions</strong></li></ul><p>This is your new <strong>AL project workspace</strong>.</p><p><img src="img/migrating-cal-to-al-txt2al/8.png" alt="Screenshot 8" /></p><h2> Common Txt2AL Options</h2><table><tr><td><p><strong>Option</strong></p></td><td><p><strong>Description</strong></p></td></tr><tr><td><p>--source</p></td><td><p>Path of source folder with .txt files</p></td></tr><tr><td><p>--target</p></td><td><p>Path of destination folder for AL output</p></td></tr><tr><td><p>--extensionStartId</p></td><td><p>Starting ID for AL objects</p></td></tr><tr><td><p>--rename</p></td><td><p>Renames objects to valid AL identifiers</p></td></tr><tr><td><p>--type</p></td><td><p>Convert specific object types only (e.g., --type Table)</p></td></tr><tr><td><p>--help</p></td><td><p>Shows all available options</p></td></tr></table><p>You can view all options anytime by running:</p><p>Txt2Al.exe --help</p><h2>⚠️ Common Pitfalls and Tips</h2><ul><li><strong>Expect Manual Cleanup:</strong> Not every C/AL construct has a direct AL equivalent (especially in reports or menus).</li><li><strong>Run in CMD (not PowerShell):</strong> Some flags behave differently in PowerShell.</li><li><strong>Use BC14 Tooling:</strong> Txt2AL exists only in BC14. Even if your target is BC23+, always convert using BC14’s tool.</li><li><strong>Choose Correct ID Range:</strong> Avoid conflicts with Microsoft or ISV objects by setting a unique ExtensionStartId.</li><li><strong>Backup Everything:</strong> Always keep your original .txt exports safe before conversion.</li></ul><h2>📘 Example Workflow Summary</h2><ol><li>Export NAV objects to .txt</li><li>Create Source and Destination folders</li><li>Run Txt2AL.exe with the right parameters</li><li>Review generated .al files in VS Code</li><li>Clean up and test your extension</li></ol><h2>🔗 Further Resources</h2><ul><li><a href="https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-txt2al-tool?utm_source=chatgpt.com" target="_new">Microsoft Docs — The Txt2AL Conversion Tool</a></li><li>Microsoft Docs — Converting from C/AL to AL</li><li><a href="https://community.dynamics.com/forums/thread/">Microsoft Community Forums</a></li></ul><h2>🏁 Final Thoughts</h2><p>Txt2AL is your <strong>first step</strong> in modernizing a legacy NAV solution.<br />While it won’t deliver a ready-to-publish extension, it gives you a massive head start — converting syntax, structures, and metadata into AL format so you can focus on functional logic and modernization.</p><p>If you’re planning an upgrade or conversion project, mastering Txt2AL is an essential skill that bridges the gap between <strong>C/AL’s past</strong> and <strong>AL’s future</strong>.</p>
+  </article>
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="../">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>

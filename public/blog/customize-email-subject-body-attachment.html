@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How to Change Subject, Body and Attachment Name while Sending E-Mail | Shrey Chauhan</title>
+<meta name="description" content="How to Change Subject, Body and Attachment Name while Sending E-Mail — a Business Central development blog by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060810;
+    color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glowbar { position: fixed; top: -240px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 780px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s;
+  }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  h1.post-title {
+    margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    color: #64748b; font-size: 14px; margin-bottom: 36px;
+    padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .meta .author {
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+  }
+  article h1, article h2 { color: #fff; font-size: 1.35rem; margin: 2.2em 0 0.6em; letter-spacing: -0.01em; }
+  article h3, article h4 { color: #e2e8f0; font-size: 1.1rem; margin: 1.8em 0 0.5em; }
+  article p { margin: 0.9em 0; }
+  article a { color: #2dd4bf; text-decoration: none; }
+  article a:hover { text-decoration: underline; }
+  article img {
+    max-width: 100%; height: auto; border-radius: 12px; margin: 18px 0;
+    border: 1px solid rgba(255,255,255,0.1); display: block;
+  }
+  article ul, article ol { padding-left: 1.4em; margin: 0.9em 0; }
+  article li { margin: 0.35em 0; }
+  article strong { color: #e2e8f0; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid rgba(255,255,255,0.12); padding: 8px 12px; text-align: left; }
+  article th { background: rgba(99,102,241,0.12); color: #e2e8f0; }
+  article pre, article code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
+    background: #0b0e1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  }
+  article code { padding: 2px 6px; }
+  article pre { padding: 16px; overflow-x: auto; }
+  article pre code { border: 0; padding: 0; }
+  .foot { margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  .foot a:hover { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <h1 class="post-title">How to Change Subject, Body and Attachment Name while Sending E-Mail</h1>
+  <p class="meta"><span class="author">Shrey Chauhan</span> &middot; November 2024 &middot; Business Central / AL</p>
+  <article>
+<p><strong>How to Change Subject, Body and Attachment File Name while Sending E-Mail ?</strong></p><p>People in businesses send information and documents, such as sales and purchase orders and invoices, by email every day. Administrators can connect one or more email accounts to Business Central, letting you send documents without having to open an email app. You can compose each message individually with basic formatting tools, such as fonts, styles, colors, and so on, and add attachments of up to 100 MB. Additionally, report layouts enable administrators to include only the key information from documents. Learn more at <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/ui-how-send-documents-email">Send Documents by Email</a>.</p><p>Email capabilities in Business Central are for outbound messages only. You can't receive replies, that is, there's no "Inbox" page.</p><p>You can send almost all types of documents as PDF attachments. Alternatively, you can set up a report layout that includes information from the document in the email text, along with text that makes the email more friendly, for example, a standard greeting. For more information, see <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/ui-manage-report-layouts">Managing Report and Document Layouts</a>.</p><p>When you send invoices, you can make it easier for customers to make payments through a payment service, such as PayPal, by automatically adding information and a link to the service in the email. For more information, see <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/sales-how-enable-payment-service-extensions">Enable Customer Payments Through Payment Services</a>.</p><p>To enable emails from within Business Central, start the <strong>Set Up Email</strong> assisted setup guide. For more information, see <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/admin-how-setup-email">Set Up Email</a>.</p><p><strong>Customizing Email Subject, Body, and Attachment Name</strong></p><p>To change the subject, body, and attachment file name dynamically, you’ll need to create a Codeunit. Codeunits allow you to customize Business Central processes by adding code for specific events. Here’s a breakdown of the steps involved.</p><p><strong>Step 1: Create a Codeunit</strong></p><p>A Codeunit is essential for applying custom code to update email properties. Start by creating one for your email customization. Use shortcut <strong>Alt + Shift + E</strong> to view available events.</p><p>Here how its look </p><p><img src="img/customize-email-subject-body-attachment/1.png" alt="Screenshot 1" /><br /><br /><img src="img/customize-email-subject-body-attachment/2.png" alt="Screenshot 2" /></p><p><strong>Step 2: Adding Events to Codeunit for Email Customization</strong></p><p>After accessing the event drop-down menu, look for the Document-Mailing event. This is where you can add custom code to alter the attachment name, subject, and body.</p><p>Here’s the image for <strong>Changing the Attachment Name</strong> :- </p><p><img src="img/customize-email-subject-body-attachment/3.png" alt="Screenshot 3" /><br />Just click on the <strong>Codeunit “Document-Mailing”<br /><img src="img/customize-email-subject-body-attachment/4.png" alt="Screenshot 4" /></strong></p><p><strong>Customizing Attachment Names</strong></p><p>Within the Codeunit, you’ll write specific code to rename attachments in emails. This can be done in two ways: </p><p><br />Now Let’s write the Code to update the Attachment Name <br /><img src="img/customize-email-subject-body-attachment/5.png" alt="Screenshot 5" /></p><ol><li><strong>Hardcoded Naming (Red Box)</strong>: The attachment name is set to a fixed string. Useful for consistent naming conventions.</li></ol><p>Here’s the <strong>Output of Red Box code</strong> :-</p><p>This is the Sales Order I have created in business central and the Action is to <strong>Post and Send</strong><br /><img src="img/customize-email-subject-body-attachment/6.png" alt="Screenshot 6" /></p><p>Here’s the Mail its Creating</p><p><img src="img/customize-email-subject-body-attachment/7.png" alt="Screenshot 7" /></p><ol><li><strong>Dynamic Naming (Green Box)</strong>: Populate the attachment name based on dynamic data like document type, customer name, or order number.</li></ol><p>Here’s the <strong>Output of Green Box code</strong> :-</p><p>This is the Sales Order I have created in business central and the Action is to <strong>Post and Send</strong><br /><img src="img/customize-email-subject-body-attachment/8.png" alt="Screenshot 8" /></p><p>Here’s the Mail its Creating <img src="img/customize-email-subject-body-attachment/9.png" alt="Screenshot 9" /></p><p><strong>Step 3: Customizing the Email Subject</strong></p><p>Changing the email subject is similarly customizable:</p><p>Here’s the Event to Change the E-mail Subject and E-mail Document Name </p><ol><li><strong>Hardcoded Subject:</strong> Set a static subject line.<strong><br /></strong><img src="img/customize-email-subject-body-attachment/10.png" alt="Screenshot 10" /></li></ol><p>Here’s the Mail its Creating</p><p><img src="img/customize-email-subject-body-attachment/11.png" alt="Screenshot 11" /></p><ol><li>Dynamic Subject Based on Document Data: Use specific values from the document, like invoice number or customer name.</li></ol><p><strong><br /></strong>Here’s the Code to change the Subject using values :<br /><img src="img/customize-email-subject-body-attachment/12.png" alt="Screenshot 12" /></p><p>Here’s the Mail its Creating</p><p><img src="img/customize-email-subject-body-attachment/13.png" alt="Screenshot 13" /></p><p><strong>Step 4: Updating the Email Body</strong></p><p>To add a custom email body, use the following approach to insert values and provide more context to the recipient.</p><p>Here’s the Code to change the Body using values :</p><p><strong><img src="img/customize-email-subject-body-attachment/14.png" alt="Screenshot 14" /></strong></p><p>Here’s the Mail its Creating</p><p><strong><img src="img/customize-email-subject-body-attachment/15.png" alt="Screenshot 15" /></strong></p><p><strong>Step 5: Automating the Email Process</strong></p><p>Business Central also allows users to send emails without opening a dialog box, which can be useful for large batch operations. By integrating this custom code, you can bypass the manual sending step entirely.</p><p>Custom Code to Send Mail Directly without opening any dialog box </p><p><strong><img src="img/customize-email-subject-body-attachment/16.png" alt="Screenshot 16" /></strong></p><p><strong>Conclusion</strong></p><p>Customizing the email subject, body, and attachment name in Business Central provides a tailored and professional touch to your outgoing communications. By creating and configuring Codeunits, you can adapt emails to reflect specific document details, enhancing the client’s experience and ensuring that your emails stand out. This process streamlines document sharing and helps maintain a consistent and personalized communication strategy.</p><p><strong>THANK YOU</strong></p>
+  </article>
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="../">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>

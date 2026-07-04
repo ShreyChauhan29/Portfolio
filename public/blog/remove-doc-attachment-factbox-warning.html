@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How to Remove the Warning of Document Attachment FactBox | Shrey Chauhan</title>
+<meta name="description" content="How to Remove the Warning of Document Attachment FactBox — a Business Central development blog by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060810;
+    color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glowbar { position: fixed; top: -240px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 780px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s;
+  }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  h1.post-title {
+    margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    color: #64748b; font-size: 14px; margin-bottom: 36px;
+    padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .meta .author {
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+  }
+  article h1, article h2 { color: #fff; font-size: 1.35rem; margin: 2.2em 0 0.6em; letter-spacing: -0.01em; }
+  article h3, article h4 { color: #e2e8f0; font-size: 1.1rem; margin: 1.8em 0 0.5em; }
+  article p { margin: 0.9em 0; }
+  article a { color: #2dd4bf; text-decoration: none; }
+  article a:hover { text-decoration: underline; }
+  article img {
+    max-width: 100%; height: auto; border-radius: 12px; margin: 18px 0;
+    border: 1px solid rgba(255,255,255,0.1); display: block;
+  }
+  article ul, article ol { padding-left: 1.4em; margin: 0.9em 0; }
+  article li { margin: 0.35em 0; }
+  article strong { color: #e2e8f0; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid rgba(255,255,255,0.12); padding: 8px 12px; text-align: left; }
+  article th { background: rgba(99,102,241,0.12); color: #e2e8f0; }
+  article pre, article code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
+    background: #0b0e1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  }
+  article code { padding: 2px 6px; }
+  article pre { padding: 16px; overflow-x: auto; }
+  article pre code { border: 0; padding: 0; }
+  .foot { margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  .foot a:hover { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <h1 class="post-title">How to Remove the Warning of Document Attachment FactBox</h1>
+  <p class="meta"><span class="author">Shrey Chauhan</span> &middot; June 2025 &middot; Business Central / AL</p>
+  <article>
+<p>📎How to Attach the Business Central Updated “Doc. Attachment List Factbox” to Custom Tables and Pages in Business Central</p><p>The Doc. Attachment List Factbox in Dynamics 365 Business Central provides a quick overview of attached files on a record, without needing to open a separate page. It's essentially a more streamlined version of the standard Document Attachments FactBox, displaying file names and types directly within the FactBox pane. </p><p>With recent updates in Microsoft Dynamics 365 Business Central, the classic Document Attachment FactBox has been deprecated and replaced with the modern Doc. Attachment List Factbox, which allows multiple file uploads and an improved user interface. This guide walks you through integrating this new FactBox into your custom tables and pages, resolving common issues, and ensuring full functionality.</p><h1>Why Use the New Doc. Attachment List Factbox?</h1><ul><li>A sleek view of attached documents directly on the page.</li><li>Support for multiple file uploads.</li><li>Elimination of the need to open additional windows to view attachments.</li></ul><h1>🛠️ Step 1: Create a CardPart Page for the Attachment</h1><p>Ensure you have your custom table and page ready. Then, create a Card object in AL (Visual Studio Code) using the Doc. Attachment table.</p><p>Example:</p><p><img src="img/remove-doc-attachment-factbox-warning/1.png" alt="Screenshot 1" /></p><h1>Step 2: Add the FactBox to Your Target Page</h1><p>Add the CardPart to your main page (List or Card) inside the FactBoxes area.</p><p>Example:</p><p>layout<br />{<br />    area(content)<br />    {<br />        // Main content here<br />    }<br />    area(FactBoxes)<br />    {<br />        part(Attachments; "Doc. Attachment List Factbox")<br />        {<br />            ApplicationArea = All;<br />            SubPageLink = "Table ID" = const(Database::"Your Custom Table"), "No." = field("Your PK Field");<br />        }<br />    }<br />}<br /><br /><img src="img/remove-doc-attachment-factbox-warning/2.png" alt="Screenshot 2" /> </p><p>This will show the attachments panel on your custom page.</p><h1>Output:-</h1><p>And here how it’s going to look like </p><p><img src="img/remove-doc-attachment-factbox-warning/3.png" alt="Screenshot 3" /></p><h1>⚠️Common Issue: File Uploaded but Not Displaying</h1><p>After uploading a document, you might find that it’s stored in the Document Attachment table, but not visible in the FactBox UI. To fix this, implement the following Event Subscribers to link your custom table to the FactBox.</p><p><img src="img/remove-doc-attachment-factbox-warning/4.png" alt="Screenshot 4" /><br /><br /><img src="img/remove-doc-attachment-factbox-warning/5.png" alt="Screenshot 5" /> <br /><br /><img src="img/remove-doc-attachment-factbox-warning/6.png" alt="Screenshot 6" /></p><p><img src="img/remove-doc-attachment-factbox-warning/7.png" alt="Screenshot 7" /><br /><img src="img/remove-doc-attachment-factbox-warning/8.png" alt="Screenshot 8" /> <br /><img src="img/remove-doc-attachment-factbox-warning/9.png" alt="Screenshot 9" /></p><h1>🎯Step 3: Event Subscribers for Custom Table Integration</h1><ol><li>OnAfterGetRecRefFail in Doc. Attachment List Factbox</li><li>OnAfterInitFieldsFromRecRef in Document Attachment</li></ol><p> [EventSubscriber(ObjectType::Page, Page::"Doc. Attachment List Factbox", OnAfterGetRecRefFail, '', false, false)]</p><p>    local procedure "Doc. Attachment List Factbox_OnAfterGetRecRefFail"(var Sender: Page "Doc. Attachment List Factbox"; DocumentAttachment: Record "Document Attachment"; var RecRef: RecordRef)</p><p>    var</p><p>        EXIMLicenseHeader: Record "LFS EXIM License Header";</p><p>    begin</p><p>        case DocumentAttachment."Table ID" of</p><p>            DATABASE::"LFS EXIM License Header":</p><p>                begin</p><p>                    RecRef.Open(DATABASE::"LFS EXIM License Header");</p><p>                    if EXIMLicenseHeader.Get(DocumentAttachment."No.") then</p><p>                        RecRef.GetTable(EXIMLicenseHeader);</p><p>                end;</p><p>        end;</p><p>    end;</p><p>    [EventSubscriber(ObjectType::Table, Database::"Document Attachment", OnAfterInitFieldsFromRecRef, '', false, false)]</p><p>    local procedure "Document Attachment_OnAfterInitFieldsFromRecRef"(var DocumentAttachment: Record "Document Attachment"; var RecRef: RecordRef)</p><p>    var</p><p>        FieldRef: FieldRef;</p><p>        RecNo: Code[20];</p><p>    begin</p><p>        case RecRef.Number of</p><p>            DATABASE::"LFS EXIM License Header":</p><p>                begin</p><p>                    FieldRef := RecRef.Field(1);</p><p>                    RecNo := FieldRef.Value;</p><p>                    DocumentAttachment.Validate("No.", RecNo);</p><p>                end;</p><p>        end;</p><p>    end;</p><h1>🔄 Uploading and Viewing Attachments</h1><p>Once the events are in place:</p><p>1. Upload a document using the FactBox UI.</p><p>2. The file is stored in the Document Attachment table.</p><p>3. The FactBox now shows the attachment on the card page and list page.</p><p>4. Users can download and preview attachments seamlessly.<br /><br /><img src="img/remove-doc-attachment-factbox-warning/10.png" alt="Screenshot 10" /></p><p><img src="img/remove-doc-attachment-factbox-warning/11.png" alt="Screenshot 11" /></p><p><img src="img/remove-doc-attachment-factbox-warning/12.png" alt="Screenshot 12" /></p><p><img src="img/remove-doc-attachment-factbox-warning/13.png" alt="Screenshot 13" /></p><p><img src="img/remove-doc-attachment-factbox-warning/14.png" alt="Screenshot 14" /></p><p><img src="img/remove-doc-attachment-factbox-warning/15.png" alt="Screenshot 15" /></p><h1>✅ Bonus: Tested Features</h1><ul><li>Multiple Attachments are supported.</li><li>Attachment Count is accurately displayed.</li><li>File Downloads are working correctly.</li><li>Same document appears on both Card and List pages.</li></ul><p><img src="img/remove-doc-attachment-factbox-warning/16.png" alt="Screenshot 16" /></p><h1>📘 Summary</h1><table><tr><td><p><strong>Feature</strong></p></td><td><p><strong>Status</strong></p></td></tr><tr><td><p>FactBox Added to Custom Pages</p></td><td><p>✅ Complete</p></td></tr><tr><td><p>Attachments Displaying Properly</p></td><td><p>✅ Fixed</p></td></tr><tr><td><p>Event Subscribers for Custom Table</p></td><td><p>✅ Implemented</p></td></tr><tr><td><p>Multiple Attachments</p></td><td><p>✅ Supported</p></td></tr><tr><td><p>File Download</p></td><td><p>✅ Functional</p></td></tr></table><h1>📌 Final Thoughts</h1><p>With just a few lines of AL code and correct event subscriptions, you can easily integrate the new Doc. Attachment List Factbox into your custom pages—future-proofing your extensions and delivering a better experience for end-users.</p>
+  </article>
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="../">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>

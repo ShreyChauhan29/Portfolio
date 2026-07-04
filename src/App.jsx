@@ -53,7 +53,7 @@ const STATS = [
   { value: '2.5+', label: 'Years in D365 BC & NAV' },
   { value: '35+', label: 'Client Projects Delivered' },
   { value: '10', label: 'Independent Modules Built' },
-  { value: '7', label: 'Technical Blogs Published' },
+  { value: '11', label: 'Technical Blogs Written' },
 ]
 
 const EXPERIENCE = [
@@ -69,7 +69,7 @@ const EXPERIENCE = [
       'Led code and data migration for NAV → Business Central projects including ALTA, TeamLease, Medilux, and KL Dugar, plus implementations for SGMT, Vijaya Diagnostic Centre, and Equitron Medica.',
       'Developed custom APIs (Donation Transaction API with full documentation) and integrated third-party services: E-Way Bill and E-Invoicing via GSTRobo, WhatsApp, and live container tracking.',
       'Delivered complex reports — Cash Book Ledger, MRP, lot-wise inventory ageing and valuation, aged AR/AP, payment export with UTR updation — plus Excel import/export frameworks with validation.',
-      'Mentor three associate consultants, published 7 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
+      'Mentor three associate consultants, authored 11 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
       'Manage Azure environments and users, work with DevOps builds and deployments, and handle databases via SQL Server Management Studio.',
     ],
     tags: ['AL', 'Business Central', 'Dynamics NAV', 'SQL Server', 'REST APIs', 'Azure', 'Power Platform'],
@@ -155,19 +155,27 @@ const PROJECTS = [
 
 const BLOGS = [
   {
-    title: 'Understanding [TryFunction] in AL for Dynamics 365 Business Central',
+    title: 'Understanding [TryFunction] in AL for Business Central',
     date: 'Jun 2026',
     excerpt:
       'How the [TryFunction] attribute really works — graceful error handling in AL, when to use it, common pitfalls, and patterns for reliable code.',
-    url: 'https://www.lfspl.com/blog/understanding-tryfunction-in-al-for-dynamics-365-business-central',
+    url: 'blog/understanding-tryfunction-in-al.html',
     tags: ['AL', 'Error Handling'],
+  },
+  {
+    title: 'Building Robust Custom APIs in Business Central',
+    date: 'Mar 2026',
+    excerpt:
+      'Designing custom API pages and codeunit-based endpoints in AL — clean contracts, validation, and integration-ready responses.',
+    url: 'blog/building-robust-custom-apis.html',
+    tags: ['AL', 'API', 'Integration'],
   },
   {
     title: 'Mastering RecordRef & FieldRef in Business Central',
     date: 'Jan 2026',
     excerpt:
       'Dynamic data access with RecordRef and FieldRef — generic validation, rule-based processing, and record comparison that works across any table.',
-    url: 'https://www.lfspl.com/blog/mastering-recordref-fieldref-in-business-central',
+    url: 'blog/mastering-recordref-fieldref.html',
     tags: ['AL', 'RecordRef'],
   },
   {
@@ -175,31 +183,63 @@ const BLOGS = [
     date: 'Dec 2025',
     excerpt:
       'AL code, assisted setup, and scheduling to keep job queues healthy — automatic restarts and email alerts when background jobs fail.',
-    url: 'https://www.lfspl.com/blog/automating-job-queue-monitoring-in-business-central-al-code-assisted-setup-scheduling',
+    url: 'blog/automating-job-queue-monitoring.html',
     tags: ['AL', 'Job Queue', 'Automation'],
+  },
+  {
+    title: 'Migrating from C-AL to AL Using Txt2AL',
+    date: 'Oct 2025',
+    excerpt:
+      'Converting classic NAV C/AL objects into AL extensions with the Txt2AL tool — export, conversion, and post-conversion cleanup workflow.',
+    url: 'blog/migrating-cal-to-al-txt2al.html',
+    tags: ['C/AL', 'Txt2AL', 'Migration'],
+  },
+  {
+    title: 'Boost Your AL Coding Productivity with AI Extensions',
+    date: 'Sep 2025',
+    excerpt:
+      'Using GitHub Copilot and Gemini Code Assist in VS Code to speed up AL development — setup, prompting, and practical wins.',
+    url: 'blog/boost-al-productivity-with-ai-extensions.html',
+    tags: ['AI', 'Copilot', 'VS Code'],
   },
   {
     title: 'Amount in Words in Microsoft Dynamics 365 Business Central',
     date: 'Jul 2025',
     excerpt:
       'Converting amounts to words on invoices, payments, and reports — the standard Check Report approach and custom AL implementations.',
-    url: 'https://www.lfspl.com/blog/amount-in-words-in-microsoft-dynamics-365-business-central',
+    url: 'blog/amount-in-words.html',
     tags: ['AL', 'Reports'],
   },
   {
-    title: 'Master the Doc. Attachment List FactBox — Complete Integration Guide',
+    title: 'Upgrading Customized C-AL to Business Central',
+    date: 'Jul 2025',
+    excerpt:
+      'The end-to-end upgrade path for customized C/AL solutions to modern Business Central — objects, data, and post-upgrade checks.',
+    url: 'blog/upgrading-customized-cal-to-business-central.html',
+    tags: ['Upgrade', 'C/AL'],
+  },
+  {
+    title: 'How to Remove the Warning of Document Attachment FactBox',
     date: 'Jun 2025',
     excerpt:
-      'Integrating the Document Attachment FactBox with custom tables — full AL examples, event subscribers, and troubleshooting the attachment warning.',
-    url: 'https://www.lfspl.com/blog/business-central-doc-attachment-list-factbox-custom-tables-integration',
-    tags: ['AL', 'FactBox', 'UI'],
+      'Fixing the Document Attachment FactBox warning when wiring it to custom tables — event subscribers and a clean integration pattern.',
+    url: 'blog/remove-doc-attachment-factbox-warning.html',
+    tags: ['AL', 'FactBox'],
+  },
+  {
+    title: 'How to Create a FactBox in Business Central',
+    date: 'Jun 2025',
+    excerpt:
+      'Building FactBoxes from scratch — page parts, wiring them to list and card pages, and surfacing related data where users need it.',
+    url: 'blog/how-to-create-a-factbox.html',
+    tags: ['AL', 'UI'],
   },
   {
     title: 'How to Change Subject, Body and Attachment Name while Sending E-Mail',
     date: 'Nov 2024',
     excerpt:
       'Customizing outgoing document emails in Business Central — dynamic subjects, bodies, and attachment file names via codeunit extensions.',
-    url: 'https://www.lfspl.com/blog/how-to-change-subject-body-and-attachment-file-name-while-sending-email',
+    url: 'blog/customize-email-subject-body-attachment.html',
     tags: ['AL', 'Email'],
   },
 ]
@@ -885,7 +925,7 @@ function Blog() {
       <SectionHeading
         eyebrow="Blog"
         title="Things I've written"
-        subtitle="Practical AL development guides published on the Leaping Frog Solutions blog."
+        subtitle="Practical AL and Business Central development guides — read them right here."
       />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -893,8 +933,6 @@ function Blog() {
           <a
             key={post.url}
             href={post.url}
-            target="_blank"
-            rel="noreferrer"
             className="glass reveal group relative flex flex-col rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/10"
             style={{ transitionDelay: `${(i % 3) * 80}ms` }}
           >
@@ -926,9 +964,6 @@ function Blog() {
         ))}
       </div>
 
-      <p className="reveal mt-8 text-center text-sm text-slate-500">
-        More on the way — Building Robust Custom APIs, AI-assisted AL development, and C/AL migration guides.
-      </p>
     </section>
   )
 }

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Understanding [TryFunction] in AL for Business Central | Shrey Chauhan</title>
+<meta name="description" content="Understanding [TryFunction] in AL for Business Central — a Business Central development blog by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060810;
+    color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glowbar { position: fixed; top: -240px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 780px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s;
+  }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  h1.post-title {
+    margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    color: #64748b; font-size: 14px; margin-bottom: 36px;
+    padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .meta .author {
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+  }
+  article h1, article h2 { color: #fff; font-size: 1.35rem; margin: 2.2em 0 0.6em; letter-spacing: -0.01em; }
+  article h3, article h4 { color: #e2e8f0; font-size: 1.1rem; margin: 1.8em 0 0.5em; }
+  article p { margin: 0.9em 0; }
+  article a { color: #2dd4bf; text-decoration: none; }
+  article a:hover { text-decoration: underline; }
+  article img {
+    max-width: 100%; height: auto; border-radius: 12px; margin: 18px 0;
+    border: 1px solid rgba(255,255,255,0.1); display: block;
+  }
+  article ul, article ol { padding-left: 1.4em; margin: 0.9em 0; }
+  article li { margin: 0.35em 0; }
+  article strong { color: #e2e8f0; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid rgba(255,255,255,0.12); padding: 8px 12px; text-align: left; }
+  article th { background: rgba(99,102,241,0.12); color: #e2e8f0; }
+  article pre, article code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
+    background: #0b0e1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  }
+  article code { padding: 2px 6px; }
+  article pre { padding: 16px; overflow-x: auto; }
+  article pre code { border: 0; padding: 0; }
+  .foot { margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  .foot a:hover { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <h1 class="post-title">Understanding [TryFunction] in AL for Business Central</h1>
+  <p class="meta"><span class="author">Shrey Chauhan</span> &middot; June 2026 &middot; Business Central / AL</p>
+  <article>
+<p>Understanding [TryFunction] in AL for Dynamics 365 Business Central</p><p><br />In Microsoft Dynamics 365 Business Central, error handling plays a critical role while developing robust and stable applications. One of the most powerful features available in AL for handling runtime exceptions gracefully is the [TryFunction] attribute. It allows developers to execute code that may fail without stopping the entire transaction or showing a disruptive error to the user immediately.</p><p>This blog explains <strong>what [TryFunction] is</strong>, <strong>why we use it</strong>, <strong>when it should be used</strong>, and <strong>how to implement it effectively</strong> in AL coding.</p><h1>What is [TryFunction] in AL?</h1><p>[TryFunction] is an AL method attribute used to catch runtime errors without throwing them directly to the user.</p><p>Instead of stopping execution with an error, the function returns:</p><ul><li>TRUE → if execution succeeds </li><li>FALSE → if an error occurs </li></ul><p>This helps developers handle failures programmatically and continue execution smoothly.</p><h1>Syntax of [TryFunction]</h1><p>[TryFunction]<br />procedure MyTryFunction()<br />begin<br />    // Risky Code<br />end;</p><p>Calling Example:</p><p>if MyTryFunction() then<br />    Message('Process Completed Successfully')<br />else<br />    Message('Something went wrong.');</p><h1>Why Do We Use [TryFunction]?</h1><p>In real-world Business Central development, many operations can fail unexpectedly:</p><ul><li>Posting documents </li><li>API integrations </li><li>Record insert/update conflicts </li><li>File handling </li><li>Web service calls </li><li>Data validations </li><li>External system communication </li></ul><p>Without proper handling, these failures stop execution and display system errors to users.</p><p>[TryFunction] helps by:</p><h2>1. Preventing System Crashes</h2><p>Instead of breaking the process, errors are captured safely.</p><h2>2. Improving User Experience</h2><p>Users receive controlled and meaningful messages.</p><h2>3. Supporting Background Processing</h2><p>Useful in Job Queue, automation, integrations, and batch processing.</p><h2>4. Allowing Conditional Logic After Failure</h2><p>You can decide what to do if a process fails.</p><p>Example:</p><ul><li>Retry </li><li>Log error </li><li>Skip record </li><li>Continue processing </li></ul><h1>When Should You Use [TryFunction]?</h1><p>[TryFunction] should be used when failure is possible and expected.</p><h2>Recommended Scenarios</h2><h3>1. Posting Transactions</h3><p>if PostSalesInvoice() then<br />    Message('Posted Successfully')<br />else<br />    Error('Posting Failed.');</p><h3>2. API or Web Service Calls</h3><p>External systems may fail due to:</p><ul><li>Network issues </li><li>Invalid responses </li><li>Authentication problems </li></ul><h3>3. Batch Processing</h3><p>While processing thousands of records, one error should not stop the complete process.</p><h3>4. Validation Testing</h3><p>Useful when checking whether certain operations are allowed.</p><h3>5. Data Import/Export</h3><p>Errors in one line should not terminate the entire import.</p><h1>When NOT to Use [TryFunction]</h1><p>Avoid using [TryFunction] everywhere.</p><h2>Do NOT use it for:</h2><ul><li>Normal validations </li><li>Business rule checks </li><li>Simple IF conditions </li><li>Replacing proper validation logic </li></ul><p>Bad Example:</p><p>if not TryCheckCustomer() then;</p><p>Instead use:</p><p>if Customer.Blocked then<br />    Error('Customer is blocked.');</p><h1>How [TryFunction] Works Internally</h1><p>When a [TryFunction] fails:</p><ul><li>The system suppresses the runtime error </li><li>Execution returns FALSE </li><li>Database changes inside the function are rolled back </li><li>Control returns to the calling code </li></ul><p>This makes it ideal for safe execution.</p><h1>Important Behavior of [TryFunction]</h1><h2>Database Rollback</h2><p>If an error occurs inside the try function:</p><p>[TryFunction]<br />procedure CreateCustomer()<br />begin<br />    Customer.Insert();<br />    Error('Test Error');<br />end;</p><p>The inserted customer will be rolled back automatically.</p><h1>Basic Example of [TryFunction]</h1><p>codeunit 50100 "TryFunction Demo"<br />{<br />    procedure RunProcess()<br />    begin<br />        if InsertCustomer() then<br />            Message('Customer Created')<br />        else<br />            Message('Customer Creation Failed');<br />    end;<br /><br />    [TryFunction]<br />    local procedure InsertCustomer()<br />    var<br />        Customer: Record Customer;<br />    begin<br />        Customer.Init();<br />        Customer."No." := 'C1000';<br />        Customer.Name := 'Test Customer';<br />        Customer.Insert(true);<br /><br />        Error('Testing Error');<br />    end;<br />}</p><h2>Output</h2><ul><li>No customer gets inserted </li><li>Function returns FALSE </li><li>User sees: "Customer Creation Failed" </li></ul><h1>Capturing Detailed Error Messages</h1><p>You can retrieve the actual system error using:</p><p>GetLastErrorText()</p><p>Example:</p><p>if not InsertCustomer() then<br />    Message(GetLastErrorText());</p><h1>Real-Time Practical Example</h1><h2>Safe Sales Order Posting</h2><p>procedure PostSalesOrder(SalesHeader: Record "Sales Header")<br />begin<br />    if TryPostSalesOrder(SalesHeader) then<br />        Message('Sales Order Posted Successfully')<br />    else<br />        Error(<br />          'Posting Failed : %1',<br />          GetLastErrorText());<br />end;<br /><br />[TryFunction]<br />local procedure TryPostSalesOrder(SalesHeader: Record "Sales Header")<br />var<br />    SalesPost: Codeunit "Sales-Post";<br />begin<br />    SalesPost.Run(SalesHeader);<br />end;</p><h1>Advantages of [TryFunction]</h1><table><tr><td><p>Advantage</p></td><td><p>Description</p></td></tr><tr><td><p>Safe Execution</p></td><td><p>Prevents application crashes</p></td></tr><tr><td><p>Cleaner Error Handling</p></td><td><p>Easy to manage failures</p></td></tr><tr><td><p>Better User Experience</p></td><td><p>Controlled messages</p></td></tr><tr><td><p>Useful in Integrations</p></td><td><p>External failures handled safely</p></td></tr><tr><td><p>Supports Batch Processing</p></td><td><p>Continue after failures</p></td></tr></table><h1>Limitations of [TryFunction]</h1><table><tr><td><p>Limitation</p></td><td><p>Explanation</p></td></tr><tr><td><p>No COMMIT Allowed</p></td><td><p>COMMIT behavior can become unpredictable</p></td></tr><tr><td><p>Performance Impact</p></td><td><p>Overuse may reduce performance</p></td></tr><tr><td><p>Not for Business Logic</p></td><td><p>Should not replace validations</p></td></tr><tr><td><p>Error Context Limited</p></td><td><p>Some errors may lose detailed stack information</p></td></tr></table><h1>Best Practices for Using [TryFunction]</h1><h2>1. Keep Try Functions Small</h2><p>Only include risky operations.</p><h2>2. Use Meaningful Error Handling</h2><p>Always inform users properly.</p><p>Error('Unable to process the transaction. Please contact administrator.');</p><h2>3. Log Errors</h2><p>Useful for debugging and monitoring.</p><p>Message(GetLastErrorText());</p><h2>4. Avoid Nested Try Functions</h2><p>This can make debugging difficult.</p><h2>5. Use for External or Uncertain Operations</h2><p>Ideal for:</p><ul><li>APIs </li><li>Posting </li><li>File handling </li><li>Batch jobs </li></ul><h1>Difference Between Error() and [TryFunction]</h1><table><tr><td><p>Feature</p></td><td><p>Error()</p></td><td><p>[TryFunction]</p></td></tr><tr><td><p>Stops Execution</p></td><td><p>Yes</p></td><td><p>No</p></td></tr><tr><td><p>Returns Boolean</p></td><td><p>No</p></td><td><p>Yes</p></td></tr><tr><td><p>Handles Runtime Failure</p></td><td><p>No</p></td><td><p>Yes</p></td></tr><tr><td><p>User-Friendly Handling</p></td><td><p>Limited</p></td><td><p>Better</p></td></tr><tr><td><p>Rollback Support</p></td><td><p>Yes</p></td><td><p>Yes</p></td></tr></table><h1>Common Mistakes Developers Make</h1><h2>1. Using TryFunction for Simple Validation</h2><p>Wrong approach.</p><h2>2. Ignoring Error Details</h2><p>Always use:</p><p>GetLastErrorText()</p><h2>3. Large Complex Try Functions</h2><p>Makes maintenance difficult.</p><h1>Recommended Use Cases in Business Central</h1><p>[TryFunction] is highly useful in:</p><ul><li>E-Invoice Integrations </li><li>GST API Calls </li><li>Payment Gateway Integrations </li><li>Job Queue Processing </li><li>Document Posting </li><li>Data Migration </li><li>XML/JSON Processing </li><li>Excel Import </li><li>Web Service Communication </li></ul><h1>Final Thoughts</h1><p>[TryFunction] is one of the most powerful error-handling mechanisms available in AL development for Dynamics 365 Business Central. When used correctly, it helps developers build stable, scalable, and user-friendly solutions by gracefully handling runtime failures.</p><p>However, it should be used strategically — mainly for uncertain or external operations — and not as a replacement for proper validation or business logic.</p><p>A well-designed implementation of [TryFunction] can significantly improve:</p><ul><li>Application reliability </li><li>User experience </li><li>Integration stability </li><li>Background processing efficiency </li></ul><p>By understanding <strong>what, why, when, and how</strong> to use [TryFunction], AL developers can create more professional and production-ready Business Central solutions.</p>
+  </article>
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="../">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>

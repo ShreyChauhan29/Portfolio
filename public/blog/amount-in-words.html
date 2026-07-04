@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Amount in Words in Microsoft Dynamics 365 Business Central | Shrey Chauhan</title>
+<meta name="description" content="Amount in Words in Microsoft Dynamics 365 Business Central — a Business Central development blog by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #060810;
+    color: #cbd5e1;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+  .backdrop {
+    position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glowbar { position: fixed; top: -240px; left: 50%; transform: translateX(-50%);
+    width: 720px; height: 420px; border-radius: 9999px; pointer-events: none;
+    background: rgba(79, 70, 229, 0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 780px; margin: 0 auto; padding: 48px 22px 80px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    padding: 8px 16px; border-radius: 12px; transition: all .2s;
+  }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  h1.post-title {
+    margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
+    font-weight: 800; letter-spacing: -0.02em; color: #fff;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    color: #64748b; font-size: 14px; margin-bottom: 36px;
+    padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .meta .author {
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+  }
+  article h1, article h2 { color: #fff; font-size: 1.35rem; margin: 2.2em 0 0.6em; letter-spacing: -0.01em; }
+  article h3, article h4 { color: #e2e8f0; font-size: 1.1rem; margin: 1.8em 0 0.5em; }
+  article p { margin: 0.9em 0; }
+  article a { color: #2dd4bf; text-decoration: none; }
+  article a:hover { text-decoration: underline; }
+  article img {
+    max-width: 100%; height: auto; border-radius: 12px; margin: 18px 0;
+    border: 1px solid rgba(255,255,255,0.1); display: block;
+  }
+  article ul, article ol { padding-left: 1.4em; margin: 0.9em 0; }
+  article li { margin: 0.35em 0; }
+  article strong { color: #e2e8f0; }
+  article table { border-collapse: collapse; width: 100%; margin: 18px 0; font-size: 14px; display: block; overflow-x: auto; }
+  article th, article td { border: 1px solid rgba(255,255,255,0.12); padding: 8px 12px; text-align: left; }
+  article th { background: rgba(99,102,241,0.12); color: #e2e8f0; }
+  article pre, article code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px;
+    background: #0b0e1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+  }
+  article code { padding: 2px 6px; }
+  article pre { padding: 16px; overflow-x: auto; }
+  article pre code { border: 0; padding: 0; }
+  .foot { margin-top: 56px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+  .foot a:hover { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <h1 class="post-title">Amount in Words in Microsoft Dynamics 365 Business Central</h1>
+  <p class="meta"><span class="author">Shrey Chauhan</span> &middot; July 2025 &middot; Business Central / AL</p>
+  <article>
+<p>💬Amount in Words in Microsoft Dynamics 365 Business Central</p><p>When dealing with financial documents like <strong>invoices</strong>, <strong>payment vouchers</strong>, and <strong>purchase orders</strong>, it's often necessary to express numeric amounts in <strong>words</strong>. This isn't just for formality—many organizations and legal systems require it to avoid ambiguity or fraud.</p><p>That’s where the <strong>"Amount in Words"</strong> feature in Microsoft Dynamics 365 Business Central becomes handy.</p><p><strong>What is "Amount in Words"?</strong></p><p>The <strong>Amount in Words</strong> refers to the <strong>textual representation</strong> of a numeric currency value. For example:</p><ul><li>Numeric: ₹1,234.56</li><li>In Words: <strong>"One Thousand Two Hundred Thirty-Four Rupees and Fifty-Six Paise"</strong></li></ul><p>This is often printed at the bottom of <strong>cheques</strong>, <strong>invoices</strong>, and <strong>legal documents</strong> to clearly convey the total payable amount in text form.</p><h2>🎯 Why is it Useful?</h2><p>Here are the main benefits:</p><ul><li>✅ Prevents tampering or fraud (changing “1,000” to “9,000” is easy in numbers, harder in words)</li><li>✅ Complies with legal and accounting standards in many countries</li><li>✅ Improves clarity for customers and stakeholders</li><li>✅ Adds professionalism to printed reports or PDFs</li></ul><h2>🏗️ How to Use "Amount in Words" in Business Central</h2><h3>✅ <strong>Standard (Out-of-the-box) Method</strong></h3><p>Business Central includes a <strong>standard function</strong> to convert numbers to words, located in Report 18935 "Check Report".</p><p>Here’s how to use it in AL code:</p><p>var</p><p>        CheckReport: Report "Check Report";</p><p>        AmountInWords: Text;</p><p>    begin</p><p>        AmountInWords := GenJnlPostLine.FormatNoText(1234.56, 'INR');</p><p>        Message(AmountInWords);</p><p>    end;</p><p>This returns:<br />🗣️ One Thousand Two Hundred Thirty-Four Rupees and Fifty-Six Paise</p><p><strong>Parameters:</strong></p><ul><li>The first parameter is the amount (Decimal).</li><li>The second is the currency code (e.g., 'USD', 'INR', 'EUR').</li></ul><p>This function is <strong>localization-aware</strong> and works seamlessly in standard reports, including:</p><ul><li>Sales Invoice</li><li>Purchase Order</li><li>Payment Journal</li></ul><p>You can bind this result to a label in <strong>RDLC</strong> or <strong>Word layout</strong> if you’re building or customizing a report.</p><h2>🧑‍💻 Custom "Amount in Words" Function (If You Need More Control)</h2><p>While the standard method works great, sometimes you may want to customize the output—for example:</p><ul><li>Show amount without "Paise" or "Cents"</li><li>Use uppercase text only</li><li>Add prefix or suffix like "<strong>Rupees Only</strong>"</li><li>Support for custom currency formats (e.g., Lakhs/Crores in Indian format)</li></ul><p>Here’s a <strong>simplified custom function</strong>:</p><p>codeunit 50101 "Amount in Words"</p><p>{</p><p>    procedure FormatNoText(var NoText: array[2] of Text[80]; No: Decimal; CurrencyCode: Code[10])</p><p>    var</p><p>        GLSetup: Record "General Ledger Setup";</p><p>        PrintExponent: Boolean;</p><p>        DecimalPart: Decimal;</p><p>        DecimalInt: Integer;</p><p>        Exponent: Integer;</p><p>        Hundreds: Integer;</p><p>        NoTextIndex: Integer;</p><p>        Ones: Integer;</p><p>        OnesDec: Integer;</p><p>        Tens: Integer;</p><p>        TensDec: Integer;</p><p>    begin</p><p>        Clear(NoText);</p><p>        NoTextIndex := 1;</p><p>        InitTextVariable();</p><p>        InitExponentText(CurrencyCode);</p><p>        GLSetup.Get();</p><p>        if No &lt; 1 then</p><p>            AddToNoText(NoText, NoTextIndex, PrintExponent, Text026Lbl)</p><p>        else</p><p>            for Exponent := 4 downto 1 do begin</p><p>                PrintExponent := false;</p><p>                Ones := No div Power(1000, Exponent - 1);</p><p>                No := No mod Power(1000, Exponent - 1);</p><p>                Hundreds := Ones div 100;</p><p>                Tens := (Ones mod 100) div 10;</p><p>                Ones := Ones mod 10;</p><p>                if Hundreds &gt; 0 then begin</p><p>                    if Hundreds in [1 .. 9] then</p><p>                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Hundreds]);</p><p>                    AddToNoText(NoText, NoTextIndex, PrintExponent, Text027Lbl); // "Hundred"</p><p>                end;</p><p>                if Tens &gt;= 2 then begin</p><p>                    AddToNoText(NoText, NoTextIndex, PrintExponent, TensText[Tens]);</p><p>                    if Ones &gt; 0 then</p><p>                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Ones]);</p><p>                end else</p><p>                    if (Tens * 10 + Ones) &gt; 0 then</p><p>                        AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[Tens * 10 + Ones]);</p><p>                if PrintExponent and (Exponent &gt; 1) then</p><p>                    AddToNoText(NoText, NoTextIndex, PrintExponent, ExponentText[Exponent]);</p><p>            end;</p><p>        if No &lt;&gt; 0 then</p><p>            AddToNoText(NoText, NoTextIndex, PrintExponent, Text028Lbl); // "AND"</p><p>        DecimalPart := ABS(No - ROUND(No, 1, '&lt;'));</p><p>        DecimalInt := ROUND(DecimalPart * 100, 1, '=');</p><p>        TensDec := DecimalInt DIV 10;</p><p>        OnesDec := DecimalInt MOD 10;</p><p>        if TensDec &gt;= 2 then begin</p><p>            AddToNoText(NoText, NoTextIndex, PrintExponent, TensText[TensDec]);</p><p>            if OnesDec &gt; 0 then</p><p>                AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[OnesDec]);</p><p>        end else</p><p>            if (TensDec * 10 + OnesDec) &gt; 0 then</p><p>                AddToNoText(NoText, NoTextIndex, PrintExponent, OnesText[TensDec * 10 + OnesDec]);</p><p>        if DecimalInt &gt; 0 then</p><p>            if CurrencyCode = 'INR' then</p><p>                AddToNoText(NoText, NoTextIndex, PrintExponent, 'PAISE')</p><p>            else</p><p>                AddToNoText(NoText, NoTextIndex, PrintExponent, 'CENTS');</p><p>        if CurrencyCode &lt;&gt; '' then</p><p>            AddToNoText(NoText, NoTextIndex, PrintExponent, 'ONLY');</p><p>    end;</p><p>    local procedure AddToNoText(var NoText: array[2] of Text; var NoTextIndex: Integer; var PrintExponent: Boolean; AddText: Text[30])</p><p>    begin</p><p>        PrintExponent := true;</p><p>        while StrLen(NoText[NoTextIndex] + ' ' + AddText) &gt; MaxStrLen(NoText[1]) do begin</p><p>            NoTextIndex := NoTextIndex + 1;</p><p>            if NoTextIndex &gt; ArrayLen(NoText) then</p><p>                Error(Text029Lbl, AddText);</p><p>        end;</p><p>        NoText[NoTextIndex] := DelChr(NoText[NoTextIndex] + ' ' + AddText, '&lt;');</p><p>    end;</p><p>    procedure InitTextVariable()</p><p>    begin</p><p>        OnesText[1] := Text032Lbl;</p><p>        OnesText[2] := Text033Lbl;</p><p>        OnesText[3] := Text034Lbl;</p><p>        OnesText[4] := Text035Lbl;</p><p>        OnesText[5] := Text036Lbl;</p><p>        OnesText[6] := Text037Lbl;</p><p>        OnesText[7] := Text038Lbl;</p><p>        OnesText[8] := Text039Lbl;</p><p>        OnesText[9] := Text040Lbl;</p><p>        OnesText[10] := Text041Lbl;</p><p>        OnesText[11] := Text042Lbl;</p><p>        OnesText[12] := Text043Lbl;</p><p>        OnesText[13] := Text044Lbl;</p><p>        OnesText[14] := Text045Lbl;</p><p>        OnesText[15] := Text046Lbl;</p><p>        OnesText[16] := Text047Lbl;</p><p>        OnesText[17] := Text048Lbl;</p><p>        OnesText[18] := Text049Lbl;</p><p>        OnesText[19] := Text050Lbl;</p><p>        TensText[1] := '';</p><p>        TensText[2] := Text051Lbl;</p><p>        TensText[3] := Text052Lbl;</p><p>        TensText[4] := Text053Lbl;</p><p>        TensText[5] := Text054Lbl;</p><p>        TensText[6] := Text055Lbl;</p><p>        TensText[7] := Text056Lbl;</p><p>        TensText[8] := Text057Lbl;</p><p>        TensText[9] := Text058Lbl;</p><p>    end;</p><p>    local procedure InitExponentText(CurrencyCode: Code[10])</p><p>    begin</p><p>        Clear(ExponentText);</p><p>        if CurrencyCode = 'INR' then begin</p><p>            ExponentText[1] := ''; // Ones</p><p>            ExponentText[2] := 'THOUSAND';</p><p>            ExponentText[3] := 'LAKH';</p><p>            ExponentText[4] := 'CRORE';</p><p>        end else begin</p><p>            ExponentText[1] := ''; // Ones</p><p>            ExponentText[2] := Text059Lbl; // THOUSAND</p><p>            ExponentText[3] := Text060Lbl; // MILLION</p><p>            ExponentText[4] := Text061Lbl; // BILLION</p><p>        end;</p><p>    end;</p><p>    var</p><p>        TensText: array[10] of Text[30];</p><p>        OnesText: array[20] of Text[30];</p><p>        ExponentText: array[5] of Text[30];</p><p>        Text032Lbl: Label 'ONE';</p><p>        Text033Lbl: Label 'TWO';</p><p>        Text034Lbl: Label 'THREE';</p><p>        Text035Lbl: Label 'FOUR';</p><p>        Text036Lbl: Label 'FIVE';</p><p>        Text037Lbl: Label 'SIX';</p><p>        Text038Lbl: Label 'SEVEN';</p><p>        Text039Lbl: Label 'EIGHT';</p><p>        Text040Lbl: Label 'NINE';</p><p>        Text041Lbl: Label 'TEN';</p><p>        Text042Lbl: Label 'ELEVEN';</p><p>        Text043Lbl: Label 'TWELVE';</p><p>        Text044Lbl: Label 'THIRTEEN';</p><p>        Text045Lbl: Label 'FOURTEEN';</p><p>        Text046Lbl: Label 'FIFTEEN';</p><p>        Text047Lbl: Label 'SIXTEEN';</p><p>        Text048Lbl: Label 'SEVENTEEN';</p><p>        Text049Lbl: Label 'EIGHTEEN';</p><p>        Text050Lbl: Label 'NINETEEN';</p><p>        Text051Lbl: Label 'TWENTY';</p><p>        Text052Lbl: Label 'THIRTY';</p><p>        Text053Lbl: Label 'FORTY';</p><p>        Text054Lbl: Label 'FIFTY';</p><p>        Text055Lbl: Label 'SIXTY';</p><p>        Text056Lbl: Label 'SEVENTY';</p><p>        Text057Lbl: Label 'EIGHTY';</p><p>        Text058Lbl: Label 'NINETY';</p><p>        Text059Lbl: Label 'THOUSAND';</p><p>        Text060Lbl: Label 'MILLION';</p><p>        Text061Lbl: Label 'BILLION';</p><p>        Text026Lbl: Label 'ZERO';</p><p>        Text027Lbl: Label 'HUNDRED';</p><p>        Text028Lbl: Label 'AND';</p><p>        Text029Lbl: Label '%1 results in a written number that is too long.';</p><p>}</p><p>🔧 <strong>Note: </strong>You can write your own converter or use external libraries/API if you need support for special formatting (like Indian number system: Lakhs/Crores).</p><h3><strong>✅ Example Results:</strong></h3><p><strong>Input:</strong> 12345678.25 with INR<br /><strong>Output:</strong><br />ONE CRORE TWENTY THREE LAKH FORTY FIVE THOUSAND SIX HUNDRED SEVENTY EIGHT AND TWENTY FIVE PAISE ONLY</p><p><strong>Input:</strong> 12345678.25 with USD<br /><strong>Output:</strong><br />TWELVE MILLION THREE HUNDRED FORTY FIVE THOUSAND SIX HUNDRED SEVENTY EIGHT AND TWENTY FIVE CENTS ONLY</p><h2>📄 Where Can You Use "Amount in Words"?</h2><p>You can display the amount in words on:</p><ul><li>Sales Invoices</li><li>Credit Memos</li><li>Purchase Invoices</li><li>Payment Vouchers</li><li>Cheques</li><li>Custom Reports</li><li>Excel/Word exports</li></ul><h2>🧠 Final Thoughts</h2><p>The "Amount in Words" feature, though often overlooked, is a <strong>crucial detail</strong> in any business application that handles monetary values. Business Central provides a clean, standard way to achieve this, but also allows <strong>customization</strong> for more specific or region-based needs.</p><p>Whether you're building <strong>compliance-focused reports</strong> or simply want to add <strong>polish</strong> to your documents, implementing amount in words is a <strong>small detail with big impact</strong>.</p>
+  </article>
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="../">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>
