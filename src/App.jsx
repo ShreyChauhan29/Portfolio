@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import {
   ArrowUpRight,
   BarChart3,
+  BookOpen,
   Braces,
   Briefcase,
   Building2,
@@ -44,6 +45,7 @@ const NAV_ITEMS = [
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
+  { label: 'Blog', href: '#blog' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -148,6 +150,57 @@ const PROJECTS = [
     description:
       'E-commerce module importing sales orders and credit memos from external systems, and a third-party container tracking integration surfacing live shipment status inside the ERP.',
     tags: ['REST API', 'AL', 'Logistics', 'Integration'],
+  },
+]
+
+const BLOGS = [
+  {
+    title: 'Understanding [TryFunction] in AL for Dynamics 365 Business Central',
+    date: 'Jun 2026',
+    excerpt:
+      'How the [TryFunction] attribute really works — graceful error handling in AL, when to use it, common pitfalls, and patterns for reliable code.',
+    url: 'https://www.lfspl.com/blog/understanding-tryfunction-in-al-for-dynamics-365-business-central',
+    tags: ['AL', 'Error Handling'],
+  },
+  {
+    title: 'Mastering RecordRef & FieldRef in Business Central',
+    date: 'Jan 2026',
+    excerpt:
+      'Dynamic data access with RecordRef and FieldRef — generic validation, rule-based processing, and record comparison that works across any table.',
+    url: 'https://www.lfspl.com/blog/mastering-recordref-fieldref-in-business-central',
+    tags: ['AL', 'RecordRef'],
+  },
+  {
+    title: 'Automating Job Queue Monitoring in Business Central',
+    date: 'Dec 2025',
+    excerpt:
+      'AL code, assisted setup, and scheduling to keep job queues healthy — automatic restarts and email alerts when background jobs fail.',
+    url: 'https://www.lfspl.com/blog/automating-job-queue-monitoring-in-business-central-al-code-assisted-setup-scheduling',
+    tags: ['AL', 'Job Queue', 'Automation'],
+  },
+  {
+    title: 'Amount in Words in Microsoft Dynamics 365 Business Central',
+    date: 'Jul 2025',
+    excerpt:
+      'Converting amounts to words on invoices, payments, and reports — the standard Check Report approach and custom AL implementations.',
+    url: 'https://www.lfspl.com/blog/amount-in-words-in-microsoft-dynamics-365-business-central',
+    tags: ['AL', 'Reports'],
+  },
+  {
+    title: 'Master the Doc. Attachment List FactBox — Complete Integration Guide',
+    date: 'Jun 2025',
+    excerpt:
+      'Integrating the Document Attachment FactBox with custom tables — full AL examples, event subscribers, and troubleshooting the attachment warning.',
+    url: 'https://www.lfspl.com/blog/business-central-doc-attachment-list-factbox-custom-tables-integration',
+    tags: ['AL', 'FactBox', 'UI'],
+  },
+  {
+    title: 'How to Change Subject, Body and Attachment Name while Sending E-Mail',
+    date: 'Nov 2024',
+    excerpt:
+      'Customizing outgoing document emails in Business Central — dynamic subjects, bodies, and attachment file names via codeunit extensions.',
+    url: 'https://www.lfspl.com/blog/how-to-change-subject-body-and-attachment-file-name-while-sending-email',
+    tags: ['AL', 'Email'],
   },
 ]
 
@@ -826,6 +879,60 @@ function Skills() {
   )
 }
 
+function Blog() {
+  return (
+    <section id="blog" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
+      <SectionHeading
+        eyebrow="Blog"
+        title="Things I've written"
+        subtitle="Practical AL development guides published on the Leaping Frog Solutions blog."
+      />
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {BLOGS.map((post, i) => (
+          <a
+            key={post.url}
+            href={post.url}
+            target="_blank"
+            rel="noreferrer"
+            className="glass reveal group relative flex flex-col rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/10"
+            style={{ transitionDelay: `${(i % 3) * 80}ms` }}
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/0 via-transparent to-teal-400/0 opacity-0 transition-opacity duration-300 group-hover:from-indigo-500/5 group-hover:to-teal-400/5 group-hover:opacity-100" />
+            <div className="mb-5 flex items-center justify-between">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-teal-400/15 text-indigo-300 transition-transform duration-300 group-hover:scale-110">
+                <BookOpen size={21} />
+              </span>
+              <span className="font-mono text-xs text-slate-500">{post.date}</span>
+            </div>
+            <h3 className="text-base font-bold text-white transition-colors group-hover:text-indigo-200">
+              {post.title}
+            </h3>
+            <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-400">{post.excerpt}</p>
+            <div className="mt-5 flex items-center justify-between">
+              <div className="flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <Badge key={tag} subtle>
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                Read
+                <ArrowUpRight size={13} />
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <p className="reveal mt-8 text-center text-sm text-slate-500">
+        More on the way — Building Robust Custom APIs, AI-assisted AL development, and C/AL migration guides.
+      </p>
+    </section>
+  )
+}
+
 function Contact() {
   return (
     <footer id="contact" className="relative mt-12 scroll-mt-24 overflow-hidden border-t border-white/5">
@@ -920,6 +1027,7 @@ export default function App() {
         <Experience />
         <Projects />
         <Skills />
+        <Blog />
       </main>
       <Contact />
     </div>
