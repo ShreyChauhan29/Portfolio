@@ -309,6 +309,18 @@ const AGENTS = [
   },
 ]
 
+const TECH_LOGOS = [
+  { src: 'logos/dynamics365.svg', name: '', title: 'Microsoft Dynamics 365' },
+  { src: 'logos/copilot.svg', name: 'Copilot Studio', title: 'Microsoft Copilot Studio' },
+  { src: 'logos/vscode.svg', name: 'VS Code · AL', title: 'Visual Studio Code' },
+  { src: 'logos/powerbi.svg', name: 'Power BI', title: 'Microsoft Power BI' },
+  { src: 'logos/powerapps.svg', name: 'Power Apps', title: 'Microsoft Power Apps' },
+  { src: 'logos/powerautomate.svg', name: 'Power Automate', title: 'Microsoft Power Automate' },
+  { src: 'logos/azure.svg', name: 'Azure', title: 'Microsoft Azure' },
+  { src: 'logos/sqlserver.svg', name: 'SQL Server', title: 'Microsoft SQL Server' },
+  { src: 'logos/github.svg', name: 'GitHub', title: 'GitHub' },
+]
+
 const SKILL_GROUPS = [
   {
     icon: Code2,
@@ -607,7 +619,7 @@ function Navbar() {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
         <a href="#top" className="flex items-center gap-2 text-sm font-bold tracking-tight text-white">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-teal-400 font-mono text-xs text-white shadow-lg shadow-indigo-500/25">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-teal-400 font-mono text-xs text-white shadow-lg shadow-indigo-500/25 transition-transform duration-300 hover:scale-110 hover:rotate-6">
             SC
           </span>
           <span className="hidden sm:inline">
@@ -759,6 +771,30 @@ function Hero() {
         </div>
       </div>
     </section>
+  )
+}
+
+function LogoMarquee() {
+  return (
+    <div className="relative mx-auto max-w-6xl px-5 pb-6 sm:px-8" aria-label="Technologies I work with">
+      <p className="mb-4 text-center font-mono text-xs tracking-widest text-slate-600 uppercase">
+        The stack I build on
+      </p>
+      <div className="marquee">
+        <div className="marquee-track items-center gap-14 py-4">
+          {[...TECH_LOGOS, ...TECH_LOGOS].map((logo, i) => (
+            <span
+              key={`${logo.src}-${i}`}
+              title={logo.title}
+              className="flex shrink-0 items-center gap-3 opacity-55 grayscale-25 transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+            >
+              <img src={logo.src} alt={logo.title} className="h-8 w-auto" loading="lazy" />
+              {logo.name && <span className="text-sm font-semibold whitespace-nowrap text-slate-400">{logo.name}</span>}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -1242,6 +1278,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <LogoMarquee />
         <About />
         <Experience />
         <Projects />
