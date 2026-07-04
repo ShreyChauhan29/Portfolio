@@ -4,14 +4,11 @@ import {
   BarChart3,
   BookOpen,
   Bot,
-  Boxes,
   Braces,
   Briefcase,
   Building2,
   Code2,
-  Cog,
   Container,
-  Cpu,
   Database,
   Download,
   Factory,
@@ -25,10 +22,8 @@ import {
   Phone,
   Plug,
   Receipt,
-  ShieldCheck,
   Ship,
   Sparkles,
-  TrendingUp,
   Webhook,
   Wrench,
   X,
@@ -253,7 +248,6 @@ const BLOGS = [
 
 const AGENTS = [
   {
-    icon: Cog,
     name: 'ProdOrder Architect AI',
     domain: 'Production Planning & Execution',
     gradient: 'from-indigo-500 to-violet-500',
@@ -264,7 +258,6 @@ const AGENTS = [
     anchor: 'prodorder',
   },
   {
-    icon: ShieldCheck,
     name: 'FinSight',
     domain: 'Compliance & Finance Operations',
     gradient: 'from-violet-500 to-fuchsia-500',
@@ -275,7 +268,6 @@ const AGENTS = [
     anchor: 'finsight',
   },
   {
-    icon: TrendingUp,
     name: 'SalesIQ',
     domain: 'Customer Intelligence',
     gradient: 'from-teal-400 to-sky-500',
@@ -286,7 +278,6 @@ const AGENTS = [
     anchor: 'salesiq',
   },
   {
-    icon: Boxes,
     name: 'StockPulse AI',
     domain: 'Inventory & Stock Health',
     gradient: 'from-amber-500 to-rose-500',
@@ -297,7 +288,6 @@ const AGENTS = [
     anchor: 'stockpulse',
   },
   {
-    icon: Cpu,
     name: 'ShopFloor IQ',
     domain: 'Manufacturing Operations',
     gradient: 'from-sky-500 to-indigo-500',
@@ -1069,6 +1059,61 @@ function Blog() {
   )
 }
 
+// Hand-drawn animated glyphs — one per agent, matching what the agent does.
+const AGENT_GLYPHS = {
+  prodorder: (
+    <g className="anim-spin">
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1" />
+    </g>
+  ),
+  finsight: (
+    <>
+      <path d="M12 2l8 3.5v5.5c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z" />
+      <path className="anim-dash" d="M7.5 12.5h2l1.5-3 2 5 1.5-2h2" />
+    </>
+  ),
+  salesiq: (
+    <>
+      <path d="M3.5 20.5h17" />
+      <path className="anim-bar" d="M7 20v-6" />
+      <path className="anim-bar anim-bar-2" d="M12 20v-10" />
+      <path className="anim-bar anim-bar-3" d="M17 20v-14" />
+    </>
+  ),
+  stockpulse: (
+    <>
+      <path d="M21 16V8l-9-5-9 5v8l9 5 9-5z" />
+      <path className="anim-dash" d="M6.5 12h3l1.5-2.5 2 5 1.5-2.5h3" />
+    </>
+  ),
+  shopfloor: (
+    <>
+      <circle className="anim-ping-wave" cx="12" cy="12" r="8" />
+      <rect x="7" y="7" width="10" height="10" rx="2" />
+      <path d="M9.5 2.5v2.5M14.5 2.5v2.5M9.5 19v2.5M14.5 19v2.5M2.5 9.5H5M2.5 14.5H5M19 9.5h2.5M19 14.5h2.5" />
+    </>
+  ),
+}
+
+function AgentLogo({ type, size = 24 }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {AGENT_GLYPHS[type]}
+    </svg>
+  )
+}
+
 function AgentsShowcase() {
   const [active, setActive] = useState(0)
   const [locked, setLocked] = useState(false)
@@ -1081,7 +1126,6 @@ function AgentsShowcase() {
   }, [locked])
 
   const agent = AGENTS[active]
-  const Icon = agent.icon
 
   return (
     <section id="agents" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
@@ -1096,7 +1140,6 @@ function AgentsShowcase() {
           {/* Agent selector */}
           <div className="flex flex-row gap-1 overflow-x-auto border-b border-white/5 p-3 lg:col-span-2 lg:flex-col lg:border-r lg:border-b-0 lg:p-4">
             {AGENTS.map((a, i) => {
-              const AIcon = a.icon
               const isActive = i === active
               return (
                 <button
@@ -1114,7 +1157,7 @@ function AgentsShowcase() {
                       isActive ? '' : 'grayscale'
                     }`}
                   >
-                    <AIcon size={17} />
+                    <AgentLogo type={a.anchor} size={18} />
                   </span>
                   <span className="hidden sm:block">
                     <span className={`block text-sm font-bold ${isActive ? 'text-white' : 'text-slate-300'}`}>
@@ -1138,9 +1181,9 @@ function AgentsShowcase() {
             <div className="animate-fade-up relative">
               <div className="flex items-center gap-4">
                 <span
-                  className={`flex h-13 w-13 items-center justify-center rounded-2xl bg-gradient-to-br p-3.5 text-white shadow-lg ${agent.gradient}`}
+                  className={`flex h-13 w-13 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg ${agent.gradient}`}
                 >
-                  <Icon size={24} />
+                  <AgentLogo type={agent.anchor} size={26} />
                 </span>
                 <div>
                   <h3 className="text-xl font-bold text-white">{agent.name}</h3>

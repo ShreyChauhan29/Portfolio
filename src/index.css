@@ -117,6 +117,62 @@ body {
   }
 }
 
+/* Animated agent logo glyphs */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.anim-spin {
+  animation: spin-slow 9s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -52;
+  }
+}
+.anim-dash {
+  stroke-dasharray: 40 12;
+  animation: dash-flow 2.6s linear infinite;
+}
+@keyframes bar-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.anim-bar {
+  transform-origin: bottom;
+  transform-box: fill-box;
+  animation: bar-pulse 2.2s ease-in-out infinite;
+}
+.anim-bar-2 {
+  animation-delay: 0.3s;
+}
+.anim-bar-3 {
+  animation-delay: 0.6s;
+}
+@keyframes ping-wave {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.55);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+.anim-ping-wave {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: ping-wave 2.2s ease-out infinite;
+}
+
 /* Glass card base */
 .glass {
   background: rgba(255, 255, 255, 0.03);

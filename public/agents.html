@@ -72,6 +72,21 @@
   .agent-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .monogram { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center;
     justify-content: center; font-weight: 800; font-size: 18px; color: #fff; flex-shrink: 0; }
+  .monogram svg { width: 30px; height: 30px; }
+  /* animated agent glyphs */
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  .anim-spin { animation: spin-slow 9s linear infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes dash-flow { to { stroke-dashoffset: -52; } }
+  .anim-dash { stroke-dasharray: 40 12; animation: dash-flow 2.6s linear infinite; }
+  @keyframes bar-pulse { 0%, 100% { transform: scaleY(0.5); } 50% { transform: scaleY(1); } }
+  .anim-bar { transform-origin: bottom; transform-box: fill-box; animation: bar-pulse 2.2s ease-in-out infinite; }
+  .anim-bar-2 { animation-delay: 0.3s; }
+  .anim-bar-3 { animation-delay: 0.6s; }
+  @keyframes ping-wave { 0% { opacity: 0.7; transform: scale(0.55); } 100% { opacity: 0; transform: scale(1.5); } }
+  .anim-ping-wave { transform-origin: center; transform-box: fill-box; animation: ping-wave 2.2s ease-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .anim-spin, .anim-dash, .anim-bar, .anim-ping-wave, .marquee-track { animation: none; }
+  }
   .m-1 { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
   .m-2 { background: linear-gradient(135deg, #8b5cf6, #d946ef); }
   .m-3 { background: linear-gradient(135deg, #2dd4bf, #0ea5e9); }
@@ -173,7 +188,7 @@
   <!-- ProdOrder Architect AI -->
   <article class="agent" id="prodorder">
     <div class="agent-head">
-      <span class="monogram m-1">PA</span>
+      <span class="monogram m-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="anim-spin"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></g></svg></span>
       <div>
         <h2>ProdOrder Architect AI</h2>
         <p class="domain">Production planning &amp; execution</p>
@@ -222,7 +237,7 @@
   <!-- FinSight -->
   <article class="agent" id="finsight">
     <div class="agent-head">
-      <span class="monogram m-2">FS</span>
+      <span class="monogram m-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 3.5v5.5c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path class="anim-dash" d="M7.5 12.5h2l1.5-3 2 5 1.5-2h2"/></svg></span>
       <div>
         <h2>FinSight</h2>
         <p class="domain">Compliance &amp; finance operations</p>
@@ -271,7 +286,7 @@
   <!-- SalesIQ -->
   <article class="agent" id="salesiq">
     <div class="agent-head">
-      <span class="monogram m-3">SQ</span>
+      <span class="monogram m-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5h17"/><path class="anim-bar" d="M7 20v-6"/><path class="anim-bar anim-bar-2" d="M12 20v-10"/><path class="anim-bar anim-bar-3" d="M17 20v-14"/></svg></span>
       <div>
         <h2>SalesIQ</h2>
         <p class="domain">Customer intelligence</p>
@@ -320,7 +335,7 @@
   <!-- StockPulse AI -->
   <article class="agent" id="stockpulse">
     <div class="agent-head">
-      <span class="monogram m-4">SP</span>
+      <span class="monogram m-4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/><path class="anim-dash" d="M6.5 12h3l1.5-2.5 2 5 1.5-2.5h3"/></svg></span>
       <div>
         <h2>StockPulse AI</h2>
         <p class="domain">Inventory &amp; stock health</p>
@@ -369,7 +384,7 @@
   <!-- ShopFloor IQ -->
   <article class="agent" id="shopfloor">
     <div class="agent-head">
-      <span class="monogram m-5">SF</span>
+      <span class="monogram m-5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="anim-ping-wave" cx="12" cy="12" r="8"/><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9.5 2.5v2.5M14.5 2.5v2.5M9.5 19v2.5M14.5 19v2.5M2.5 9.5H5M2.5 14.5H5M19 9.5h2.5M19 14.5h2.5"/></svg></span>
       <div>
         <h2>ShopFloor IQ</h2>
         <p class="domain">Manufacturing operations</p>
