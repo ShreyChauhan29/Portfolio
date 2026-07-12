@@ -695,7 +695,18 @@ function Hero() {
       </div>
 
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <div className="animate-fade-up" style={{ animationDelay: '0ms' }}>
+        <div className="animate-fade-up mb-7 flex justify-center" style={{ animationDelay: '0ms' }}>
+          <div className="relative">
+            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-indigo-500 via-violet-500 to-teal-400 opacity-80 blur-[6px]" />
+            <img
+              src="profile.jpg"
+              alt="Shrey Chauhan — Microsoft Dynamics 365 Business Central Developer"
+              className="relative h-36 w-36 rounded-full border-2 border-white/20 object-cover object-top shadow-2xl sm:h-40 sm:w-40"
+            />
+          </div>
+        </div>
+
+        <div className="animate-fade-up" style={{ animationDelay: '60ms' }}>
           <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-teal-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-60" />
