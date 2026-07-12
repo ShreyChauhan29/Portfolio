@@ -68,7 +68,8 @@ const EXPERIENCE = [
     bullets: [
       'Design, customize, and deploy Microsoft Dynamics 365 Business Central and NAV solutions across 35+ client projects spanning manufacturing, pharmaceuticals, healthcare, chemicals, F&B, shipping, and NGO sectors.',
       'Built 10 independent modules from scratch — EXIM, E-Way Bill, MSME, Advance Payment, Terms & Conditions, Plant & Maintenance, Material Requisition, Donation Transaction, Branch Accounting, and Transfer Order Dimension Updation.',
-      'Led code and data migration for NAV → Business Central projects including ALTA, TeamLease, Medilux, and KL Dugar, plus implementations for SGMT, Vijaya Diagnostic Centre, and Equitron Medica.',
+      'Led code and data migration for NAV → Business Central projects across the pharmaceutical, staffing services, and F&B manufacturing sectors, plus end-to-end implementations in the NGO, healthcare diagnostics, and medical equipment sectors.',
+      'Designed and built five AI agents on Microsoft Copilot Studio for Business Central — production planning, finance & compliance, customer intelligence, inventory, and manufacturing operations — powered by custom AL API pages with human-in-the-loop design.',
       'Developed custom APIs (Donation Transaction API with full documentation) and integrated third-party services: E-Way Bill and E-Invoicing via GSTRobo, WhatsApp, and live container tracking.',
       'Delivered complex reports — Cash Book Ledger, MRP, lot-wise inventory ageing and valuation, aged AR/AP, payment export with UTR updation — plus Excel import/export frameworks with validation.',
       'Mentor three associate consultants, authored 11 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
