@@ -6,7 +6,7 @@
   // After creating a free account at goatcounter.com, put your site code here
   // (e.g. 'shreychauhan' for https://shreychauhan.goatcounter.com) to collect
   // visitor stats from EVERY device into your private dashboard.
-  var GOATCOUNTER_CODE = ''
+  var GOATCOUNTER_CODE = 'shreychauhan'
 
   var LOG_KEY = 'sc-visitor-log'
   var MAX_EVENTS = 800
