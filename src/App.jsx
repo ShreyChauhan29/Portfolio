@@ -38,7 +38,7 @@ const LINKS = {
   linkedin: 'https://www.linkedin.com/in/shrey-chauhan-67a628227/',
   email: 'shreychauhan15312902@gmail.com',
   phone: '+91 84609 95300',
-  resume: 'Shrey-Chauhan-Resume.docx',
+  resume: 'Shrey-Chauhan-Resume.pdf',
 }
 
 const NAV_ITEMS = [
