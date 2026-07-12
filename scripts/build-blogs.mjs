@@ -153,6 +153,7 @@ const template = (meta, body) => `<!doctype html>
 </style>
 </head>
 <body>
+<script defer src="../site-guard.js"></script>
 <div class="backdrop"></div>
 <div class="glowbar"></div>
 <div class="wrap">

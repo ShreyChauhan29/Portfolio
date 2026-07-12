@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Access Denied | Shrey Chauhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: #060810; color: #cbd5e1; font-family: 'Inter', system-ui, sans-serif; text-align: center; padding: 24px; }
+  .glow { position: fixed; top: -200px; left: 50%; transform: translateX(-50%); width: 640px; height: 400px;
+    border-radius: 9999px; background: rgba(244, 63, 94, 0.12); filter: blur(130px); pointer-events: none; }
+  .card { position: relative; max-width: 520px; border: 1px solid rgba(244,63,94,0.25);
+    background: rgba(255,255,255,0.03); border-radius: 24px; padding: 44px 34px; backdrop-filter: blur(12px); }
+  .icon { width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 18px; display: flex; align-items: center;
+    justify-content: center; background: linear-gradient(135deg, #f43f5e, #f59e0b); font-size: 28px;
+    box-shadow: 0 12px 32px rgba(244,63,94,0.35); animation: shake 2.4s ease-in-out infinite; }
+  @keyframes shake { 0%,88%,100% { transform: rotate(0) } 90% { transform: rotate(-6deg) } 94% { transform: rotate(6deg) } 98% { transform: rotate(-3deg) } }
+  h1 { margin: 0 0 8px; font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  p { margin: 6px 0; font-size: 15px; color: #94a3b8; line-height: 1.6; }
+  .path { display: inline-block; margin: 12px 0; padding: 6px 14px; border-radius: 9999px;
+    background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.25); color: #fda4af;
+    font: 500 12.5px 'JetBrains Mono', monospace; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .count { color: #2dd4bf; font-weight: 600; }
+  a.home { display: inline-flex; margin-top: 18px; padding: 12px 26px; border-radius: 14px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6); color: #fff; text-decoration: none;
+    font-weight: 700; font-size: 14px; box-shadow: 0 12px 30px rgba(99,102,241,0.35); transition: transform .2s; }
+  a.home:hover { transform: scale(1.05); }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="card">
+  <div class="icon">🚫</div>
+  <h1>Access Denied</h1>
+  <p>The address you entered doesn't exist on this site. Modifying the URL manually isn't allowed.</p>
+  <span class="path" id="bad-path"></span>
+  <p>Taking you back to the portfolio in <span class="count" id="count">6</span> seconds…</p>
+  <a class="home" href="/Portfolio/">← Go to Home</a>
+</div>
+<script src="/Portfolio/site-guard.js"></script>
+<script>
+  document.getElementById('bad-path').textContent = location.pathname
+  if (window.__scLog) window.__scLog('url-tamper', location.pathname)
+  var n = 6
+  var el = document.getElementById('count')
+  var iv = setInterval(function () {
+    n -= 1
+    el.textContent = n
+    if (n <= 0) { clearInterval(iv); location.replace('/Portfolio/') }
+  }, 1000)
+</script>
+</body>
+</html>
