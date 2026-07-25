@@ -173,6 +173,44 @@ body {
   animation: ping-wave 2.2s ease-out infinite;
 }
 
+/* Flowing gradient text (ReactBits "Gradient Text" vibe) */
+@keyframes gradient-pan {
+  to {
+    background-position: 200% 50%;
+  }
+}
+.gradient-text.gradient-flow {
+  background-size: 200% auto;
+  animation: gradient-pan 6s linear infinite;
+}
+
+/* Shiny sweep text (ReactBits "Shiny Text" vibe) */
+.shiny-text {
+  background: linear-gradient(
+    110deg,
+    rgba(148, 163, 184, 0.65) 35%,
+    #ffffff 50%,
+    rgba(148, 163, 184, 0.65) 65%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 5s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: -250% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-flow,
+  .shiny-text {
+    animation: none;
+  }
+}
+
 /* Glass card base */
 .glass {
   background: rgba(255, 255, 255, 0.03);

@@ -596,6 +596,92 @@ function CursorGlow() {
   return <div ref={glowRef} className="cursor-glow" aria-hidden="true" />
 }
 
+// Flowing layered sine-wave band (Antigravity-style): several gradient waves
+// drift across each other on a canvas. GPU-cheap; honors reduced motion.
+function FlowWaves() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    let raf
+    let w = 0
+    let h = 0
+    let t = 0
+
+    const WAVES = [
+      { amp: 26, len: 260, speed: 0.6, off: 0.5, col: [129, 140, 248], width: 1.6 },
+      { amp: 34, len: 340, speed: -0.45, off: 0.52, col: [139, 92, 246], width: 1.6 },
+      { amp: 20, len: 200, speed: 0.82, off: 0.48, col: [45, 212, 191], width: 1.3 },
+      { amp: 44, len: 430, speed: 0.32, off: 0.55, col: [99, 102, 241], width: 1 },
+      { amp: 16, len: 165, speed: -0.72, off: 0.5, col: [192, 132, 252], width: 1 },
+    ]
+
+    const resize = () => {
+      w = canvas.clientWidth
+      h = canvas.clientHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    const drawWave = (wv, time) => {
+      ctx.beginPath()
+      for (let x = 0; x <= w; x += 8) {
+        const y =
+          h * wv.off +
+          Math.sin(x / wv.len + time * wv.speed) * wv.amp +
+          Math.sin(x / (wv.len * 0.5) + time * wv.speed * 1.7) * wv.amp * 0.3
+        if (x === 0) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      }
+      const [r, g, b] = wv.col
+      const grad = ctx.createLinearGradient(0, 0, w, 0)
+      grad.addColorStop(0, `rgba(${r},${g},${b},0)`)
+      grad.addColorStop(0.5, `rgba(${r},${g},${b},0.55)`)
+      grad.addColorStop(1, `rgba(${r},${g},${b},0)`)
+      ctx.strokeStyle = grad
+      ctx.lineWidth = wv.width
+      ctx.stroke()
+    }
+
+    const frame = () => {
+      ctx.clearRect(0, 0, w, h)
+      t += 0.006
+      for (const wv of WAVES) drawWave(wv, t)
+      raf = requestAnimationFrame(frame)
+    }
+
+    resize()
+    window.addEventListener('resize', resize)
+    for (const wv of WAVES) drawWave(wv, 0) // paint an immediate first frame
+    if (!reduce) raf = requestAnimationFrame(frame)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="block h-full w-full" aria-hidden="true" />
+}
+
+function WaveBand() {
+  return (
+    <section className="relative overflow-hidden py-14 sm:py-16">
+      <div className="reveal mx-auto max-w-3xl px-5 text-center">
+        <p className="shiny-text text-xl font-semibold tracking-tight sm:text-3xl">
+          From insight to action — engineered in AL.
+        </p>
+      </div>
+      <div className="relative mt-6 h-52 w-full sm:h-60">
+        <FlowWaves />
+      </div>
+    </section>
+  )
+}
+
 // ---------------------------------------------------------------------------
 // Building blocks
 // ---------------------------------------------------------------------------
@@ -760,7 +846,7 @@ function Hero() {
           className="animate-fade-up mt-6 text-5xl font-extrabold tracking-tight text-white sm:text-7xl"
           style={{ animationDelay: '120ms' }}
         >
-           <span className="gradient-text">Shrey Chauhan</span>
+          <span className="gradient-text gradient-flow">Shrey Chauhan</span>
         </h1>
 
         <p
@@ -1383,6 +1469,7 @@ export default function App() {
         <Skills />
         <Blog />
         <AgentsShowcase />
+        <WaveBand />
       </main>
       <Contact />
     </div>
