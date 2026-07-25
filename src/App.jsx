@@ -7,23 +7,30 @@ import {
   Braces,
   Briefcase,
   Building2,
+  Clock,
   Code2,
   Container,
   Database,
   Download,
   Factory,
+  FileCode2,
   FileSpreadsheet,
   Github,
   GraduationCap,
+  Hash,
   Linkedin,
   Mail,
   MapPin,
   Menu,
+  PanelRight,
   Phone,
   Plug,
   Receipt,
+  Rocket,
+  ShieldAlert,
   Ship,
   Sparkles,
+  TriangleAlert,
   Webhook,
   Wrench,
   X,
@@ -55,7 +62,7 @@ const STATS = [
   { value: '2.5+', label: 'Years in D365 BC & NAV' },
   { value: '35+', label: 'Client Projects Delivered' },
   { value: '10', label: 'Independent Modules Built' },
-  { value: '11', label: 'Technical Blogs Written' },
+  { value: '12', label: 'Technical Blogs Written' },
 ]
 
 const EXPERIENCE = [
@@ -72,7 +79,7 @@ const EXPERIENCE = [
       'Designed and built five AI agents on Microsoft Copilot Studio for Business Central — production planning, finance & compliance, customer intelligence, inventory, and manufacturing operations — powered by custom AL API pages with human-in-the-loop design.',
       'Developed custom APIs (Donation Transaction API with full documentation) and integrated third-party services: E-Way Bill and E-Invoicing via GSTRobo, WhatsApp, and live container tracking.',
       'Delivered complex reports — Cash Book Ledger, MRP, lot-wise inventory ageing and valuation, aged AR/AP, payment export with UTR updation — plus Excel import/export frameworks with validation.',
-      'Mentor three associate consultants, authored 11 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
+      'Mentor three associate consultants, authored 12 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
       'Manage Azure environments and users, work with DevOps builds and deployments, and handle databases via SQL Server Management Studio.',
     ],
     tags: ['AL', 'Business Central', 'Dynamics NAV', 'SQL Server', 'REST APIs', 'Azure', 'Power Platform'],
@@ -158,6 +165,18 @@ const PROJECTS = [
 
 const BLOGS = [
   {
+    icon: Braces,
+    gradient: 'from-indigo-500 to-teal-400',
+    title: 'Converting BC Table Data into 14 API-Ready Payload Formats',
+    date: 'Jul 2026',
+    excerpt:
+      'One Customer record → JSON, Base64, byte arrays, hex, multipart, zip, hashes, HMAC signatures, and AES encryption — all SaaS-safe with no DotNet.',
+    url: 'blog/bc-json-payload-formats.html',
+    tags: ['AL', 'API', 'JSON', 'Integration'],
+  },
+  {
+    icon: ShieldAlert,
+    gradient: 'from-rose-500 to-orange-400',
     title: 'Understanding [TryFunction] in AL for Business Central',
     date: 'Jun 2026',
     excerpt:
@@ -166,6 +185,8 @@ const BLOGS = [
     tags: ['AL', 'Error Handling'],
   },
   {
+    icon: Webhook,
+    gradient: 'from-violet-500 to-fuchsia-400',
     title: 'Building Robust Custom APIs in Business Central',
     date: 'Mar 2026',
     excerpt:
@@ -174,6 +195,8 @@ const BLOGS = [
     tags: ['AL', 'API', 'Integration'],
   },
   {
+    icon: Database,
+    gradient: 'from-teal-400 to-sky-500',
     title: 'Mastering RecordRef & FieldRef in Business Central',
     date: 'Jan 2026',
     excerpt:
@@ -182,6 +205,8 @@ const BLOGS = [
     tags: ['AL', 'RecordRef'],
   },
   {
+    icon: Clock,
+    gradient: 'from-amber-500 to-rose-500',
     title: 'Automating Job Queue Monitoring in Business Central',
     date: 'Dec 2025',
     excerpt:
@@ -190,6 +215,8 @@ const BLOGS = [
     tags: ['AL', 'Job Queue', 'Automation'],
   },
   {
+    icon: FileCode2,
+    gradient: 'from-sky-500 to-indigo-500',
     title: 'Migrating from C-AL to AL Using Txt2AL',
     date: 'Oct 2025',
     excerpt:
@@ -198,6 +225,8 @@ const BLOGS = [
     tags: ['C/AL', 'Txt2AL', 'Migration'],
   },
   {
+    icon: Sparkles,
+    gradient: 'from-fuchsia-500 to-indigo-500',
     title: 'Boost Your AL Coding Productivity with AI Extensions',
     date: 'Sep 2025',
     excerpt:
@@ -206,6 +235,8 @@ const BLOGS = [
     tags: ['AI', 'Copilot', 'VS Code'],
   },
   {
+    icon: Hash,
+    gradient: 'from-teal-400 to-emerald-500',
     title: 'Amount in Words in Microsoft Dynamics 365 Business Central',
     date: 'Jul 2025',
     excerpt:
@@ -214,6 +245,8 @@ const BLOGS = [
     tags: ['AL', 'Reports'],
   },
   {
+    icon: Rocket,
+    gradient: 'from-indigo-500 to-violet-500',
     title: 'Upgrading Customized C-AL to Business Central',
     date: 'Jul 2025',
     excerpt:
@@ -222,6 +255,8 @@ const BLOGS = [
     tags: ['Upgrade', 'C/AL'],
   },
   {
+    icon: TriangleAlert,
+    gradient: 'from-amber-500 to-orange-500',
     title: 'How to Remove the Warning of Document Attachment FactBox',
     date: 'Jun 2025',
     excerpt:
@@ -230,6 +265,8 @@ const BLOGS = [
     tags: ['AL', 'FactBox'],
   },
   {
+    icon: PanelRight,
+    gradient: 'from-sky-500 to-teal-400',
     title: 'How to Create a FactBox in Business Central',
     date: 'Jun 2025',
     excerpt:
@@ -238,6 +275,8 @@ const BLOGS = [
     tags: ['AL', 'UI'],
   },
   {
+    icon: Mail,
+    gradient: 'from-violet-500 to-sky-500',
     title: 'How to Change Subject, Body and Attachment Name while Sending E-Mail',
     date: 'Nov 2024',
     excerpt:
@@ -1032,41 +1071,45 @@ function Blog() {
       />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {BLOGS.map((post, i) => (
-          <a
-            key={post.url}
-            href={post.url}
-            className="glass reveal group relative flex flex-col rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/10"
-            style={{ transitionDelay: `${(i % 3) * 80}ms` }}
-          >
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/0 via-transparent to-teal-400/0 opacity-0 transition-opacity duration-300 group-hover:from-indigo-500/5 group-hover:to-teal-400/5 group-hover:opacity-100" />
-            <div className="mb-5 flex items-center justify-between">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-teal-400/15 text-indigo-300 transition-transform duration-300 group-hover:scale-110">
-                <BookOpen size={21} />
-              </span>
-              <span className="font-mono text-xs text-slate-500">{post.date}</span>
-            </div>
-            <h3 className="text-base font-bold text-white transition-colors group-hover:text-indigo-200">
-              {post.title}
-            </h3>
-            <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-400">{post.excerpt}</p>
-            <div className="mt-5 flex items-center justify-between">
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} subtle>
-                    {tag}
-                  </Badge>
-                ))}
+        {BLOGS.map((post, i) => {
+          const Icon = post.icon || BookOpen
+          return (
+            <a
+              key={post.url}
+              href={post.url}
+              className="glass reveal group relative flex flex-col rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/10"
+              style={{ transitionDelay: `${(i % 3) * 80}ms` }}
+            >
+              <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/0 via-transparent to-teal-400/0 opacity-0 transition-opacity duration-300 group-hover:from-indigo-500/5 group-hover:to-teal-400/5 group-hover:opacity-100" />
+              <div className="mb-5 flex items-center justify-between">
+                <span
+                  className={`flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br text-white shadow-lg transition-transform duration-300 group-hover:scale-110 ${post.gradient || 'from-indigo-500 to-teal-400'}`}
+                >
+                  <Icon size={20} />
+                </span>
+                <span className="font-mono text-xs text-slate-500">{post.date}</span>
               </div>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                Read
-                <ArrowUpRight size={13} />
-              </span>
-            </div>
-          </a>
-        ))}
+              <h3 className="text-base font-bold text-white transition-colors group-hover:text-indigo-200">
+                {post.title}
+              </h3>
+              <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-400">{post.excerpt}</p>
+              <div className="mt-5 flex items-center justify-between">
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <Badge key={tag} subtle>
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-teal-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  Read
+                  <ArrowUpRight size={13} />
+                </span>
+              </div>
+            </a>
+          )
+        })}
       </div>
-
     </section>
   )
 }
