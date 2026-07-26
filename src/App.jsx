@@ -53,7 +53,7 @@ const NAV_ITEMS = [
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Blog', href: '#blog' },
+  { label: 'Blog', href: 'blogs.html' },
   { label: 'Agents', href: 'agents.html' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -1153,11 +1153,11 @@ function Blog() {
       <SectionHeading
         eyebrow="Blog"
         title="Things I've written"
-        subtitle="Practical AL and Business Central development guides — read them right here."
+        subtitle={`${BLOGS.length} practical AL and Business Central development guides — here are the latest.`}
       />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {BLOGS.map((post, i) => {
+        {BLOGS.slice(0, 3).map((post, i) => {
           const Icon = post.icon || BookOpen
           return (
             <a
@@ -1195,6 +1195,17 @@ function Blog() {
             </a>
           )
         })}
+      </div>
+
+      <div className="reveal mt-10 flex justify-center">
+        <a
+          href="blogs.html"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 px-6 py-3 text-sm font-semibold text-white shadow-xl shadow-indigo-500/30 transition-all hover:scale-[1.04] hover:shadow-indigo-500/50"
+        >
+          <BookOpen size={17} />
+          View all {BLOGS.length} posts
+          <ArrowUpRight size={15} />
+        </a>
       </div>
     </section>
   )

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog | Shrey Chauhan</title>
+<meta name="description" content="Practical Microsoft Dynamics 365 Business Central & AL development guides by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #060810; color: #cbd5e1; font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .backdrop { position: fixed; inset: 0; pointer-events: none; opacity: 0.025;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 56px 56px; }
+  .glowbar { position: fixed; top: -260px; left: 50%; transform: translateX(-50%); width: 760px; height: 440px;
+    border-radius: 9999px; pointer-events: none; background: rgba(79,70,229,0.16); filter: blur(140px); }
+  .wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 44px 22px 90px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; font-weight: 800; font-size: 14px; }
+  .brand .sc { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #fff; background: linear-gradient(135deg,#6366f1,#2dd4bf);
+    box-shadow: 0 8px 20px rgba(99,102,241,0.3); transition: transform .3s; }
+  .brand:hover .sc { transform: scale(1.12) rotate(6deg); }
+  .brand .dev { color: #818cf8; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 12px; transition: all .2s; }
+  .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .head { text-align: center; margin: 46px 0 8px; }
+  .eyebrow { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #a5b4fc;
+    border: 1px solid rgba(129,140,248,0.25); background: rgba(129,140,248,0.06); padding: 6px 16px; border-radius: 9999px; margin-bottom: 16px; }
+  h1 { margin: 0 0 10px; font-size: clamp(2rem,5vw,3rem); font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+  .grad { background: linear-gradient(120deg,#818cf8,#c084fc,#2dd4bf); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { max-width: 620px; margin: 0 auto; color: #94a3b8; font-size: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-top: 44px; }
+  .tile { position: relative; display: flex; flex-direction: column; text-decoration: none; border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.025); border-radius: 20px; padding: 24px; transition: transform .3s, border-color .3s, box-shadow .3s; backdrop-filter: blur(12px); }
+  .tile:hover { transform: translateY(-6px); border-color: rgba(129,140,248,0.35); box-shadow: 0 24px 50px -20px rgba(99,102,241,0.4); }
+  .tile-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .tile-ico { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff;
+    box-shadow: 0 10px 24px -8px rgba(0,0,0,0.6); transition: transform .3s; }
+  .tile-ico svg { width: 22px; height: 22px; }
+  .tile:hover .tile-ico { transform: scale(1.1); }
+  .tile-date { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #64748b; }
+  .tile-title { margin: 0 0 8px; font-size: 17px; font-weight: 700; color: #fff; line-height: 1.35; letter-spacing: -0.01em; }
+  .tile:hover .tile-title { color: #c7d2fe; }
+  .tile-ex { margin: 0; flex: 1; font-size: 13.5px; line-height: 1.65; color: #94a3b8; }
+  .tile-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 18px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #94a3b8; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03); border-radius: 6px; padding: 2px 8px; }
+  .read { font-size: 12px; font-weight: 700; color: #2dd4bf; opacity: 0; transition: opacity .3s; white-space: nowrap; }
+  .tile:hover .read { opacity: 1; }
+  .foot { margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; color: #64748b; font-size: 13px; }
+  .foot a { color: #818cf8; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<script defer src="site-guard.js"></script>
+<div class="backdrop"></div>
+<div class="glowbar"></div>
+<div class="wrap">
+  <div class="topbar">
+    <a class="brand" href="./"><span class="sc">SC</span>shrey<span class="dev">.dev</span></a>
+    <a class="back" href="./">&#8592; Back to portfolio</a>
+  </div>
+
+  <div class="head">
+    <span class="eyebrow">Blog</span>
+    <h1>Things I&#8217;ve <span class="grad">written</span></h1>
+    <p class="lead">Practical AL and Microsoft Dynamics 365 Business Central development guides — 12 in-depth articles, all hosted here.</p>
+  </div>
+
+  <div class="grid">
+    <a class="tile" href="blog/bc-json-payload-formats.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#6366f1,#2dd4bf)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4H6a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1"/><path d="M17 4h1a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-1"/></svg></span>
+        <span class="tile-date">July 2026</span>
+      </div>
+      <h2 class="tile-title">Converting BC Table Data into 14 API-Ready Payload Formats</h2>
+      <p class="tile-ex">One Customer record → JSON, Base64, byte arrays, hex, multipart, zip, hashes, HMAC signatures, and AES encryption — all SaaS-safe with no DotNet.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">API</span><span class="tag">JSON</span><span class="tag">Integration</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/understanding-tryfunction-in-al.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#f43f5e,#fb923c)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5v5.5c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M9.5 12l2 2 3.5-4"/></svg></span>
+        <span class="tile-date">June 2026</span>
+      </div>
+      <h2 class="tile-title">Understanding [TryFunction] in AL for Business Central</h2>
+      <p class="tile-ex">How the [TryFunction] attribute really works — graceful error handling in AL, when to use it, common pitfalls, and patterns for reliable code.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">Error Handling</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/building-robust-custom-apis.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#8b5cf6,#e879f9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg></span>
+        <span class="tile-date">March 2026</span>
+      </div>
+      <h2 class="tile-title">Building Robust Custom APIs in Business Central</h2>
+      <p class="tile-ex">Designing custom API pages and codeunit-based endpoints in AL — clean contracts, validation, and integration-ready responses.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">API</span><span class="tag">Integration</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/mastering-recordref-fieldref.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#2dd4bf,#0ea5e9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+        <span class="tile-date">January 2026</span>
+      </div>
+      <h2 class="tile-title">Mastering RecordRef & FieldRef in Business Central</h2>
+      <p class="tile-ex">Dynamic data access with RecordRef and FieldRef — generic validation, rule-based processing, and record comparison that works across any table.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">RecordRef</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/automating-job-queue-monitoring.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <span class="tile-date">December 2025</span>
+      </div>
+      <h2 class="tile-title">Automating Job Queue Monitoring in Business Central</h2>
+      <p class="tile-ex">AL code, assisted setup, and scheduling to keep job queues healthy — automatic restarts and email alerts when background jobs fail.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">Job Queue</span><span class="tag">Automation</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/migrating-cal-to-al-txt2al.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 12l-2 2 2 2M14 12l2 2-2 2"/></svg></span>
+        <span class="tile-date">October 2025</span>
+      </div>
+      <h2 class="tile-title">Migrating from C-AL to AL Using Txt2AL</h2>
+      <p class="tile-ex">Converting classic NAV C/AL objects into AL extensions with the Txt2AL tool — export, conversion, and post-conversion cleanup workflow.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">C/AL</span><span class="tag">Txt2AL</span><span class="tag">Migration</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/boost-al-productivity-with-ai-extensions.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#e879f9,#6366f1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+        <span class="tile-date">September 2025</span>
+      </div>
+      <h2 class="tile-title">Boost Your AL Coding Productivity with AI Extensions</h2>
+      <p class="tile-ex">Using GitHub Copilot and Gemini Code Assist in VS Code to speed up AL development — setup, prompting, and practical wins.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AI</span><span class="tag">Copilot</span><span class="tag">VS Code</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/amount-in-words.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#2dd4bf,#10b981)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg></span>
+        <span class="tile-date">July 2025</span>
+      </div>
+      <h2 class="tile-title">Amount in Words in Microsoft Dynamics 365 Business Central</h2>
+      <p class="tile-ex">Converting amounts to words on invoices, payments, and reports — the standard Check Report approach and custom AL implementations.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">Reports</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/upgrading-customized-cal-to-business-central.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 8-11c3 0 5 2 5 5a22 22 0 0 1-11 8z"/></svg></span>
+        <span class="tile-date">July 2025</span>
+      </div>
+      <h2 class="tile-title">Upgrading Customized C-AL to Business Central</h2>
+      <p class="tile-ex">The end-to-end upgrade path for customized C/AL solutions to modern Business Central — objects, data, and post-upgrade checks.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">Upgrade</span><span class="tag">C/AL</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/remove-doc-attachment-factbox-warning.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#f59e0b,#f97316)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+        <span class="tile-date">June 2025</span>
+      </div>
+      <h2 class="tile-title">How to Remove the Warning of Document Attachment FactBox</h2>
+      <p class="tile-ex">Fixing the Document Attachment FactBox warning when wiring it to custom tables — event subscribers and a clean integration pattern.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">FactBox</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/how-to-create-a-factbox.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#0ea5e9,#2dd4bf)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg></span>
+        <span class="tile-date">June 2025</span>
+      </div>
+      <h2 class="tile-title">How to Create a FactBox in Business Central</h2>
+      <p class="tile-ex">Building FactBoxes from scratch — page parts, wiring them to list and card pages, and surfacing related data where users need it.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">UI</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+    <a class="tile" href="blog/customize-email-subject-body-attachment.html">
+      <div class="tile-top">
+        <span class="tile-ico" style="background:linear-gradient(135deg,#8b5cf6,#0ea5e9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>
+        <span class="tile-date">November 2024</span>
+      </div>
+      <h2 class="tile-title">How to Change Subject, Body and Attachment Name while Sending E-Mail</h2>
+      <p class="tile-ex">Customizing outgoing document emails in Business Central — dynamic subjects, bodies, and attachment file names via codeunit extensions.</p>
+      <div class="tile-foot"><div class="tags"><span class="tag">AL</span><span class="tag">Email</span></div><span class="read">Read &#8599;</span></div>
+    </a>
+  </div>
+
+  <div class="foot">
+    <span>&copy; 2026 Shrey Chauhan</span>
+    <a href="./">shrey.dev &#8599;</a>
+  </div>
+</div>
+</body>
+</html>
