@@ -194,6 +194,12 @@ export default function Lightfall({
   const rendererRef = useRef(null)
   const mouseTargetRef = useRef([0, 0])
   const lastTimeRef = useRef(0)
+  const pausedRef = useRef(paused)
+
+  // React to paused changes without rebuilding the WebGL context.
+  useEffect(() => {
+    pausedRef.current = paused
+  }, [paused])
 
   useEffect(() => {
     const container = containerRef.current
@@ -289,7 +295,7 @@ export default function Lightfall({
       } else {
         lastTimeRef.current = t
       }
-      if (!paused && programRef.current && meshRef.current) {
+      if (!pausedRef.current && !document.hidden && programRef.current && meshRef.current) {
         try {
           renderer.render({ scene: meshRef.current })
         } catch (e) {

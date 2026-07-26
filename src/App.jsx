@@ -460,7 +460,7 @@ function ParticleField() {
       canvas.style.width = `${w}px`
       canvas.style.height = `${h}px`
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      const count = Math.min(170, Math.floor((w * h) / 11000))
+      const count = Math.min(140, Math.floor((w * h) / 14000))
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -479,63 +479,79 @@ function ParticleField() {
       mouse.y = -1e4
     }
 
-    const LINK_DIST = 135
-    const MOUSE_DIST = 230
+    const LINK_DIST = 125
+    const LINK_DIST2 = LINK_DIST * LINK_DIST
+    const MOUSE_DIST = 210
+    const MOUSE_DIST2 = MOUSE_DIST * MOUSE_DIST
 
     const tick = () => {
+      if (document.hidden) {
+        raf = requestAnimationFrame(tick)
+        return
+      }
       if (w !== window.innerWidth || h !== window.innerHeight) init()
       ctx.clearRect(0, 0, w, h)
 
+      // move + integrate (one batched fill for all dots — 1 draw call, not N)
+      ctx.beginPath()
       for (const p of particles) {
-        // gentle pull toward the cursor when it is nearby
         const dx = mouse.x - p.x
         const dy = mouse.y - p.y
-        const dist = Math.hypot(dx, dy)
-        if (dist < MOUSE_DIST && dist > 1) {
+        const d2 = dx * dx + dy * dy
+        if (d2 < MOUSE_DIST2 && d2 > 1) {
+          const dist = Math.sqrt(d2)
           p.vx += (dx / dist) * 0.012
           p.vy += (dy / dist) * 0.012
         }
-        // speed cap keeps the pull from snowballing
-        const speed = Math.hypot(p.vx, p.vy)
-        if (speed > 0.7) {
-          p.vx = (p.vx / speed) * 0.7
-          p.vy = (p.vy / speed) * 0.7
+        const sp2 = p.vx * p.vx + p.vy * p.vy
+        if (sp2 > 0.49) {
+          const sp = Math.sqrt(sp2)
+          p.vx = (p.vx / sp) * 0.7
+          p.vy = (p.vy / sp) * 0.7
         }
         p.x += p.vx
         p.y += p.vy
         if (p.x < -20) p.x = w + 20
-        if (p.x > w + 20) p.x = -20
+        else if (p.x > w + 20) p.x = -20
         if (p.y < -20) p.y = h + 20
-        if (p.y > h + 20) p.y = -20
+        else if (p.y > h + 20) p.y = -20
 
-        ctx.beginPath()
+        ctx.moveTo(p.x + p.r, p.y)
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(148, 163, 184, 0.45)'
-        ctx.fill()
       }
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.45)'
+      ctx.fill()
 
+      // links: compare squared distance first; only sqrt for pairs that connect
+      ctx.lineWidth = 1
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i]
         for (let j = i + 1; j < particles.length; j++) {
           const b = particles[j]
-          const d = Math.hypot(a.x - b.x, a.y - b.y)
-          if (d < LINK_DIST) {
+          const dx = a.x - b.x
+          const dy = a.y - b.y
+          const d2 = dx * dx + dy * dy
+          if (d2 < LINK_DIST2) {
+            const d = Math.sqrt(d2)
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
             ctx.strokeStyle = `rgba(99, 102, 241, ${0.22 * (1 - d / LINK_DIST)})`
-            ctx.lineWidth = 1
             ctx.stroke()
           }
         }
-        const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y)
-        if (dm < MOUSE_DIST) {
-          ctx.beginPath()
-          ctx.moveTo(a.x, a.y)
-          ctx.lineTo(mouse.x, mouse.y)
-          ctx.strokeStyle = `rgba(45, 212, 191, ${0.35 * (1 - dm / MOUSE_DIST)})`
-          ctx.lineWidth = 1
-          ctx.stroke()
+        if (mouse.x > -1e3) {
+          const mdx = a.x - mouse.x
+          const mdy = a.y - mouse.y
+          const dm2 = mdx * mdx + mdy * mdy
+          if (dm2 < MOUSE_DIST2) {
+            const dm = Math.sqrt(dm2)
+            ctx.beginPath()
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.strokeStyle = `rgba(45, 212, 191, ${0.35 * (1 - dm / MOUSE_DIST)})`
+            ctx.stroke()
+          }
         }
       }
 
@@ -971,15 +987,34 @@ function TechWave() {
 function TopZone() {
   const prefersReduced =
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const zoneRef = useRef(null)
+  const [lfPaused, setLfPaused] = useState(false)
+
+  // Pause the expensive WebGL shader once the hero zone scrolls out of view,
+  // so scrolling the rest of the page stays smooth.
+  useEffect(() => {
+    if (prefersReduced || !zoneRef.current || !('IntersectionObserver' in window)) return
+    const io = new IntersectionObserver(([entry]) => setLfPaused(!entry.isIntersecting), { threshold: 0 })
+    io.observe(zoneRef.current)
+    return () => io.disconnect()
+  }, [prefersReduced])
 
   return (
-    <div className="relative overflow-hidden">
+    <div ref={zoneRef} className="relative overflow-hidden">
       {/* Shared Lightfall backdrop spanning hero + stack, with readability overlays */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {prefersReduced ? (
           <div className="absolute -top-40 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[140px]" />
         ) : (
-          <Lightfall className="absolute inset-0" streakCount={3} speed={0.5} opacity={0.9} mouseInteraction={false} />
+          <Lightfall
+            className="absolute inset-0"
+            dpr={1}
+            streakCount={3}
+            speed={0.5}
+            opacity={0.9}
+            mouseInteraction={false}
+            paused={lfPaused}
+          />
         )}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_32%,transparent_28%,rgba(6,8,16,0.72)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-[#060810]" />
