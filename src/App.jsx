@@ -803,31 +803,8 @@ function Navbar() {
 }
 
 function Hero() {
-  const prefersReduced =
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
   return (
-    <section id="top" className="relative overflow-hidden pt-36 pb-24 sm:pt-44 sm:pb-32">
-      {/* Lightfall WebGL backdrop + readability overlays + a subtle drifting orb */}
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        {prefersReduced ? (
-          <div
-            className="absolute -top-40 left-1/2 h-[480px] w-[720px] rounded-full bg-indigo-600/20 blur-[140px]"
-          />
-        ) : (
-          <Lightfall
-            className="absolute inset-0"
-            streakCount={3}
-            speed={0.5}
-            opacity={0.9}
-            mouseInteraction={false}
-          />
-        )}
-        {/* darken toward the edges and bottom so hero text stays readable */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,transparent_30%,rgba(6,8,16,0.72)_100%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-[#060810]" />
-      </div>
-
+    <section id="top" className="relative pt-36 pb-16 sm:pt-44 sm:pb-20">
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <div className="animate-fade-up mb-7 flex justify-center" style={{ animationDelay: '0ms' }}>
           <div className="relative">
@@ -909,26 +886,107 @@ function Hero() {
   )
 }
 
-function LogoMarquee() {
+// Logos flowing along a fixed sine wave (curved-loop style). Each logo rides a
+// spatial wave and drifts left, wrapping seamlessly off-screen behind the mask.
+function TechWave() {
+  const wrapRef = useRef(null)
+  const itemRefs = useRef([])
+  const ITEMS = [...TECH_LOGOS, ...TECH_LOGOS] // duplicated so the band is always full
+
+  useEffect(() => {
+    const wrap = wrapRef.current
+    const els = itemRefs.current.filter(Boolean)
+    if (!wrap || !els.length) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const GAP = 220 // horizontal spacing between logos (px)
+    const AMP = 24 // wave height (px)
+    const WAVELEN = 520 // wave length (px)
+    const SPEED = 60 // px per second, drifting left
+    const total = els.length * GAP
+    const xs = els.map((_, i) => i * GAP)
+
+    const yFor = (x, cy, h) => cy + AMP * Math.sin((x / WAVELEN) * Math.PI * 2) - h / 2
+
+    const paint = () => {
+      const cy = wrap.clientHeight / 2
+      els.forEach((el, i) => {
+        el.style.transform = `translate(${xs[i]}px, ${yFor(xs[i], cy, el.offsetHeight)}px)`
+      })
+    }
+
+    paint()
+    if (reduce) return
+
+    let raf
+    let last = 0
+    const frame = (t) => {
+      if (!last) last = t
+      const dt = Math.min((t - last) / 1000, 0.05)
+      last = t
+      const cy = wrap.clientHeight / 2
+      for (let i = 0; i < els.length; i++) {
+        xs[i] -= SPEED * dt
+        if (xs[i] < -GAP) xs[i] += total
+        const el = els[i]
+        el.style.transform = `translate(${xs[i]}px, ${yFor(xs[i], cy, el.offsetHeight)}px)`
+      }
+      raf = requestAnimationFrame(frame)
+    }
+    raf = requestAnimationFrame(frame)
+    const onResize = () => paint()
+    window.addEventListener('resize', onResize)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', onResize)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <div className="relative mx-auto max-w-6xl px-5 pb-6 sm:px-8" aria-label="Technologies I work with">
-      <p className="mb-4 text-center font-mono text-xs tracking-widest text-slate-600 uppercase">
+    <div className="relative px-5 pb-10" aria-label="Technologies I work with">
+      <p className="mb-2 text-center font-mono text-xs tracking-widest text-slate-500 uppercase">
         The stack I build on
       </p>
-      <div className="marquee">
-        <div className="marquee-track items-center gap-14 py-4">
-          {[...TECH_LOGOS, ...TECH_LOGOS].map((logo, i) => (
-            <span
-              key={`${logo.src}-${i}`}
-              title={logo.title}
-              className="flex shrink-0 items-center gap-3 opacity-55 grayscale-25 transition-all duration-300 hover:opacity-100 hover:grayscale-0"
-            >
-              <img src={logo.src} alt={logo.title} className="h-8 w-auto" loading="lazy" />
-              {logo.name && <span className="text-sm font-semibold whitespace-nowrap text-slate-400">{logo.name}</span>}
-            </span>
-          ))}
-        </div>
+      <div ref={wrapRef} className="wave-track relative mx-auto h-28 max-w-6xl">
+        {ITEMS.map((logo, i) => (
+          <span
+            key={`${logo.src}-${i}`}
+            ref={(el) => (itemRefs.current[i] = el)}
+            title={logo.title}
+            className="absolute top-0 left-0 flex items-center gap-3 opacity-60 grayscale-25 transition-[opacity,filter] duration-300 will-change-transform hover:opacity-100 hover:grayscale-0"
+          >
+            <img src={logo.src} alt={logo.title} className="h-8 w-auto" loading="lazy" />
+            {logo.name && (
+              <span className="text-sm font-semibold whitespace-nowrap text-slate-400">{logo.name}</span>
+            )}
+          </span>
+        ))}
       </div>
+    </div>
+  )
+}
+
+// Unified hero + tech-stack zone sharing one Lightfall backdrop (no seam).
+function TopZone() {
+  const prefersReduced =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  return (
+    <div className="relative overflow-hidden">
+      {/* Shared Lightfall backdrop spanning hero + stack, with readability overlays */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        {prefersReduced ? (
+          <div className="absolute -top-40 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[140px]" />
+        ) : (
+          <Lightfall className="absolute inset-0" streakCount={3} speed={0.5} opacity={0.9} mouseInteraction={false} />
+        )}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_32%,transparent_28%,rgba(6,8,16,0.72)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-[#060810]" />
+      </div>
+
+      <Hero />
+      <TechWave />
     </div>
   )
 }
@@ -1480,8 +1538,7 @@ export default function App() {
       <CursorGlow />
       <Navbar />
       <main>
-        <Hero />
-        <LogoMarquee />
+        <TopZone />
         <About />
         <Experience />
         <Projects />
