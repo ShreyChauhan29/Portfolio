@@ -28,6 +28,9 @@
     border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
     padding: 8px 16px; border-radius: 12px; transition: all .2s; }
   .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .back.primary { background: linear-gradient(90deg,#6366f1,#8b5cf6); border-color: transparent; color: #fff; }
+  .back.primary:hover { color: #fff; box-shadow: 0 10px 24px -8px rgba(99,102,241,0.6); }
+  .bottom-nav { margin-top: 8px; display: flex; gap: 12px; flex-wrap: wrap; }
   .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
     color: #fff; font-weight: 800; font-size: 14px; letter-spacing: -0.01em; }
@@ -444,6 +447,11 @@
       <div class="pcard"><span class="ico">⚡</span><h4>Proactive but bounded</h4><p>Agents surface adjacent risks without being asked, but never expand beyond their declared scope.</p></div>
     </div>
   </section>
+
+  <div class="bottom-nav">
+    <a class="back primary" href="./#agents">&#8592; Back to Agents</a>
+    <a class="back" href="./">Portfolio home</a>
+  </div>
 
   <div class="foot">
     <span>&copy; <span id="y"></span> Shrey Chauhan — From insight to action, safely.</span>

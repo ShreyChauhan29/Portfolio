@@ -262,6 +262,17 @@ const template = (meta, toc, body) => `<!doctype html>
     padding: 8px 16px; border-radius: 12px; transition: all .2s;
   }
   .back:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+  .back.primary { background: linear-gradient(90deg,#6366f1,#8b5cf6); border-color: transparent; color: #fff; }
+  .back.primary:hover { color: #fff; box-shadow: 0 10px 24px -8px rgba(99,102,241,0.6); }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; font-weight: 800; font-size: 14px; }
+  .brand .sc { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #fff; background: linear-gradient(135deg,#6366f1,#2dd4bf);
+    box-shadow: 0 8px 20px rgba(99,102,241,0.3); transition: transform .3s; }
+  .brand:hover .sc { transform: scale(1.12) rotate(6deg); }
+  .brand .dev { color: #818cf8; }
+  .nav-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .bottom-nav { margin-top: 52px; display: flex; gap: 12px; flex-wrap: wrap; }
   h1.post-title {
     margin: 36px 0 10px; font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2;
     font-weight: 800; letter-spacing: -0.02em; color: #fff;
@@ -328,13 +339,23 @@ const template = (meta, toc, body) => `<!doctype html>
 <div class="backdrop"></div>
 <div class="glowbar"></div>
 <div class="wrap">
-  <a class="back" href="../">&#8592; Back to portfolio</a>
+  <div class="topbar">
+    <a class="brand" href="../"><span class="sc">SC</span>shrey<span class="dev">.dev</span></a>
+    <div class="nav-actions">
+      <a class="back primary" href="../blogs.html">&#8592; All Posts</a>
+      <a class="back" href="../">Portfolio</a>
+    </div>
+  </div>
   <h1 class="post-title">${meta.title}</h1>
   <p class="meta"><span class="author">Shrey Chauhan</span> &middot; ${meta.date} &middot; Business Central / AL</p>
   ${toc}
   <article>
 ${body}
   </article>
+  <div class="bottom-nav">
+    <a class="back primary" href="../blogs.html">&#8592; Back to all posts</a>
+    <a class="back" href="../">Portfolio home</a>
+  </div>
   <div class="foot">
     <span>&copy; ${new Date().getFullYear()} Shrey Chauhan</span>
     <a href="../">shrey.dev &#8599;</a>
