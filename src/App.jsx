@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import Lightfall from './Lightfall'
 import {
   ArrowUpRight,
   BarChart3,
@@ -802,22 +803,29 @@ function Navbar() {
 }
 
 function Hero() {
+  const prefersReduced =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   return (
     <section id="top" className="relative overflow-hidden pt-36 pb-24 sm:pt-44 sm:pb-32">
-      {/* Ambient gradient orbs, slowly drifting */}
+      {/* Lightfall WebGL backdrop + readability overlays + a subtle drifting orb */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div
-          className="absolute -top-40 left-1/2 h-[480px] w-[720px] rounded-full bg-indigo-600/20 blur-[140px]"
-          style={{ animation: 'orb-drift-a 16s ease-in-out infinite' }}
-        />
-        <div
-          className="absolute top-40 -left-40 h-80 w-80 rounded-full bg-teal-500/10 blur-[120px]"
-          style={{ animation: 'orb-drift-b 20s ease-in-out infinite' }}
-        />
-        <div
-          className="absolute top-64 -right-32 h-72 w-72 rounded-full bg-violet-600/15 blur-[120px]"
-          style={{ animation: 'orb-drift-c 24s ease-in-out infinite' }}
-        />
+        {prefersReduced ? (
+          <div
+            className="absolute -top-40 left-1/2 h-[480px] w-[720px] rounded-full bg-indigo-600/20 blur-[140px]"
+          />
+        ) : (
+          <Lightfall
+            className="absolute inset-0"
+            streakCount={3}
+            speed={0.5}
+            opacity={0.9}
+            mouseInteraction={false}
+          />
+        )}
+        {/* darken toward the edges and bottom so hero text stays readable */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_38%,transparent_30%,rgba(6,8,16,0.72)_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-[#060810]" />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
