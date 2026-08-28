@@ -16,6 +16,8 @@ import {
   Factory,
   FileCode2,
   FileSpreadsheet,
+  Award,
+  GitFork,
   Github,
   GraduationCap,
   Hash,
@@ -1248,6 +1250,180 @@ function Skills() {
   )
 }
 
+const GH_USER = 'ShreyChauhan29'
+const REPO_DESC = {
+  'LFSPL-EXIM-Modules': 'Export–Import (EXIM) module for Business Central — full EXIM document lifecycle, written in AL.',
+  'LFS-MSME-Module': 'MSME compliance module — vendor payment-timeline tracking and alerts, in AL.',
+  'LFS-E-Way-Bill-Module': 'E-Way Bill generation and government-portal integration module, in AL.',
+}
+const FALLBACK_REPOS = Object.keys(REPO_DESC).map((name) => ({
+  name,
+  html_url: `https://github.com/${GH_USER}/${name}`,
+  language: 'AL',
+  description: null,
+}))
+
+function OpenSource() {
+  const [repos, setRepos] = useState(FALLBACK_REPOS)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=pushed`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error('gh'))))
+      .then((data) => {
+        if (cancelled || !Array.isArray(data)) return
+        const list = data
+          .filter((r) => !r.fork && r.name !== 'Portfolio')
+          .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+          .slice(0, 6)
+        if (list.length) setRepos(list)
+      })
+      .catch(() => {}) // keep fallback on rate-limit / offline
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  return (
+    <section id="opensource" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
+      <SectionHeading
+        eyebrow="Open Source"
+        title="Code on GitHub"
+        subtitle="Business Central AL modules published as public repositories."
+      />
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {repos.map((repo, i) => (
+          <a
+            key={repo.name}
+            href={repo.html_url}
+            target="_blank"
+            rel="noreferrer"
+            className="glass reveal group relative flex flex-col rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-indigo-400/30 hover:shadow-2xl hover:shadow-indigo-500/10"
+            style={{ transitionDelay: `${(i % 3) * 80}ms` }}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 text-white shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <Github size={20} />
+              </span>
+              <ArrowUpRight
+                size={18}
+                className="text-slate-600 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-indigo-300"
+              />
+            </div>
+            <h3 className="font-mono text-sm font-bold text-white transition-colors group-hover:text-indigo-200">
+              {repo.name}
+            </h3>
+            <p className="mt-2.5 flex-1 text-sm leading-relaxed text-slate-400">
+              {repo.description || REPO_DESC[repo.name] || 'Microsoft Dynamics 365 Business Central / AL project.'}
+            </p>
+            <div className="mt-5 flex items-center gap-4 text-xs text-slate-500">
+              {repo.language && (
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-indigo-400" />
+                  {repo.language}
+                </span>
+              )}
+              {typeof repo.stargazers_count === 'number' && repo.stargazers_count > 0 && (
+                <span className="inline-flex items-center gap-1">★ {repo.stargazers_count}</span>
+              )}
+              {typeof repo.forks_count === 'number' && repo.forks_count > 0 && (
+                <span className="inline-flex items-center gap-1">
+                  <GitFork size={12} /> {repo.forks_count}
+                </span>
+              )}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div className="reveal mt-8 flex justify-center">
+        <a
+          href={`https://github.com/${GH_USER}`}
+          target="_blank"
+          rel="noreferrer"
+          className="glass inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-slate-200 transition-all hover:scale-[1.04] hover:border-white/20"
+        >
+          <Github size={17} />
+          View GitHub profile
+          <ArrowUpRight size={15} />
+        </a>
+      </div>
+    </section>
+  )
+}
+
+const CERTS = [
+  { title: 'MB-820: D365 Business Central Developer Associate', issuer: 'Microsoft', status: 'In Progress' },
+  { title: 'Google UX Design Professional Certificate', issuer: 'Coursera', status: 'Completed' },
+  { title: 'Advanced Microsoft Excel', issuer: 'Certification', status: 'Completed' },
+]
+const ACHIEVEMENTS = [
+  'Promoted to Technical Consultant',
+  '5 Copilot Studio AI agents',
+  '10 independent modules shipped',
+  '12 technical blogs authored',
+  '35+ client projects delivered',
+]
+
+function Certifications() {
+  return (
+    <section id="certifications" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
+      <SectionHeading
+        eyebrow="Credentials"
+        title="Certifications & Achievements"
+        subtitle="Continuous learning, recognition, and measurable impact."
+      />
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="space-y-4">
+          {CERTS.map((c, i) => (
+            <div
+              key={c.title}
+              className="glass reveal flex items-center gap-4 rounded-2xl p-5 transition-colors hover:border-indigo-400/30"
+              style={{ transitionDelay: `${i * 70}ms` }}
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-teal-400/15 text-indigo-300">
+                <Award size={20} />
+              </span>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-white">{c.title}</p>
+                <p className="text-xs text-slate-400">{c.issuer}</p>
+              </div>
+              <span
+                className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                  c.status === 'In Progress'
+                    ? 'border border-amber-400/30 bg-amber-400/10 text-amber-300'
+                    : 'border border-teal-400/30 bg-teal-400/10 text-teal-300'
+                }`}
+              >
+                {c.status}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="glass reveal rounded-2xl p-7">
+          <h3 className="mb-5 flex items-center gap-2 text-base font-bold text-white">
+            <Sparkles size={18} className="text-teal-300" />
+            Key Achievements
+          </h3>
+          <ul className="space-y-3">
+            {ACHIEVEMENTS.map((a) => (
+              <li key={a} className="flex items-center gap-3 text-sm text-slate-300">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-indigo-500/15 text-indigo-300">
+                  ✓
+                </span>
+                {a}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Blog() {
   return (
     <section id="blog" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8">
@@ -1538,12 +1714,19 @@ function Contact() {
           </div>
 
           <p className="mt-8 text-sm text-slate-400">
-            Prefer a clean, recruiter-friendly version?{' '}
+            Prefer a different view?{' '}
+            <a
+              href="folio.html"
+              className="font-semibold text-indigo-300 underline decoration-indigo-400/40 underline-offset-4 transition-colors hover:text-white"
+            >
+              Minimal portfolio
+            </a>{' '}
+            ·{' '}
             <a
               href="cv.html"
               className="font-semibold text-indigo-300 underline decoration-indigo-400/40 underline-offset-4 transition-colors hover:text-white"
             >
-              View my print-friendly CV →
+              Print-friendly CV
             </a>
           </p>
         </div>
@@ -1587,7 +1770,9 @@ export default function App() {
         <About />
         <Experience />
         <Projects />
+        <OpenSource />
         <Skills />
+        <Certifications />
         <Blog />
         <AgentsShowcase />
         <WaveBand />
