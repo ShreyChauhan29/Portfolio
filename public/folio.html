@@ -116,6 +116,47 @@
   .contact-box p { color: var(--muted); margin: 0 0 22px; }
   footer { text-align: center; color: var(--faint); font-size: 13px; padding: 44px 0 40px; }
   footer a { color: var(--accent); text-decoration: none; }
+  /* About + stat boxes */
+  .about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 22px; align-items: stretch; }
+  .about-text { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; }
+  .about-text p { color: var(--muted); margin: 0 0 12px; font-size: 15px; }
+  .about-text p strong { color: var(--text); }
+  .statgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .statbox { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    transition: transform .2s, border-color .2s; }
+  .statbox:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+  .statbox b { font-family: 'Sora'; font-size: 30px; font-weight: 800; line-height: 1;
+    background: linear-gradient(120deg, var(--accent), var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .statbox span { margin-top: 8px; font-size: 12px; color: var(--faint); }
+  @media (max-width: 780px) { .about-grid { grid-template-columns: 1fr; } }
+  /* Dark feature bands (ribbon + wave) — always dark for logo/wave contrast */
+  .band { position: relative; overflow: hidden; background: #0a0f1f; border: 1px solid #1b2440;
+    border-radius: 22px; padding: 30px 20px; margin: 22px 0; }
+  .band-label { text-align: center; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #6b7699; }
+  .tstrip { overflow: hidden; margin-top: 20px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .tstrip-track { display: flex; gap: 56px; width: max-content; align-items: center; animation: tscroll 24s linear infinite; }
+  .tstrip:hover .tstrip-track { animation-play-state: paused; }
+  @keyframes tscroll { to { transform: translateX(-50%); } }
+  .tstrip .l { display: flex; align-items: center; gap: 10px; opacity: 0.66; transition: opacity .2s; }
+  .tstrip .l:hover { opacity: 1; }
+  .tstrip .l img { height: 28px; width: auto; }
+  .tstrip .l span { color: #94a3b8; font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .wave-tag { position: relative; text-align: center; font-family: 'Sora'; font-weight: 800; z-index: 1;
+    font-size: clamp(1.3rem, 3vw, 2rem); letter-spacing: -0.01em;
+    background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .wave-canvas { display: block; width: 100%; height: 170px; margin-top: 10px; }
+  @media (prefers-reduced-motion: reduce) { .tstrip-track { animation: none; } }
+  /* Agents */
+  .agent-card { display: flex; gap: 14px; align-items: flex-start; }
+  .agent-card .ag-ico { width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; display: flex;
+    align-items: center; justify-content: center; color: #fff; }
+  .agent-card .ag-ico svg { width: 21px; height: 21px; }
+  .agent-card h3 { margin: 0 0 2px; }
+  .agent-card .dom { color: var(--accent); font-size: 12.5px; font-weight: 600; margin: 0 0 4px; }
 </style>
 </head>
 <body>
@@ -160,17 +201,56 @@
           GitHub
         </a>
       </div>
-      <div class="stats">
-        <div class="stat"><b>2.5+</b><span>Years in D365 BC &amp; NAV</span></div>
-        <div class="stat"><b>35+</b><span>Client projects</span></div>
-        <div class="stat"><b>10</b><span>Modules shipped</span></div>
-        <div class="stat"><b>12</b><span>Technical blogs</span></div>
-      </div>
     </div>
     <div class="avatar-wrap">
       <img class="avatar" src="profile.jpg" alt="Shrey Chauhan" />
     </div>
   </header>
+
+  <!-- About + stat boxes -->
+  <section id="about">
+    <p class="eyebrow">About me</p>
+    <h2 class="title">ERP developer who speaks business</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I&rsquo;m a Technical Consultant specializing in <strong>Microsoft Dynamics 365 Business Central</strong>
+          and Dynamics NAV, with 2.5+ years of hands-on experience across the full ERP lifecycle — analysis,
+          solution design, development in the <strong>AL language</strong>, integrations, and debugging.</p>
+        <p>I&rsquo;ve delivered implementations, NAV-to-BC migrations, and support across 35+ projects in
+          manufacturing, pharmaceuticals, healthcare, chemicals, and F&amp;B — including 10 independent modules
+          built from scratch and API integrations from government portals (E-Way Bill, E-Invoicing) to WhatsApp.
+          I also write technical blogs, mentor associate consultants, and run knowledge-sharing sessions.</p>
+        <div class="chips" style="margin-top:14px;">
+          <span class="chip">AL Language</span><span class="chip">ERP Architecture</span>
+          <span class="chip">BC Customization</span><span class="chip">API Integrations</span>
+        </div>
+      </div>
+      <div class="statgrid">
+        <div class="statbox"><b>2.5+</b><span>Years in D365 BC &amp; NAV</span></div>
+        <div class="statbox"><b>35+</b><span>Client projects delivered</span></div>
+        <div class="statbox"><b>10</b><span>Independent modules built</span></div>
+        <div class="statbox"><b>12</b><span>Technical blogs written</span></div>
+      </div>
+    </div>
+
+    <!-- Stack ribbon -->
+    <div class="band" style="margin-top:24px;" aria-label="The stack I build on">
+      <p class="band-label">The stack I build on</p>
+      <div class="tstrip">
+        <div class="tstrip-track" id="tstrip">
+          <span class="l"><img src="logos/dynamics365.svg" alt="Dynamics 365" /></span>
+          <span class="l"><img src="logos/copilot.svg" alt="Copilot" /><span>Copilot Studio</span></span>
+          <span class="l"><img src="logos/vscode.svg" alt="VS Code" /><span>VS Code · AL</span></span>
+          <span class="l"><img src="logos/powerbi.svg" alt="Power BI" /><span>Power BI</span></span>
+          <span class="l"><img src="logos/powerapps.svg" alt="Power Apps" /><span>Power Apps</span></span>
+          <span class="l"><img src="logos/powerautomate.svg" alt="Power Automate" /><span>Power Automate</span></span>
+          <span class="l"><img src="logos/azure.svg" alt="Azure" /><span>Azure</span></span>
+          <span class="l"><img src="logos/sqlserver.svg" alt="SQL Server" /><span>SQL Server</span></span>
+          <span class="l"><img src="logos/github.svg" alt="GitHub" /><span>GitHub</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Skills -->
   <section id="skills">
@@ -244,6 +324,37 @@
     </div>
   </section>
 
+  <!-- AI Agents -->
+  <section id="agents">
+    <p class="eyebrow">Copilot Studio</p>
+    <h2 class="title">AI Agents for Business Central</h2>
+    <div class="grid g2">
+      <div class="card agent-card">
+        <span class="ag-ico" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg></span>
+        <div><h3>ProdOrder Architect AI</h3><p class="dom">Production planning &amp; execution</p><p>Validates master data and creates, refreshes &amp; posts production orders — with lot/serial tracking.</p></div>
+      </div>
+      <div class="card agent-card">
+        <span class="ag-ico" style="background:linear-gradient(135deg,#8b5cf6,#d946ef)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 3.5v5.5c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M8 12l2.5 2.5L16 9"/></svg></span>
+        <div><h3>FinSight</h3><p class="dom">Finance, compliance &amp; anomaly detection</p><p>Seven finance capabilities — regulatory research, duplicate-invoice &amp; spend-anomaly detection, reconciliation, forecasting.</p></div>
+      </div>
+      <div class="card agent-card">
+        <span class="ag-ico" style="background:linear-gradient(135deg,#2dd4bf,#0ea5e9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3.5 20.5h17M7 20v-6M12 20v-10M17 20v-14"/></svg></span>
+        <div><h3>SalesIQ</h3><p class="dom">Customer intelligence</p><p>Transparent A–D customer rating from revenue, payment behaviour, order frequency, credit health &amp; disputes.</p></div>
+      </div>
+      <div class="card agent-card">
+        <span class="ag-ico" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg></span>
+        <div><h3>StockPulse AI</h3><p class="dom">Inventory &amp; stock health</p><p>Flags stockout risk and dead stock, drafts vendor-consolidated POs, and creates replenishment production orders.</p></div>
+      </div>
+      <div class="card agent-card">
+        <span class="ag-ico" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9.5 2.5v2.5M14.5 2.5v2.5M9.5 19v2.5M14.5 19v2.5M2.5 9.5H5M2.5 14.5H5M19 9.5h2.5M19 14.5h2.5"/></svg></span>
+        <div><h3>ShopFloor IQ</h3><p class="dom">Manufacturing operations</p><p>Schedule optimization, predictive maintenance, digital inspection with traceability, and asset management.</p></div>
+      </div>
+      <div class="card agent-card" style="align-items:center;justify-content:center;text-align:center;">
+        <div><h3 style="font-family:'Sora';">5 human-in-the-loop agents</h3><p>Built on Microsoft Copilot Studio with custom AL API pages — every agent drafts &amp; recommends, and acts only on explicit confirmation.</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Open Source -->
   <section id="opensource">
     <p class="eyebrow">On GitHub</p>
@@ -270,6 +381,14 @@
         <h3>Certifications</h3>
         <div class="chips"><span class="chip">MB-820 (in progress)</span><span class="chip">Google UX Design</span><span class="chip">Advanced Excel</span></div>
       </div>
+    </div>
+  </section>
+
+  <!-- Wave band -->
+  <section id="flow">
+    <div class="band">
+      <p class="wave-tag">From insight to action — engineered in AL.</p>
+      <canvas class="wave-canvas" id="waveCanvas" aria-hidden="true"></canvas>
     </div>
   </section>
 
@@ -316,6 +435,46 @@
     }
   })();
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Duplicate the tech ribbon so the marquee loops seamlessly
+  (function () {
+    var t = document.getElementById('tstrip');
+    if (t) t.innerHTML += t.innerHTML;
+  })();
+
+  // Flowing wave band (layered sine waves)
+  (function () {
+    var canvas = document.getElementById('waveCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0, h = 0, t = 0, raf;
+    var WAVES = [
+      { amp: 20, len: 260, speed: 0.6, off: 0.5, col: [129,140,248], width: 1.6 },
+      { amp: 28, len: 340, speed: -0.45, off: 0.52, col: [139,92,246], width: 1.6 },
+      { amp: 16, len: 200, speed: 0.82, off: 0.48, col: [45,212,191], width: 1.3 },
+      { amp: 34, len: 430, speed: 0.32, off: 0.55, col: [99,102,241], width: 1 },
+    ];
+    function resize() { w = canvas.clientWidth; h = canvas.clientHeight; canvas.width = w*dpr; canvas.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+    function drawWave(wv, time) {
+      ctx.beginPath();
+      for (var x = 0; x <= w; x += 8) {
+        var y = h*wv.off + Math.sin(x/wv.len + time*wv.speed)*wv.amp + Math.sin(x/(wv.len*0.5) + time*wv.speed*1.7)*wv.amp*0.3;
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      var g = ctx.createLinearGradient(0,0,w,0), c = wv.col;
+      g.addColorStop(0, 'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
+      g.addColorStop(0.5, 'rgba('+c[0]+','+c[1]+','+c[2]+',0.6)');
+      g.addColorStop(1, 'rgba('+c[0]+','+c[1]+','+c[2]+',0)');
+      ctx.strokeStyle = g; ctx.lineWidth = wv.width; ctx.stroke();
+    }
+    function frame() { ctx.clearRect(0,0,w,h); t += 0.006; for (var i=0;i<WAVES.length;i++) drawWave(WAVES[i], t); raf = requestAnimationFrame(frame); }
+    resize();
+    window.addEventListener('resize', resize);
+    for (var i=0;i<WAVES.length;i++) drawWave(WAVES[i], 0);
+    if (!reduce) raf = requestAnimationFrame(frame);
+  })();
 
   // Live-refresh GitHub repos (keeps the static fallback if the API is unavailable)
   fetch('https://api.github.com/users/ShreyChauhan29/repos?per_page=100&sort=pushed')
