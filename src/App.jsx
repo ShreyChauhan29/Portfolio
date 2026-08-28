@@ -1536,6 +1536,16 @@ function Contact() {
               <Phone size={18} />
             </a>
           </div>
+
+          <p className="mt-8 text-sm text-slate-400">
+            Prefer a clean, recruiter-friendly version?{' '}
+            <a
+              href="cv.html"
+              className="font-semibold text-indigo-300 underline decoration-indigo-400/40 underline-offset-4 transition-colors hover:text-white"
+            >
+              View my print-friendly CV →
+            </a>
+          </p>
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-8 text-xs text-slate-500 sm:flex-row">

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shrey Chauhan — Microsoft Dynamics 365 Business Central Developer</title>
+<meta name="description" content="Shrey Chauhan — Microsoft Dynamics 365 Business Central (AL) Developer & Technical Consultant. AL extension development, API integrations, NAV to BC migration, RDLC reports, Power Platform, Azure DevOps. 2.5+ years, 35+ projects." />
+<meta name="author" content="Shrey Chauhan" />
+<meta name="keywords" content="Microsoft Dynamics 365 Business Central, AL Developer, Business Central Developer, Dynamics NAV, AL Language, ERP, Technical Consultant, API Integration, RDLC Reports, Power Platform, Azure DevOps, SQL Server, Copilot Studio" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #14213b;
+    --muted: #52607a;
+    --faint: #7c8aa3;
+    --accent: #3949ab;
+    --line: #e2e6ee;
+    --bg: #ffffff;
+    --panel: #f7f8fb;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: #eef1f6; color: var(--ink);
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; line-height: 1.6; font-size: 15px;
+  }
+  .sheet {
+    max-width: 900px; margin: 28px auto; background: var(--bg);
+    box-shadow: 0 10px 40px rgba(20,33,59,0.12); border-radius: 10px; overflow: hidden;
+  }
+  /* Header */
+  header { padding: 40px 48px 30px; border-bottom: 3px solid var(--accent); }
+  h1 { margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+  .role { margin: 4px 0 0; font-size: 17px; font-weight: 600; color: var(--accent); }
+  .contact { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 13.5px; }
+  .contact a, .contact span { color: var(--muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .contact a:hover { color: var(--accent); text-decoration: underline; }
+  .contact svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--faint); }
+  .actions { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600;
+    padding: 9px 16px; border-radius: 8px; text-decoration: none; cursor: pointer; border: 1px solid var(--line); }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { background: #2e3a8c; }
+  .btn-ghost { background: #fff; color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn svg { width: 16px; height: 16px; }
+  /* Body */
+  main { padding: 16px 48px 44px; }
+  section { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  section:last-child { border-bottom: 0; }
+  h2 { font-size: 13px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 14px; }
+  p { margin: 0 0 10px; color: var(--muted); }
+  .summary { color: var(--ink); font-size: 15.5px; }
+  /* Skills */
+  .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; }
+  .skillrow { font-size: 14px; }
+  .skillrow b { color: var(--ink); font-weight: 700; display: block; margin-bottom: 3px; }
+  .skillrow span { color: var(--muted); }
+  /* Experience / entries */
+  .entry { margin-bottom: 22px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; align-items: baseline; }
+  .entry-head h3 { margin: 0; font-size: 16.5px; font-weight: 700; color: var(--ink); }
+  .entry-head .when { font-size: 13px; color: var(--faint); font-weight: 600; white-space: nowrap; }
+  .entry .org { font-size: 14px; font-weight: 600; color: var(--accent); margin: 2px 0 2px; }
+  .entry .note { font-size: 12.5px; color: var(--faint); margin: 0 0 8px; }
+  ul { margin: 8px 0 0; padding-left: 18px; }
+  li { margin: 5px 0; color: var(--muted); }
+  li::marker { color: var(--accent); }
+  /* Projects grid */
+  .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 26px; }
+  .proj h4 { margin: 0 0 3px; font-size: 14.5px; font-weight: 700; color: var(--ink); }
+  .proj p { margin: 0; font-size: 13px; color: var(--muted); }
+  /* Agents */
+  .agentlist { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 26px; margin-top: 4px; }
+  .agentlist div { font-size: 13.5px; color: var(--muted); }
+  .agentlist b { color: var(--ink); }
+  /* Chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
+  .chip { font-size: 12px; color: var(--muted); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 6px; padding: 3px 10px; }
+  .muted-note { font-size: 13px; color: var(--faint); }
+  footer { padding: 20px 48px 30px; text-align: center; font-size: 12.5px; color: var(--faint); }
+  footer a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 680px) {
+    header, main, footer { padding-left: 24px; padding-right: 24px; }
+    .skills, .proj-grid, .agentlist { grid-template-columns: 1fr; }
+    h1 { font-size: 28px; }
+  }
+  /* Print — clean single-color résumé */
+  @media print {
+    body { background: #fff; font-size: 11.5px; line-height: 1.45; }
+    .sheet { box-shadow: none; margin: 0; max-width: none; border-radius: 0; }
+    .actions, .no-print { display: none !important; }
+    header { padding: 0 0 12px; border-bottom: 2px solid #000; }
+    main { padding: 0; }
+    section { padding: 10px 0; break-inside: avoid; }
+    h1 { font-size: 22px; }
+    a { color: #000; text-decoration: none; }
+    :root { --accent: #1a237e; --muted: #222; --ink: #000; }
+    @page { margin: 14mm; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <h1>Shrey Chauhan</h1>
+    <p class="role">Microsoft Dynamics 365 Business Central (AL) Developer &middot; Technical Consultant</p>
+    <div class="contact">
+      <a href="mailto:shreychauhan15312902@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>shreychauhan15312902@gmail.com</a>
+      <a href="tel:+918460995300"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>+91 84609 95300</a>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Mumbai, India</span>
+      <a href="https://www.linkedin.com/in/shrey-chauhan-67a628227/" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.3 18V10H5.7v8h2.6zM7 8.8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM18.3 18v-4.4c0-2.4-1.3-3.5-3-3.5-1.4 0-2 .8-2.3 1.3V10h-2.6v8h2.6v-4.5c0-1.2.8-1.6 1.5-1.6s1.2.5 1.2 1.6V18h2.6z"/></svg>LinkedIn</a>
+      <a href="https://github.com/ShreyChauhan29" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.7c0 .3.2.6.7.5A10 10 0 0 0 22 12.3C22 6.6 17.5 2 12 2z"/></svg>GitHub</a>
+      <a href="./" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>Portfolio</a>
+    </div>
+    <div class="actions no-print">
+      <a class="btn btn-primary" href="Shrey-Chauhan-Resume.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Download Résumé (PDF)</a>
+      <button class="btn btn-ghost" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>Save as PDF / Print</button>
+      <a class="btn btn-ghost" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>Interactive Portfolio</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Professional Summary</h2>
+      <p class="summary">
+        Microsoft Dynamics 365 Business Central Developer and Technical Consultant with <strong>2.5+ years</strong>
+        delivering ERP solutions in the <strong>AL language</strong> across <strong>35+ client projects</strong>.
+        Strong across the full lifecycle — requirement analysis, solution design, AL extension development, API
+        integrations, RDLC report writing, and debugging — for both Microsoft Dynamics 365 Business Central and
+        Dynamics NAV. Experienced in NAV-to-BC code and data migration, custom API pages, Power Platform, and Azure
+        DevOps, with a track record of building reusable modules and mentoring peers.
+      </p>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="skills">
+        <div class="skillrow"><b>ERP Development</b><span>AL Language, Dynamics 365 Business Central, Dynamics NAV, Extension Development, RDLC Reports, NAV &rarr; BC Migration</span></div>
+        <div class="skillrow"><b>Integrations &amp; APIs</b><span>REST APIs, Custom API Pages, JSON / XML, E-Way Bill, E-Invoicing (IRP / GSTRobo), Web Services, Container Tracking</span></div>
+        <div class="skillrow"><b>Data &amp; Analytics</b><span>SQL Server, SSMS, Oracle SQL, MySQL, Power BI, Dimension-based Reporting</span></div>
+        <div class="skillrow"><b>Tools &amp; Platforms</b><span>VS Code, Git &amp; GitHub, GitHub Copilot, Copilot Studio, Azure Portal, DevOps, Power Apps, Power Automate</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Professional Experience</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Technical Consultant</h3>
+          <span class="when">Dec 2023 &ndash; Present</span>
+        </div>
+        <p class="org">Leaping Frog Solutions Pvt. Ltd. &middot; Mumbai, India</p>
+        <p class="note">Promoted from Associate Technical Consultant</p>
+        <ul>
+          <li>Design, customize, and deploy Microsoft Dynamics 365 Business Central and NAV solutions across 35+ client projects spanning manufacturing, pharmaceuticals, healthcare, chemicals, F&amp;B, shipping, and NGO sectors.</li>
+          <li>Built 10 independent modules from scratch — EXIM, E-Way Bill, MSME, Advance Payment, Terms &amp; Conditions, Plant &amp; Maintenance, Material Requisition, Donation Transaction, Branch Accounting, and Transfer Order Dimension Updation.</li>
+          <li>Led code and data migration for NAV &rarr; Business Central projects across pharmaceutical, staffing-services, and F&amp;B manufacturing sectors, plus end-to-end implementations in NGO, healthcare diagnostics, and medical-equipment sectors.</li>
+          <li>Designed and built five AI agents on Microsoft Copilot Studio for Business Central, powered by custom AL API pages with human-in-the-loop design.</li>
+          <li>Developed custom APIs (documented Donation Transaction API) and integrated third-party services — E-Way Bill, E-Invoicing via GSTRobo, WhatsApp, and live container tracking.</li>
+          <li>Delivered complex reports — Cash Book Ledger, MRP, lot-wise inventory ageing and valuation, aged AR/AP, and payment export with UTR updation — plus Excel import/export frameworks with validation.</li>
+          <li>Mentor three associate consultants, authored 12 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.</li>
+          <li>Manage Azure environments and users, work with DevOps builds and deployments, and administer databases via SQL Server Management Studio.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Technical Intern</h3>
+          <span class="when">Jan 2023 &ndash; Apr 2023</span>
+        </div>
+        <p class="org">Leaping Frog Solutions Pvt. Ltd. &middot; Mumbai, India</p>
+        <ul>
+          <li>Trained in Microsoft Dynamics 365 Business Central and the AL programming language.</li>
+          <li>Completed a mini-project building a Business Central extension from requirement to deployment.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>AI Agent Development &mdash; Microsoft Copilot Studio</h2>
+      <p class="muted-note">Five human-in-the-loop agents for Business Central, built on Copilot Studio with custom AL API pages:</p>
+      <div class="agentlist">
+        <div><b>ProdOrder Architect AI</b> — production planning &amp; execution</div>
+        <div><b>FinSight</b> — finance, compliance &amp; anomaly detection</div>
+        <div><b>SalesIQ</b> — customer intelligence &amp; A–D rating</div>
+        <div><b>StockPulse AI</b> — inventory &amp; stock-health analysis</div>
+        <div><b>ShopFloor IQ</b> — manufacturing operations</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Key Projects</h2>
+      <div class="proj-grid">
+        <div class="proj"><h4>Dimension-Based Reporting</h4><p>Multi-dimensional financial/operational reporting, including automatic Transfer Order dimension updation at shipment and receipt.</p></div>
+        <div class="proj"><h4>E-Way Bill &amp; E-Invoicing Integration</h4><p>Real-time integration with government portals via GSTRobo — JSON payloads, IRN/QR retrieval, in-posting error handling.</p></div>
+        <div class="proj"><h4>Custom APIs &amp; WhatsApp Integration</h4><p>Codeunit-based Donation Transaction API (documented) for an NGO client, plus WhatsApp messaging integration.</p></div>
+        <div class="proj"><h4>Advanced Reporting Suite</h4><p>Cash Book Ledger, MRP, lot-wise ageing/valuation, aged AR/AP, payment export with UTR — plus Excel import/export.</p></div>
+        <div class="proj"><h4>EXIM Module</h4><p>Independent export–import module covering the full EXIM document lifecycle, adapted to client business processes.</p></div>
+        <div class="proj"><h4>MSME Compliance Module</h4><p>Vendor-payment tracking enforcing MSME Act timelines, with ageing visibility and alerts.</p></div>
+        <div class="proj"><h4>Manufacturing &amp; Lot Tracking</h4><p>Lot/item selection on sales &amp; transfer lines with auto mfg/expiry dates, plus BOM-level item substitution.</p></div>
+        <div class="proj"><h4>E-Commerce &amp; Container Tracking</h4><p>Sales-order/credit-memo import from external systems and live container status inside the ERP.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Technical Writing</h2>
+      <p>Authored <strong>12 technical blogs</strong> on AL and Business Central development, including custom API design,
+        RecordRef &amp; FieldRef, Job Queue automation, C/AL-to-AL migration, and API payload formatting.
+        <a href="blogs.html" style="color:var(--accent);font-weight:600;text-decoration:none;">Read the articles &rarr;</a></p>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="entry">
+        <div class="entry-head">
+          <h3>Bachelor of Engineering — Computer Science &amp; Engineering</h3>
+          <span class="when">2019 &ndash; 2023</span>
+        </div>
+        <p class="org">Gujarat Technological University</p>
+        <p class="muted-note">CGPA: 9.28 / 10</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Certifications</h2>
+      <ul>
+        <li><strong>MB-820: Microsoft Dynamics 365 Business Central Developer Associate</strong> — in progress</li>
+        <li>Google UX Design Professional Certificate (Coursera series) — UX foundations, wireframing, Figma &amp; Adobe XD prototyping</li>
+        <li>Advanced Microsoft Excel</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>References available on request &middot; <a href="./">Interactive portfolio</a> &middot; <a href="mailto:shreychauhan15312902@gmail.com">shreychauhan15312902@gmail.com</a></p>
+  </footer>
+</div>
+</body>
+</html>
