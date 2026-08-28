@@ -131,10 +131,12 @@
   .statbox span { margin-top: 8px; font-size: 12px; color: var(--faint); }
   @media (max-width: 780px) { .about-grid { grid-template-columns: 1fr; } }
   /* Dark feature bands (ribbon + wave) — always dark for logo/wave contrast */
-  .band { position: relative; overflow: hidden; background: #0a0f1f; border: 1px solid #1b2440;
+  .band { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--border);
     border-radius: 22px; padding: 30px 20px; margin: 22px 0; }
   .band-label { text-align: center; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: #6b7699; }
+    text-transform: uppercase; color: var(--faint); }
+  /* Light-tuned logos (GitHub/Copilot/Dynamics wordmark) darkened on light theme so they stay visible */
+  html:not([data-theme="dark"]) .tstrip img[data-mono] { filter: brightness(0.4); }
   .tstrip { overflow: hidden; margin-top: 20px;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
@@ -144,7 +146,7 @@
   .tstrip .l { display: flex; align-items: center; gap: 10px; opacity: 0.66; transition: opacity .2s; }
   .tstrip .l:hover { opacity: 1; }
   .tstrip .l img { height: 28px; width: auto; }
-  .tstrip .l span { color: #94a3b8; font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .tstrip .l span { color: var(--muted); font-weight: 600; font-size: 14px; white-space: nowrap; }
   .wave-tag { position: relative; text-align: center; font-family: 'Sora'; font-weight: 800; z-index: 1;
     font-size: clamp(1.3rem, 3vw, 2rem); letter-spacing: -0.01em;
     background: linear-gradient(120deg, #818cf8, #c084fc, #2dd4bf); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -238,15 +240,15 @@
       <p class="band-label">The stack I build on</p>
       <div class="tstrip">
         <div class="tstrip-track" id="tstrip">
-          <span class="l"><img src="logos/dynamics365.svg" alt="Dynamics 365" /></span>
-          <span class="l"><img src="logos/copilot.svg" alt="Copilot" /><span>Copilot Studio</span></span>
+          <span class="l"><img src="logos/dynamics365.svg" alt="Dynamics 365" data-mono /></span>
+          <span class="l"><img src="logos/copilot.svg" alt="Copilot" data-mono /><span>Copilot Studio</span></span>
           <span class="l"><img src="logos/vscode.svg" alt="VS Code" /><span>VS Code · AL</span></span>
           <span class="l"><img src="logos/powerbi.svg" alt="Power BI" /><span>Power BI</span></span>
           <span class="l"><img src="logos/powerapps.svg" alt="Power Apps" /><span>Power Apps</span></span>
           <span class="l"><img src="logos/powerautomate.svg" alt="Power Automate" /><span>Power Automate</span></span>
           <span class="l"><img src="logos/azure.svg" alt="Azure" /><span>Azure</span></span>
           <span class="l"><img src="logos/sqlserver.svg" alt="SQL Server" /><span>SQL Server</span></span>
-          <span class="l"><img src="logos/github.svg" alt="GitHub" /><span>GitHub</span></span>
+          <span class="l"><img src="logos/github.svg" alt="GitHub" data-mono /><span>GitHub</span></span>
         </div>
       </div>
     </div>
