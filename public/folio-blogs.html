@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog | Shrey Chauhan</title>
+<meta name="description" content="AL and Microsoft Dynamics 365 Business Central development articles by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#f7f9fc; --surface:#fff; --surface-2:#eef2f8; --text:#16213e; --muted:#55617a; --faint:#8792a8;
+    --accent:#4f46e5; --accent-2:#0ea5e9; --teal:#0d9488; --border:#e4e9f2; --shadow:rgba(20,33,62,0.10); }
+  html[data-theme="dark"] { --bg:#0b1020; --surface:#121933; --surface-2:#1a2242; --text:#eef2ff; --muted:#9aa6c4;
+    --faint:#6b7699; --accent:#818cf8; --accent-2:#38bdf8; --teal:#2dd4bf; --border:#232c4d; --shadow:rgba(0,0,0,0.4); }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Inter',ui-sans-serif,system-ui,Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased; transition:background .3s,color .3s; }
+  h1,h2 { font-family:'Sora','Inter',sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+  nav { position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent); border-bottom:1px solid var(--border); }
+  .nav-in { display:flex; align-items:center; justify-content:space-between; height:62px; }
+  .brand { font-family:'Sora'; font-weight:800; font-size:16px; text-decoration:none; color:var(--text); }
+  .brand span { color:var(--accent); }
+  .nav-right { display:flex; gap:10px; align-items:center; }
+  .back { display:inline-flex; align-items:center; gap:7px; text-decoration:none; color:var(--text);
+    font-size:14px; font-weight:600; padding:9px 16px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface); transition:all .18s; }
+  .back:hover { border-color:var(--accent); color:var(--accent); }
+  .icon-btn { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px;
+    border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; }
+  .icon-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .icon-btn svg { width:18px; height:18px; }
+  header.head { text-align:center; padding:56px 0 8px; }
+  .eyebrow { font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin:0 0 8px; }
+  h1 { font-size:clamp(2rem,5vw,2.8rem); font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; }
+  .grad { background:linear-gradient(120deg,var(--accent),var(--accent-2),var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { color:var(--muted); max-width:600px; margin:0 auto; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; padding:40px 0 20px; }
+  .fcard { display:flex; flex-direction:column; text-decoration:none; background:var(--surface); border:1px solid var(--border);
+    border-radius:18px; padding:22px; transition:transform .2s,border-color .2s,box-shadow .2s; }
+  .fcard:hover { transform:translateY(-5px); border-color:color-mix(in srgb,var(--accent) 45%,var(--border));
+    box-shadow:0 20px 44px -22px var(--shadow); }
+  .fcard-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .fico { width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; color:#fff; }
+  .fico svg { width:22px; height:22px; }
+  .fdate { font-size:12.5px; color:var(--faint); font-weight:600; }
+  .ftitle { font-family:'Inter'; font-size:16px; font-weight:700; margin:0 0 8px; color:var(--text); line-height:1.35; }
+  .fcard:hover .ftitle { color:var(--accent); }
+  .fex { margin:0; flex:1; font-size:13.5px; color:var(--muted); }
+  .fchips { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
+  .chip { font-size:12px; color:var(--muted); background:var(--surface-2); border:1px solid var(--border); border-radius:7px; padding:3px 10px; }
+  footer { text-align:center; color:var(--faint); font-size:13px; padding:30px 0 44px; }
+  footer a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="folio.html">Shrey<span>.</span>dev</a>
+    <div class="nav-right">
+      <a class="back" href="folio.html">&#8592; Back to portfolio</a>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <header class="head">
+    <p class="eyebrow">Blog</p>
+    <h1>Things I&rsquo;ve <span class="grad">written</span></h1>
+    <p class="lead">12 practical AL and Microsoft Dynamics 365 Business Central development articles.</p>
+  </header>
+  <div class="grid">
+    <a class="fcard" href="blog/bc-json-payload-formats.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#6366f1,#2dd4bf)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4H6a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1"/><path d="M17 4h1a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-1"/></svg></span>
+        <span class="fdate">July 2026</span>
+      </div>
+      <h2 class="ftitle">Converting BC Table Data into 14 API-Ready Payload Formats</h2>
+      <p class="fex">One Customer record → JSON, Base64, byte arrays, hex, multipart, zip, hashes, HMAC signatures, and AES encryption — all SaaS-safe with no DotNet.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">API</span><span class="chip">JSON</span><span class="chip">Integration</span></div>
+    </a>
+    <a class="fcard" href="blog/understanding-tryfunction-in-al.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#f43f5e,#fb923c)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3.5v5.5c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5.5z"/><path d="M9.5 12l2 2 3.5-4"/></svg></span>
+        <span class="fdate">June 2026</span>
+      </div>
+      <h2 class="ftitle">Understanding [TryFunction] in AL for Business Central</h2>
+      <p class="fex">How the [TryFunction] attribute really works — graceful error handling in AL, when to use it, common pitfalls, and patterns for reliable code.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">Error Handling</span></div>
+    </a>
+    <a class="fcard" href="blog/building-robust-custom-apis.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#8b5cf6,#e879f9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg></span>
+        <span class="fdate">March 2026</span>
+      </div>
+      <h2 class="ftitle">Building Robust Custom APIs in Business Central</h2>
+      <p class="fex">Designing custom API pages and codeunit-based endpoints in AL — clean contracts, validation, and integration-ready responses.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">API</span><span class="chip">Integration</span></div>
+    </a>
+    <a class="fcard" href="blog/mastering-recordref-fieldref.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#2dd4bf,#0ea5e9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+        <span class="fdate">January 2026</span>
+      </div>
+      <h2 class="ftitle">Mastering RecordRef & FieldRef in Business Central</h2>
+      <p class="fex">Dynamic data access with RecordRef and FieldRef — generic validation, rule-based processing, and record comparison that works across any table.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">RecordRef</span></div>
+    </a>
+    <a class="fcard" href="blog/automating-job-queue-monitoring.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#f59e0b,#f43f5e)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <span class="fdate">December 2025</span>
+      </div>
+      <h2 class="ftitle">Automating Job Queue Monitoring in Business Central</h2>
+      <p class="fex">AL code, assisted setup, and scheduling to keep job queues healthy — automatic restarts and email alerts when background jobs fail.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">Job Queue</span><span class="chip">Automation</span></div>
+    </a>
+    <a class="fcard" href="blog/migrating-cal-to-al-txt2al.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 12l-2 2 2 2M14 12l2 2-2 2"/></svg></span>
+        <span class="fdate">October 2025</span>
+      </div>
+      <h2 class="ftitle">Migrating from C-AL to AL Using Txt2AL</h2>
+      <p class="fex">Converting classic NAV C/AL objects into AL extensions with the Txt2AL tool — export, conversion, and post-conversion cleanup workflow.</p>
+      <div class="fchips"><span class="chip">C/AL</span><span class="chip">Txt2AL</span><span class="chip">Migration</span></div>
+    </a>
+    <a class="fcard" href="blog/boost-al-productivity-with-ai-extensions.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#e879f9,#6366f1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+        <span class="fdate">September 2025</span>
+      </div>
+      <h2 class="ftitle">Boost Your AL Coding Productivity with AI Extensions</h2>
+      <p class="fex">Using GitHub Copilot and Gemini Code Assist in VS Code to speed up AL development — setup, prompting, and practical wins.</p>
+      <div class="fchips"><span class="chip">AI</span><span class="chip">Copilot</span><span class="chip">VS Code</span></div>
+    </a>
+    <a class="fcard" href="blog/amount-in-words.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#2dd4bf,#10b981)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg></span>
+        <span class="fdate">July 2025</span>
+      </div>
+      <h2 class="ftitle">Amount in Words in Microsoft Dynamics 365 Business Central</h2>
+      <p class="fex">Converting amounts to words on invoices, payments, and reports — the standard Check Report approach and custom AL implementations.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">Reports</span></div>
+    </a>
+    <a class="fcard" href="blog/upgrading-customized-cal-to-business-central.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 8-11c3 0 5 2 5 5a22 22 0 0 1-11 8z"/></svg></span>
+        <span class="fdate">July 2025</span>
+      </div>
+      <h2 class="ftitle">Upgrading Customized C-AL to Business Central</h2>
+      <p class="fex">The end-to-end upgrade path for customized C/AL solutions to modern Business Central — objects, data, and post-upgrade checks.</p>
+      <div class="fchips"><span class="chip">Upgrade</span><span class="chip">C/AL</span></div>
+    </a>
+    <a class="fcard" href="blog/remove-doc-attachment-factbox-warning.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#f59e0b,#f97316)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></span>
+        <span class="fdate">June 2025</span>
+      </div>
+      <h2 class="ftitle">How to Remove the Warning of Document Attachment FactBox</h2>
+      <p class="fex">Fixing the Document Attachment FactBox warning when wiring it to custom tables — event subscribers and a clean integration pattern.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">FactBox</span></div>
+    </a>
+    <a class="fcard" href="blog/how-to-create-a-factbox.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#0ea5e9,#2dd4bf)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></svg></span>
+        <span class="fdate">June 2025</span>
+      </div>
+      <h2 class="ftitle">How to Create a FactBox in Business Central</h2>
+      <p class="fex">Building FactBoxes from scratch — page parts, wiring them to list and card pages, and surfacing related data where users need it.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">UI</span></div>
+    </a>
+    <a class="fcard" href="blog/customize-email-subject-body-attachment.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:linear-gradient(135deg,#8b5cf6,#0ea5e9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>
+        <span class="fdate">November 2024</span>
+      </div>
+      <h2 class="ftitle">How to Change Subject, Body and Attachment Name while Sending E-Mail</h2>
+      <p class="fex">Customizing outgoing document emails in Business Central — dynamic subjects, bodies, and attachment file names via codeunit extensions.</p>
+      <div class="fchips"><span class="chip">AL</span><span class="chip">Email</span></div>
+    </a>
+  </div>
+  <footer>© <span id="yr"></span> Shrey Chauhan · <a href="folio.html">Back to portfolio</a></footer>
+</div>
+<script>
+  (function () {
+    var saved = null; try { saved = localStorage.getItem('folio-theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    apply(dark);
+    document.getElementById('themeToggle').addEventListener('click', function () {
+      dark = !(document.documentElement.getAttribute('data-theme') === 'dark');
+      apply(dark);
+      try { localStorage.setItem('folio-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    });
+    function apply(isDark) {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      var ic = document.getElementById('themeIcon');
+      if (ic) ic.innerHTML = isDark
+        ? '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>'
+        : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+    }
+  })();
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

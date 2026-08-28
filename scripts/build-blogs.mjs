@@ -342,8 +342,8 @@ const template = (meta, toc, body) => `<!doctype html>
   <div class="topbar">
     <a class="brand" href="../"><span class="sc">SC</span>shrey<span class="dev">.dev</span></a>
     <div class="nav-actions">
-      <a class="back primary" href="../blogs.html">&#8592; All Posts</a>
-      <a class="back" href="../">Portfolio</a>
+      <a class="back primary" data-back="posts" href="../blogs.html">&#8592; All Posts</a>
+      <a class="back" data-back="home" href="../">Portfolio</a>
     </div>
   </div>
   <h1 class="post-title">${meta.title}</h1>
@@ -353,9 +353,24 @@ const template = (meta, toc, body) => `<!doctype html>
 ${body}
   </article>
   <div class="bottom-nav">
-    <a class="back primary" href="../blogs.html">&#8592; Back to all posts</a>
-    <a class="back" href="../">Portfolio home</a>
+    <a class="back primary" data-back="posts" href="../blogs.html">&#8592; Back to all posts</a>
+    <a class="back" data-back="home" href="../">Portfolio home</a>
   </div>
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        var from = p.get('from') || sessionStorage.getItem('blogFrom');
+        if (from === 'folio') {
+          sessionStorage.setItem('blogFrom', 'folio');
+          document.querySelectorAll('[data-back="posts"]').forEach(function (a) { a.setAttribute('href', '../folio-blogs.html'); });
+          document.querySelectorAll('[data-back="home"]').forEach(function (a) { a.setAttribute('href', '../folio.html'); });
+        } else if (from === 'main') {
+          sessionStorage.setItem('blogFrom', 'main');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <div class="foot">
     <span>&copy; ${new Date().getFullYear()} Shrey Chauhan</span>
     <a href="../">shrey.dev &#8599;</a>
@@ -369,7 +384,7 @@ ${body}
 function indexTile(blog) {
   const svg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${GLYPHS[blog.glyph] || GLYPHS.braces}</svg>`
   const tags = blog.tags.map((t) => `<span class="tag">${t}</span>`).join('')
-  return `    <a class="tile" href="blog/${blog.slug}.html">
+  return `    <a class="tile" href="blog/${blog.slug}.html?from=main">
       <div class="tile-top">
         <span class="tile-ico" style="background:${blog.grad}">${svg}</span>
         <span class="tile-date">${blog.date}</span>
@@ -378,6 +393,128 @@ function indexTile(blog) {
       <p class="tile-ex">${blog.excerpt}</p>
       <div class="tile-foot"><div class="tags">${tags}</div><span class="read">Read &#8599;</span></div>
     </a>`
+}
+
+// ---- Folio-styled blog index: public/folio-blogs.html (light/dark) --------
+function folioTile(blog) {
+  const svg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${GLYPHS[blog.glyph] || GLYPHS.braces}</svg>`
+  const tags = blog.tags.map((t) => `<span class="chip">${t}</span>`).join('')
+  return `    <a class="fcard" href="blog/${blog.slug}.html?from=folio">
+      <div class="fcard-top">
+        <span class="fico" style="background:${blog.grad}">${svg}</span>
+        <span class="fdate">${blog.date}</span>
+      </div>
+      <h2 class="ftitle">${blog.title}</h2>
+      <p class="fex">${blog.excerpt}</p>
+      <div class="fchips">${tags}</div>
+    </a>`
+}
+
+function folioIndexPage(blogs) {
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog | Shrey Chauhan</title>
+<meta name="description" content="AL and Microsoft Dynamics 365 Business Central development articles by Shrey Chauhan." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#f7f9fc; --surface:#fff; --surface-2:#eef2f8; --text:#16213e; --muted:#55617a; --faint:#8792a8;
+    --accent:#4f46e5; --accent-2:#0ea5e9; --teal:#0d9488; --border:#e4e9f2; --shadow:rgba(20,33,62,0.10); }
+  html[data-theme="dark"] { --bg:#0b1020; --surface:#121933; --surface-2:#1a2242; --text:#eef2ff; --muted:#9aa6c4;
+    --faint:#6b7699; --accent:#818cf8; --accent-2:#38bdf8; --teal:#2dd4bf; --border:#232c4d; --shadow:rgba(0,0,0,0.4); }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:'Inter',ui-sans-serif,system-ui,Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased; transition:background .3s,color .3s; }
+  h1,h2 { font-family:'Sora','Inter',sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+  nav { position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:color-mix(in srgb, var(--bg) 82%, transparent); border-bottom:1px solid var(--border); }
+  .nav-in { display:flex; align-items:center; justify-content:space-between; height:62px; }
+  .brand { font-family:'Sora'; font-weight:800; font-size:16px; text-decoration:none; color:var(--text); }
+  .brand span { color:var(--accent); }
+  .nav-right { display:flex; gap:10px; align-items:center; }
+  .back { display:inline-flex; align-items:center; gap:7px; text-decoration:none; color:var(--text);
+    font-size:14px; font-weight:600; padding:9px 16px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface); transition:all .18s; }
+  .back:hover { border-color:var(--accent); color:var(--accent); }
+  .icon-btn { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px;
+    border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--text); cursor:pointer; }
+  .icon-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .icon-btn svg { width:18px; height:18px; }
+  header.head { text-align:center; padding:56px 0 8px; }
+  .eyebrow { font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin:0 0 8px; }
+  h1 { font-size:clamp(2rem,5vw,2.8rem); font-weight:800; letter-spacing:-0.02em; margin:0 0 10px; }
+  .grad { background:linear-gradient(120deg,var(--accent),var(--accent-2),var(--teal)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { color:var(--muted); max-width:600px; margin:0 auto; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; padding:40px 0 20px; }
+  .fcard { display:flex; flex-direction:column; text-decoration:none; background:var(--surface); border:1px solid var(--border);
+    border-radius:18px; padding:22px; transition:transform .2s,border-color .2s,box-shadow .2s; }
+  .fcard:hover { transform:translateY(-5px); border-color:color-mix(in srgb,var(--accent) 45%,var(--border));
+    box-shadow:0 20px 44px -22px var(--shadow); }
+  .fcard-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .fico { width:44px; height:44px; border-radius:13px; display:flex; align-items:center; justify-content:center; color:#fff; }
+  .fico svg { width:22px; height:22px; }
+  .fdate { font-size:12.5px; color:var(--faint); font-weight:600; }
+  .ftitle { font-family:'Inter'; font-size:16px; font-weight:700; margin:0 0 8px; color:var(--text); line-height:1.35; }
+  .fcard:hover .ftitle { color:var(--accent); }
+  .fex { margin:0; flex:1; font-size:13.5px; color:var(--muted); }
+  .fchips { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
+  .chip { font-size:12px; color:var(--muted); background:var(--surface-2); border:1px solid var(--border); border-radius:7px; padding:3px 10px; }
+  footer { text-align:center; color:var(--faint); font-size:13px; padding:30px 0 44px; }
+  footer a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="folio.html">Shrey<span>.</span>dev</a>
+    <div class="nav-right">
+      <a class="back" href="folio.html">&#8592; Back to portfolio</a>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="wrap">
+  <header class="head">
+    <p class="eyebrow">Blog</p>
+    <h1>Things I&rsquo;ve <span class="grad">written</span></h1>
+    <p class="lead">${blogs.length} practical AL and Microsoft Dynamics 365 Business Central development articles.</p>
+  </header>
+  <div class="grid">
+${blogs.map(folioTile).join('\n')}
+  </div>
+  <footer>© <span id="yr"></span> Shrey Chauhan · <a href="folio.html">Back to portfolio</a></footer>
+</div>
+<script>
+  (function () {
+    var saved = null; try { saved = localStorage.getItem('folio-theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    apply(dark);
+    document.getElementById('themeToggle').addEventListener('click', function () {
+      dark = !(document.documentElement.getAttribute('data-theme') === 'dark');
+      apply(dark);
+      try { localStorage.setItem('folio-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    });
+    function apply(isDark) {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      var ic = document.getElementById('themeIcon');
+      if (ic) ic.innerHTML = isDark
+        ? '<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>'
+        : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+    }
+  })();
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+`
 }
 
 function indexPage(blogs) {
@@ -505,5 +642,7 @@ for (const blog of BLOGS) {
 // Emit the tiles index page (public/blogs.html), one level above OUT_DIR.
 fs.writeFileSync(path.resolve('public/blogs.html'), indexPage(BLOGS))
 console.log(`OK  blogs.html  (${BLOGS.length} tiles)`)
+fs.writeFileSync(path.resolve('public/folio-blogs.html'), folioIndexPage(BLOGS))
+console.log(`OK  folio-blogs.html  (${BLOGS.length} tiles)`)
 
 process.exit(hadError ? 1 : 0)

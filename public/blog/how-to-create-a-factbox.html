@@ -116,8 +116,8 @@
   <div class="topbar">
     <a class="brand" href="../"><span class="sc">SC</span>shrey<span class="dev">.dev</span></a>
     <div class="nav-actions">
-      <a class="back primary" href="../blogs.html">&#8592; All Posts</a>
-      <a class="back" href="../">Portfolio</a>
+      <a class="back primary" data-back="posts" href="../blogs.html">&#8592; All Posts</a>
+      <a class="back" data-back="home" href="../">Portfolio</a>
     </div>
   </div>
   <h1 class="post-title">How to Create a FactBox in Business Central</h1>
@@ -127,9 +127,24 @@
 <p><strong>How to Create a FactBox ?</strong></p><p>Dynamics 365 Business Central includes a FactBox control element on many key list pages. The purpose of this FactBox is to display informations related to records in the lists, providing extra insight into the data. The idea is that as you move between rows in the list, the record updates for the selected entry.</p><p>Factbox area is normally located on the Left side of the page and is used to display content including other pages, charts, and system parts such as Notes, and Links.</p><p>Creating a factbox can be done in two steps.</p><ol><li>Creating a factbox Page</li><li>Adding a FactBox area to a page</li></ol><p><strong>Creating a factbox Page :-</strong></p><p>For creating a factbox first we must have the tables and pages for the related datasets.</p><p>After that Create a new Card Part in visual studio code in AL extension. In that select the source table and inserts the fields you want to display on client side.</p><p>Create different groups of different fields to simplify the look.</p><p>Here how its look </p><p><img src="img/how-to-create-a-factbox/1.png" alt="Screenshot 1" /></p><p>This is of my AL Project 3.</p><p><strong>Adding a FactBox area to a page :- </strong></p><p>After creating the Card part of factbox you have to add this card part the Header card or List where you want to show the factbox.</p><p><img src="img/how-to-create-a-factbox/2.png" alt="Screenshot 2" /></p><p>In the card page you have to add the area(FactBox) in area(Content)</p><p><img src="img/how-to-create-a-factbox/3.png" alt="Screenshot 3" /></p><p>In that you have give your card part <br /><img src="img/how-to-create-a-factbox/4.png" alt="Screenshot 4" /></p><p>You can also add and call the standard Microsoft Dynamics 365 Business Central card parts like for Customer Images, Attachments and many more.</p><p><img src="img/how-to-create-a-factbox/5.png" alt="Screenshot 5" /></p><p><strong>Output:-</strong></p><p>And here how it’s going to look like </p><p><img src="img/how-to-create-a-factbox/6.png" alt="Screenshot 6" /> <img src="img/how-to-create-a-factbox/7.png" alt="Screenshot 7" /></p>
   </article>
   <div class="bottom-nav">
-    <a class="back primary" href="../blogs.html">&#8592; Back to all posts</a>
-    <a class="back" href="../">Portfolio home</a>
+    <a class="back primary" data-back="posts" href="../blogs.html">&#8592; Back to all posts</a>
+    <a class="back" data-back="home" href="../">Portfolio home</a>
   </div>
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        var from = p.get('from') || sessionStorage.getItem('blogFrom');
+        if (from === 'folio') {
+          sessionStorage.setItem('blogFrom', 'folio');
+          document.querySelectorAll('[data-back="posts"]').forEach(function (a) { a.setAttribute('href', '../folio-blogs.html'); });
+          document.querySelectorAll('[data-back="home"]').forEach(function (a) { a.setAttribute('href', '../folio.html'); });
+        } else if (from === 'main') {
+          sessionStorage.setItem('blogFrom', 'main');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <div class="foot">
     <span>&copy; 2026 Shrey Chauhan</span>
     <a href="../">shrey.dev &#8599;</a>

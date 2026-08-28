@@ -116,8 +116,8 @@
   <div class="topbar">
     <a class="brand" href="../"><span class="sc">SC</span>shrey<span class="dev">.dev</span></a>
     <div class="nav-actions">
-      <a class="back primary" href="../blogs.html">&#8592; All Posts</a>
-      <a class="back" href="../">Portfolio</a>
+      <a class="back primary" data-back="posts" href="../blogs.html">&#8592; All Posts</a>
+      <a class="back" data-back="home" href="../">Portfolio</a>
     </div>
   </div>
   <h1 class="post-title">Boost Your AL Coding Productivity with AI Extensions</h1>
@@ -127,9 +127,24 @@
 <p><strong>🚀 Boost Your AL Coding Productivity with AI Extensions &amp; Custom Shortcuts</strong></p><p>Working on AL development can be faster and smarter if you use the right tools in <strong>Visual Studio Code (VS Code)</strong>. Here are two must-have extensions and some powerful keyboard shortcuts to enhance your workflow.</p><p><strong>🔹 1. AI-Powered Extensions for AL Coding</strong></p><p><strong>✨ Gemini Code Assist</strong></p><ul><li>Coding assistance powered by <strong>Google Gemini</strong>.</li><li>Provides <strong>contextual responses</strong> to help with code logic and completions.</li><li>Offers <strong>source citations</strong> for documentation/code samples.</li><li>Supports <strong>automated code reviews</strong> in GitHub.</li></ul><p><img alt="Screenshot 1" src="img/boost-al-productivity-with-ai-extensions/1.png" /></p><p>🔗 <a href="https://marketplace.visualstudio.com/items?itemName=Google.geminicodeassist" target="_new">Get Gemini Code Assist</a></p><p><br /></p><p><strong>🤖 GitHub Copilot Chat</strong></p><ul><li>AI peer programmer that helps you <strong>write code faster</strong>.</li><li><strong>Chat interface</strong> to describe requirements and get instant solutions.</li><li>Adapts to project needs with <strong>custom instructions</strong>.</li><li>Seamlessly integrates with debugging and peer programming.</li></ul><p><img alt="Screenshot 2" src="img/boost-al-productivity-with-ai-extensions/2.png" /></p><p>🔗 <a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat" target="_new">Get GitHub Copilot Chat</a></p><p>⚠️ <strong>Important Reminder:</strong><br />These tools assist in coding, but always ensure:</p><ul><li>The <strong>logic and requirements</strong> match your project needs.</li><li>You <strong>review &amp; test code</strong> before publishing.</li></ul><p><strong>🔹 2. VS Code Keyboard Shortcuts for AL Developers</strong></p><p>Efficient coding isn’t only about AI assistance—<strong>keyboard shortcuts</strong> save tons of time.</p><p><strong>🔑 Key Highlights</strong></p><ul><li>Open shortcuts editor: Ctrl + K Ctrl + S</li><li>Right-click any command → <em>Configure Keybinding</em>.</li><li>Use <strong>Keymap extensions</strong> to import familiar shortcuts.</li><li>Detect conflicts via <em>Show Same Keybindings</em>.</li><li>Deep customization possible via keybindings.json.<br /></li></ul><p><img src="img/boost-al-productivity-with-ai-extensions/3.png" alt="Screenshot 3" /></p><p><strong>⚡ AL Coding Shortcuts</strong></p><p><strong>✍️ General Editing</strong></p><ul><li>Ctrl + Space → Trigger IntelliSense.</li><li>Alt + Shift + F → Format AL code.</li><li>Ctrl + / → Toggle line comment.</li><li>Shift + Alt + A → Block comment (/*...*/).</li></ul><p><strong>🔎 Navigation</strong></p><ul><li>Ctrl + P → Quick open files.</li><li>F12 → Go to definition.</li><li>Alt + F12 → Peek definition.</li><li>Ctrl + Shift + O → Navigate file symbols.</li></ul><p><strong>▶️ Running &amp; Debugging</strong></p><ul><li>Ctrl + F5 → Publish without debugging.</li><li>F5 → Publish + debug.</li><li>F9 → Toggle breakpoint.</li><li>F10 / F11 → Step over / Step into.</li></ul><p><strong>🚀 Productivity Boost</strong></p><ul><li>Ctrl + Shift + L → Select all occurrences.</li><li>Alt + Click → Multi-cursor editing.</li><li>Ctrl + D → Duplicate line.</li><li>Ctrl + Shift + F → Search workspace.</li></ul><p><img alt="Screenshot 4" src="img/boost-al-productivity-with-ai-extensions/4.png" /></p><p><strong>✅ Conclusion</strong></p><p>By combining <strong>AI-powered coding assistants</strong> (Gemini &amp; Copilot) with <strong>optimized VS Code shortcuts</strong>, you can significantly boost your AL development speed, reduce errors, and stay focused on business logic instead of repetitive tasks.</p>
   </article>
   <div class="bottom-nav">
-    <a class="back primary" href="../blogs.html">&#8592; Back to all posts</a>
-    <a class="back" href="../">Portfolio home</a>
+    <a class="back primary" data-back="posts" href="../blogs.html">&#8592; Back to all posts</a>
+    <a class="back" data-back="home" href="../">Portfolio home</a>
   </div>
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        var from = p.get('from') || sessionStorage.getItem('blogFrom');
+        if (from === 'folio') {
+          sessionStorage.setItem('blogFrom', 'folio');
+          document.querySelectorAll('[data-back="posts"]').forEach(function (a) { a.setAttribute('href', '../folio-blogs.html'); });
+          document.querySelectorAll('[data-back="home"]').forEach(function (a) { a.setAttribute('href', '../folio.html'); });
+        } else if (from === 'main') {
+          sessionStorage.setItem('blogFrom', 'main');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <div class="foot">
     <span>&copy; 2026 Shrey Chauhan</span>
     <a href="../">shrey.dev &#8599;</a>
