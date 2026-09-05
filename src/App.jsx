@@ -1354,7 +1354,12 @@ function OpenSource() {
 }
 
 const CERTS = [
-  { title: 'MB-820: D365 Business Central Developer Associate', issuer: 'Microsoft', status: 'In Progress' },
+  {
+    title: 'MB-820: Microsoft Certified — Dynamics 365 Business Central Developer Associate',
+    issuer: 'Microsoft · Earned Sep 2026',
+    status: 'Certified',
+    link: 'MB-820-Certificate.pdf',
+  },
   { title: 'Google UX Design Professional Certificate', issuer: 'Coursera', status: 'Completed' },
   { title: 'Advanced Microsoft Excel', issuer: 'Certification', status: 'Completed' },
 ]
@@ -1389,6 +1394,17 @@ function Certifications() {
               <div className="flex-1">
                 <p className="text-sm font-semibold text-white">{c.title}</p>
                 <p className="text-xs text-slate-400">{c.issuer}</p>
+                {c.link && (
+                  <a
+                    href={c.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-indigo-300 hover:text-white"
+                  >
+                    View credential
+                    <ArrowUpRight size={12} />
+                  </a>
+                )}
               </div>
               <span
                 className={`rounded-full px-3 py-1 text-xs font-semibold ${
