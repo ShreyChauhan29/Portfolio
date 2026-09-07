@@ -11,6 +11,17 @@ const OUT_DIR = path.resolve('public/blog')
 // grad = CSS gradient for the tile icon; glyph = key into GLYPHS below.
 const BLOGS = [
   {
+    abs: 'D:/AL Projects/OCRInvoiceCapture/docs/OCR Invoice Capture - Solution Document.docx',
+    slug: 'ocr-invoice-capture',
+    title: 'OCR Invoice Capture — PDF Invoices to Posting-Ready Documents in Business Central',
+    date: 'September 2026',
+    excerpt:
+      'An AL extension that turns vendor PDF invoices into posting-ready Business Central purchase documents — Gemini / Azure OCR, master-data matching, GST & TDS, and the source PDF attached.',
+    tags: ['AL', 'AI / OCR', 'API', 'GST / TDS'],
+    grad: 'linear-gradient(135deg,#0ea5e9,#8b5cf6)',
+    glyph: 'sparkles',
+  },
+  {
     abs: 'C:/Users/Shrey Chauhan/Downloads/BC_JSON_Payload_Formats_Blog.docx',
     slug: 'bc-json-payload-formats',
     title: 'Converting BC Table Data into 14 API-Ready Payload Formats',

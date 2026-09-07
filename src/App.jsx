@@ -30,6 +30,7 @@ import {
   Plug,
   Receipt,
   Rocket,
+  ScanText,
   ShieldAlert,
   Ship,
   Sparkles,
@@ -65,7 +66,7 @@ const STATS = [
   { value: '2.5+', label: 'Years in D365 BC & NAV' },
   { value: '35+', label: 'Client Projects Delivered' },
   { value: '10', label: 'Independent Modules Built' },
-  { value: '12', label: 'Technical Blogs Written' },
+  { value: '13', label: 'Technical Blogs Written' },
 ]
 
 const EXPERIENCE = [
@@ -82,7 +83,7 @@ const EXPERIENCE = [
       'Designed and built five AI agents on Microsoft Copilot Studio for Business Central — production planning, finance & compliance, customer intelligence, inventory, and manufacturing operations — powered by custom AL API pages with human-in-the-loop design.',
       'Developed custom APIs (Donation Transaction API with full documentation) and integrated third-party services: E-Way Bill and E-Invoicing via GSTRobo, WhatsApp, and live container tracking.',
       'Delivered complex reports — Cash Book Ledger, MRP, lot-wise inventory ageing and valuation, aged AR/AP, payment export with UTR updation — plus Excel import/export frameworks with validation.',
-      'Mentor three associate consultants, authored 12 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
+      'Mentor three associate consultants, authored 13 technical blogs, and run internal knowledge-sharing sessions on AL best practices and GitHub Copilot.',
       'Manage Azure environments and users, work with DevOps builds and deployments, and handle databases via SQL Server Management Studio.',
     ],
     tags: ['AL', 'Business Central', 'Dynamics NAV', 'SQL Server', 'REST APIs', 'Azure', 'Power Platform'],
@@ -101,6 +102,13 @@ const EXPERIENCE = [
 ]
 
 const PROJECTS = [
+  {
+    icon: ScanText,
+    title: 'OCR Invoice Capture',
+    description:
+      'AI extension that turns vendor PDF invoices into posting-ready Business Central purchase documents — Google Gemini / Azure OCR, master-data matching ladder, India GST & TDS, and the source PDF attached.',
+    tags: ['AL', 'AI / OCR', 'Gemini', 'Azure', 'GST / TDS'],
+  },
   {
     icon: BarChart3,
     title: 'Dimension-Based Reporting',
@@ -167,6 +175,16 @@ const PROJECTS = [
 ]
 
 const BLOGS = [
+  {
+    icon: ScanText,
+    gradient: 'from-sky-500 to-violet-500',
+    title: 'OCR Invoice Capture — PDF Invoices to Posting-Ready BC Documents',
+    date: 'Sep 2026',
+    excerpt:
+      'An AL extension that turns vendor PDF invoices into posting-ready Business Central purchase documents — Gemini / Azure OCR, master-data matching, GST & TDS, and the source PDF attached.',
+    url: 'blog/ocr-invoice-capture.html',
+    tags: ['AL', 'AI / OCR', 'API', 'GST / TDS'],
+  },
   {
     icon: Braces,
     gradient: 'from-indigo-500 to-teal-400',
